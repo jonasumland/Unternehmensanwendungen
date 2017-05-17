@@ -1,5 +1,3 @@
-package jdbc
-
 import java.sql.DriverManager
 import java.sql.Connection
 
@@ -7,7 +5,7 @@ import java.sql.Connection
   * A Scala JDBC connection example by Alvin Alexander,
   * http://alvinalexander.com
   */
-object ScalaJdbcConnectSelect {
+object übung1 {
 
   def main(args: Array[String]) {
     // connect to the database named "mysql" on the localhost
