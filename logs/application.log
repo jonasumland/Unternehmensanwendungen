@@ -1,94 +1,207 @@
-2017-05-31 13:52:26,925 [INFO] from application in ForkJoinPool-1-worker-1 - Creating Pool for datasource 'default'
-2017-05-31 13:52:48,022 [ERROR] from application in netty-event-loop-3 - 
+2017-05-31 15:43:19,935 [INFO] from application in ForkJoinPool-1-worker-1 - Creating Pool for datasource 'default'
+2017-05-31 15:43:20,401 [INFO] from play.api.db.DefaultDBApi in ForkJoinPool-1-worker-1 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-05-31 15:43:20,789 [INFO] from application in ForkJoinPool-1-worker-1 - ApplicationTimer demo: Starting application at 2017-05-31T13:43:20.751Z.
+2017-05-31 15:43:21,685 [INFO] from play.api.Play in ForkJoinPool-1-worker-1 - Application started (Dev)
+2017-05-31 15:44:55,964 [INFO] from application in application-akka.actor.default-dispatcher-8 - ApplicationTimer demo: Stopping application at 2017-05-31T13:44:55.964Z after 95s.
+2017-05-31 15:44:55,968 [INFO] from application in application-akka.actor.default-dispatcher-8 - Shutting down connection pool.
+2017-05-31 15:44:56,204 [INFO] from application in application-akka.actor.default-dispatcher-8 - Creating Pool for datasource 'default'
+2017-05-31 15:44:56,246 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-8 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-05-31 15:44:56,251 [INFO] from application in application-akka.actor.default-dispatcher-8 - ApplicationTimer demo: Starting application at 2017-05-31T13:44:56.250Z.
+2017-05-31 15:44:56,393 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-8 - Application started (Dev)
+2017-05-31 15:45:58,629 [INFO] from application in application-akka.actor.default-dispatcher-5 - ApplicationTimer demo: Stopping application at 2017-05-31T13:45:58.628Z after 62s.
+2017-05-31 15:45:58,629 [INFO] from application in application-akka.actor.default-dispatcher-5 - Shutting down connection pool.
+2017-05-31 15:45:59,235 [INFO] from application in application-akka.actor.default-dispatcher-5 - Creating Pool for datasource 'default'
+2017-05-31 15:45:59,349 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-5 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-05-31 15:45:59,368 [INFO] from application in application-akka.actor.default-dispatcher-5 - ApplicationTimer demo: Starting application at 2017-05-31T13:45:59.367Z.
+2017-05-31 15:45:59,662 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-5 - Application started (Dev)
+2017-05-31 15:46:31,864 [INFO] from application in application-akka.actor.default-dispatcher-7 - ApplicationTimer demo: Stopping application at 2017-05-31T13:46:31.864Z after 32s.
+2017-05-31 15:46:31,865 [INFO] from application in application-akka.actor.default-dispatcher-7 - Shutting down connection pool.
+2017-05-31 15:46:32,050 [INFO] from application in application-akka.actor.default-dispatcher-7 - Creating Pool for datasource 'default'
+2017-05-31 15:46:32,101 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-7 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-05-31 15:46:32,108 [INFO] from application in application-akka.actor.default-dispatcher-7 - ApplicationTimer demo: Starting application at 2017-05-31T13:46:32.107Z.
+2017-05-31 15:46:32,221 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-7 - Application started (Dev)
+2017-05-31 15:53:39,657 [INFO] from application in application-akka.actor.default-dispatcher-7 - ApplicationTimer demo: Stopping application at 2017-05-31T13:53:39.656Z after 427s.
+2017-05-31 15:53:39,657 [INFO] from application in application-akka.actor.default-dispatcher-7 - Shutting down connection pool.
+2017-05-31 15:53:39,842 [INFO] from application in application-akka.actor.default-dispatcher-7 - Creating Pool for datasource 'default'
+2017-05-31 15:53:39,878 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-7 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-05-31 15:53:39,887 [INFO] from application in application-akka.actor.default-dispatcher-7 - ApplicationTimer demo: Starting application at 2017-05-31T13:53:39.886Z.
+2017-05-31 15:53:40,013 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-7 - Application started (Dev)
+2017-05-31 15:54:43,620 [INFO] from application in application-akka.actor.default-dispatcher-9 - ApplicationTimer demo: Stopping application at 2017-05-31T13:54:43.619Z after 64s.
+2017-05-31 15:54:43,637 [INFO] from application in application-akka.actor.default-dispatcher-9 - Shutting down connection pool.
+2017-05-31 15:54:43,930 [INFO] from application in application-akka.actor.default-dispatcher-9 - Creating Pool for datasource 'default'
+2017-05-31 15:54:43,987 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-9 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-05-31 15:54:44,007 [INFO] from application in application-akka.actor.default-dispatcher-9 - ApplicationTimer demo: Starting application at 2017-05-31T13:54:44.004Z.
+2017-05-31 15:54:44,301 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-9 - Application started (Dev)
+2017-05-31 15:55:26,923 [INFO] from application in application-akka.actor.default-dispatcher-3 - ApplicationTimer demo: Stopping application at 2017-05-31T13:55:26.923Z after 42s.
+2017-05-31 15:55:26,924 [INFO] from application in application-akka.actor.default-dispatcher-3 - Shutting down connection pool.
+2017-05-31 15:55:27,103 [INFO] from application in application-akka.actor.default-dispatcher-3 - Creating Pool for datasource 'default'
+2017-05-31 15:55:27,139 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-3 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-05-31 15:55:27,142 [INFO] from application in application-akka.actor.default-dispatcher-3 - ApplicationTimer demo: Starting application at 2017-05-31T13:55:27.141Z.
+2017-05-31 15:55:27,284 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-3 - Application started (Dev)
+2017-05-31 15:55:31,285 [ERROR] from application in application-akka.actor.default-dispatcher-4 - 
 
-! @747clgfgk - Internal server error, for (GET) [/] ->
+! @747dbje37 - Internal server error, for (POST) [/submitKundennummer] ->
  
-play.api.Configuration$$anon$1: Configuration error[Cannot connect to database [default]]
-	at play.api.Configuration$.configError(Configuration.scala:155)
-	at play.api.Configuration.reportError(Configuration.scala:808)
-	at play.api.db.DefaultDBApi$$anonfun$connect$1.apply(DefaultDBApi.scala:48)
-	at play.api.db.DefaultDBApi$$anonfun$connect$1.apply(DefaultDBApi.scala:42)
-	at scala.collection.immutable.List.foreach(List.scala:392)
-	at play.api.db.DefaultDBApi.connect(DefaultDBApi.scala:42)
-	at play.api.db.DBApiProvider.get$lzycompute(DBModule.scala:72)
-	at play.api.db.DBApiProvider.get(DBModule.scala:62)
-	at play.api.db.DBApiProvider.get(DBModule.scala:58)
-	at com.google.inject.internal.ProviderInternalFactory.provision(ProviderInternalFactory.java:81)
-	at com.google.inject.internal.BoundProviderFactory.provision(BoundProviderFactory.java:72)
-	at com.google.inject.internal.ProviderInternalFactory.circularGet(ProviderInternalFactory.java:61)
-	at com.google.inject.internal.BoundProviderFactory.get(BoundProviderFactory.java:62)
-	at com.google.inject.internal.SingleFieldInjector.inject(SingleFieldInjector.java:54)
-	at com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:132)
-	at com.google.inject.internal.MembersInjectorImpl$1.call(MembersInjectorImpl.java:93)
-	at com.google.inject.internal.MembersInjectorImpl$1.call(MembersInjectorImpl.java:80)
-	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1103)
-	at com.google.inject.internal.MembersInjectorImpl.injectAndNotify(MembersInjectorImpl.java:80)
-	at com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:62)
-	at com.google.inject.internal.InjectorImpl.injectMembers(InjectorImpl.java:984)
-	at com.google.inject.util.Providers$GuicifiedProviderWithDependencies.initialize(Providers.java:149)
-	at com.google.inject.util.Providers$GuicifiedProviderWithDependencies$$FastClassByGuice$$2a7177aa.invoke(<generated>)
-	at com.google.inject.internal.cglib.reflect.$FastMethod.invoke(FastMethod.java:53)
-	at com.google.inject.internal.SingleMethodInjector$1.invoke(SingleMethodInjector.java:57)
-	at com.google.inject.internal.SingleMethodInjector.inject(SingleMethodInjector.java:91)
-	at com.google.inject.internal.MembersInjectorImpl.injectMembers(MembersInjectorImpl.java:132)
-	at com.google.inject.internal.MembersInjectorImpl$1.call(MembersInjectorImpl.java:93)
-	at com.google.inject.internal.MembersInjectorImpl$1.call(MembersInjectorImpl.java:80)
-	at com.google.inject.internal.InjectorImpl.callInContext(InjectorImpl.java:1092)
-	at com.google.inject.internal.MembersInjectorImpl.injectAndNotify(MembersInjectorImpl.java:80)
-	at com.google.inject.internal.Initializer$InjectableReference.get(Initializer.java:174)
-	at com.google.inject.internal.Initializer.injectAll(Initializer.java:108)
-	at com.google.inject.internal.InternalInjectorCreator.injectDynamically(InternalInjectorCreator.java:174)
-	at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:110)
-	at com.google.inject.Guice.createInjector(Guice.java:96)
-	at com.google.inject.Guice.createInjector(Guice.java:84)
-	at play.api.inject.guice.GuiceBuilder.injector(GuiceInjectorBuilder.scala:181)
-	at play.api.inject.guice.GuiceApplicationBuilder.build(GuiceApplicationBuilder.scala:123)
-	at play.api.inject.guice.GuiceApplicationLoader.load(GuiceApplicationLoader.scala:21)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1$$anonfun$apply$1$$anonfun$1$$anonfun$2.apply(DevServerStart.scala:168)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1$$anonfun$apply$1$$anonfun$1$$anonfun$2.apply(DevServerStart.scala:164)
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[IndexOutOfBoundsException: 0]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:293)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:220)
+	at play.api.GlobalSettings$class.onError(GlobalSettings.scala:160)
+	at play.api.DefaultGlobal$.onError(GlobalSettings.scala:188)
+	at play.api.http.GlobalSettingsHttpErrorHandler.onServerError(HttpErrorHandler.scala:100)
+	at play.core.server.netty.PlayRequestHandler$$anonfun$2$$anonfun$apply$1.applyOrElse(PlayRequestHandler.scala:100)
+	at play.core.server.netty.PlayRequestHandler$$anonfun$2$$anonfun$apply$1.applyOrElse(PlayRequestHandler.scala:99)
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:346)
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:345)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:36)
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:44)
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:252)
+	at scala.concurrent.Promise$class.complete(Promise.scala:55)
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:157)
+	at scala.concurrent.Future$$anonfun$recoverWith$1$$anonfun$apply$6.apply(Future.scala:346)
+	at scala.concurrent.Future$$anonfun$recoverWith$1$$anonfun$apply$6.apply(Future.scala:346)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:36)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.processBatch$1(BatchingExecutor.scala:63)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.apply$mcV$sp(BatchingExecutor.scala:78)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.apply(BatchingExecutor.scala:55)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.apply(BatchingExecutor.scala:55)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:72)
+	at scala.concurrent.BatchingExecutor$Batch.run(BatchingExecutor.scala:54)
+	at scala.concurrent.Future$InternalCallbackExecutor$.unbatchedExecute(Future.scala:601)
+	at scala.concurrent.BatchingExecutor$class.execute(BatchingExecutor.scala:106)
+	at scala.concurrent.Future$InternalCallbackExecutor$.execute(Future.scala:599)
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:44)
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:252)
+	at scala.concurrent.Promise$class.complete(Promise.scala:55)
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:157)
+	at scala.concurrent.Future$$anonfun$map$1.apply(Future.scala:237)
+	at scala.concurrent.Future$$anonfun$map$1.apply(Future.scala:237)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:36)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:55)
+	at akka.dispatch.BatchingExecutor$BlockableBatch$$anonfun$run$1.apply$mcV$sp(BatchingExecutor.scala:91)
+	at akka.dispatch.BatchingExecutor$BlockableBatch$$anonfun$run$1.apply(BatchingExecutor.scala:91)
+	at akka.dispatch.BatchingExecutor$BlockableBatch$$anonfun$run$1.apply(BatchingExecutor.scala:91)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:72)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:90)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:415)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.lang.IndexOutOfBoundsException: 0
+	at scala.collection.immutable.Vector.checkRangeConvert(Vector.scala:132)
+	at scala.collection.immutable.Vector.apply(Vector.scala:122)
+	at controllers.HomeController$$anonfun$submitKundennummer$1.apply(HomeController.scala:162)
+	at controllers.HomeController$$anonfun$submitKundennummer$1.apply(HomeController.scala:146)
+	at play.api.mvc.ActionBuilder$$anonfun$apply$13.apply(Action.scala:371)
+	at play.api.mvc.ActionBuilder$$anonfun$apply$13.apply(Action.scala:370)
+	at play.api.mvc.Action$.invokeBlock(Action.scala:498)
+	at play.api.mvc.Action$.invokeBlock(Action.scala:495)
+	at play.api.mvc.ActionBuilder$$anon$2.apply(Action.scala:458)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5$$anonfun$apply$6.apply(Action.scala:112)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5$$anonfun$apply$6.apply(Action.scala:112)
 	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(DevServerStart.scala:164)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1$$anonfun$apply$1$$anonfun$1.apply(DevServerStart.scala:131)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5.apply(Action.scala:111)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5.apply(Action.scala:110)
 	at scala.Option.map(Option.scala:146)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1$$anonfun$apply$1.apply(DevServerStart.scala:131)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1$$anonfun$apply$1.apply(DevServerStart.scala:129)
-	at scala.util.Success.flatMap(Try.scala:231)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1.apply(DevServerStart.scala:129)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1.apply(DevServerStart.scala:121)
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
-	at java.util.concurrent.ForkJoinTask$RunnableExecuteAction.exec(ForkJoinTask.java:1402)
-	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
-	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
-	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
-	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:157)
-Caused by: play.api.Configuration$$anon$1: Configuration error[Failed to initialize pool: SAP DBTech JDBC: Cannot connect to jdbc:sap://192.168.31.39:30215/ [Cannot connect to host 192.168.31.39:30215 [Connection timed out: connect], -813.].]
-	at play.api.Configuration$.configError(Configuration.scala:155)
-	at play.api.PlayConfig.reportError(Configuration.scala:999)
-	at play.api.db.HikariCPConnectionPool.create(HikariCPModule.scala:70)
-	at play.api.db.PooledDatabase.createDataSource(Databases.scala:199)
-	at play.api.db.DefaultDatabase.dataSource$lzycompute(Databases.scala:123)
-	at play.api.db.DefaultDatabase.dataSource(Databases.scala:121)
-	at play.api.db.DefaultDatabase.getConnection(Databases.scala:142)
-	at play.api.db.DefaultDatabase.getConnection(Databases.scala:138)
-	at play.api.db.DefaultDBApi$$anonfun$connect$1.apply(DefaultDBApi.scala:44)
-	... 55 common frames omitted
-Caused by: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: SAP DBTech JDBC: Cannot connect to jdbc:sap://192.168.31.39:30215/ [Cannot connect to host 192.168.31.39:30215 [Connection timed out: connect], -813.].
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:512)
-	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:105)
-	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:71)
-	at play.api.db.HikariCPConnectionPool$$anonfun$1.apply(HikariCPModule.scala:58)
-	at play.api.db.HikariCPConnectionPool$$anonfun$1.apply(HikariCPModule.scala:54)
-	at scala.util.Try$.apply(Try.scala:192)
-	at play.api.db.HikariCPConnectionPool.create(HikariCPModule.scala:54)
-	... 61 common frames omitted
-Caused by: com.sap.db.jdbc.exceptions.JDBCDriverException: SAP DBTech JDBC: Cannot connect to jdbc:sap://192.168.31.39:30215/ [Cannot connect to host 192.168.31.39:30215 [Connection timed out: connect], -813.].
-	at com.sap.db.jdbc.exceptions.SQLExceptionSapDB.createException(SQLExceptionSapDB.java:230)
-	at com.sap.db.jdbc.exceptions.SQLExceptionSapDB.createException(SQLExceptionSapDB.java:214)
-	at com.sap.db.jdbc.exceptions.SQLExceptionSapDB.generateDatabaseException(SQLExceptionSapDB.java:197)
-	at com.sap.db.jdbc.Driver.connect(Driver.java:218)
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:95)
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:101)
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:341)
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:506)
-	... 67 common frames omitted
+	at play.api.mvc.Action$$anonfun$apply$2.apply(Action.scala:110)
+	at play.api.mvc.Action$$anonfun$apply$2.apply(Action.scala:103)
+	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:253)
+	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:251)
+	... 13 common frames omitted
+2017-05-31 16:06:29,809 [INFO] from application in application-akka.actor.default-dispatcher-5 - ApplicationTimer demo: Stopping application at 2017-05-31T14:06:29.808Z after 662s.
+2017-05-31 16:06:29,809 [INFO] from application in application-akka.actor.default-dispatcher-5 - Shutting down connection pool.
+2017-05-31 16:06:30,004 [INFO] from application in application-akka.actor.default-dispatcher-5 - Creating Pool for datasource 'default'
+2017-05-31 16:06:30,045 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-5 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-05-31 16:06:30,047 [INFO] from application in application-akka.actor.default-dispatcher-5 - ApplicationTimer demo: Starting application at 2017-05-31T14:06:30.046Z.
+2017-05-31 16:06:30,194 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-5 - Application started (Dev)
+2017-05-31 16:06:38,764 [ERROR] from application in application-akka.actor.default-dispatcher-8 - 
+
+! @747dd5ddf - Internal server error, for (POST) [/submitKundennummer] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[IllegalArgumentException: Multiple decimal separators in pattern "#.###.###.###.##0,00"]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:293)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:220)
+	at play.api.GlobalSettings$class.onError(GlobalSettings.scala:160)
+	at play.api.DefaultGlobal$.onError(GlobalSettings.scala:188)
+	at play.api.http.GlobalSettingsHttpErrorHandler.onServerError(HttpErrorHandler.scala:100)
+	at play.core.server.netty.PlayRequestHandler$$anonfun$2$$anonfun$apply$1.applyOrElse(PlayRequestHandler.scala:100)
+	at play.core.server.netty.PlayRequestHandler$$anonfun$2$$anonfun$apply$1.applyOrElse(PlayRequestHandler.scala:99)
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:346)
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:345)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:36)
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:44)
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:252)
+	at scala.concurrent.Promise$class.complete(Promise.scala:55)
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:157)
+	at scala.concurrent.Future$$anonfun$recoverWith$1$$anonfun$apply$6.apply(Future.scala:346)
+	at scala.concurrent.Future$$anonfun$recoverWith$1$$anonfun$apply$6.apply(Future.scala:346)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:36)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.processBatch$1(BatchingExecutor.scala:63)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.apply$mcV$sp(BatchingExecutor.scala:78)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.apply(BatchingExecutor.scala:55)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.apply(BatchingExecutor.scala:55)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:72)
+	at scala.concurrent.BatchingExecutor$Batch.run(BatchingExecutor.scala:54)
+	at scala.concurrent.Future$InternalCallbackExecutor$.unbatchedExecute(Future.scala:601)
+	at scala.concurrent.BatchingExecutor$class.execute(BatchingExecutor.scala:106)
+	at scala.concurrent.Future$InternalCallbackExecutor$.execute(Future.scala:599)
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:44)
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:252)
+	at scala.concurrent.Promise$class.complete(Promise.scala:55)
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:157)
+	at scala.concurrent.Future$$anonfun$map$1.apply(Future.scala:237)
+	at scala.concurrent.Future$$anonfun$map$1.apply(Future.scala:237)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:36)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:55)
+	at akka.dispatch.BatchingExecutor$BlockableBatch$$anonfun$run$1.apply$mcV$sp(BatchingExecutor.scala:91)
+	at akka.dispatch.BatchingExecutor$BlockableBatch$$anonfun$run$1.apply(BatchingExecutor.scala:91)
+	at akka.dispatch.BatchingExecutor$BlockableBatch$$anonfun$run$1.apply(BatchingExecutor.scala:91)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:72)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:90)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:415)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.lang.IllegalArgumentException: Multiple decimal separators in pattern "#.###.###.###.##0,00"
+	at java.text.DecimalFormat.applyPattern(DecimalFormat.java:3339)
+	at java.text.DecimalFormat.<init>(DecimalFormat.java:436)
+	at controllers.HomeController$$anonfun$submitKundennummer$1$$anonfun$apply$1$$anonfun$apply$2.apply(HomeController.scala:176)
+	at controllers.HomeController$$anonfun$submitKundennummer$1$$anonfun$apply$1$$anonfun$apply$2.apply(HomeController.scala:168)
+	at scala.collection.Iterator$class.foreach(Iterator.scala:891)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1334)
+	at scala.collection.MapLike$DefaultKeySet.foreach(MapLike.scala:174)
+	at controllers.HomeController$$anonfun$submitKundennummer$1$$anonfun$apply$1.apply(HomeController.scala:168)
+	at controllers.HomeController$$anonfun$submitKundennummer$1$$anonfun$apply$1.apply(HomeController.scala:166)
+	at scala.collection.Iterator$class.foreach(Iterator.scala:891)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1334)
+	at scala.collection.IterableLike$class.foreach(IterableLike.scala:72)
+	at scala.collection.AbstractIterable.foreach(Iterable.scala:54)
+	at controllers.HomeController$$anonfun$submitKundennummer$1.apply(HomeController.scala:166)
+	at controllers.HomeController$$anonfun$submitKundennummer$1.apply(HomeController.scala:146)
+	at play.api.mvc.ActionBuilder$$anonfun$apply$13.apply(Action.scala:371)
+	at play.api.mvc.ActionBuilder$$anonfun$apply$13.apply(Action.scala:370)
+	at play.api.mvc.Action$.invokeBlock(Action.scala:498)
+	at play.api.mvc.Action$.invokeBlock(Action.scala:495)
+	at play.api.mvc.ActionBuilder$$anon$2.apply(Action.scala:458)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5$$anonfun$apply$6.apply(Action.scala:112)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5$$anonfun$apply$6.apply(Action.scala:112)
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5.apply(Action.scala:111)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5.apply(Action.scala:110)
+	at scala.Option.map(Option.scala:146)
+	at play.api.mvc.Action$$anonfun$apply$2.apply(Action.scala:110)
+	at play.api.mvc.Action$$anonfun$apply$2.apply(Action.scala:103)
+	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:253)
+	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:251)
+	... 13 common frames omitted
+2017-05-31 16:07:34,677 [INFO] from application in application-akka.actor.default-dispatcher-4 - ApplicationTimer demo: Stopping application at 2017-05-31T14:07:34.677Z after 64s.
+2017-05-31 16:07:34,677 [INFO] from application in application-akka.actor.default-dispatcher-4 - Shutting down connection pool.
+2017-05-31 16:07:34,840 [INFO] from application in application-akka.actor.default-dispatcher-4 - Creating Pool for datasource 'default'
+2017-05-31 16:07:34,873 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-4 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-05-31 16:07:34,881 [INFO] from application in application-akka.actor.default-dispatcher-4 - ApplicationTimer demo: Starting application at 2017-05-31T14:07:34.880Z.
+2017-05-31 16:07:35,004 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-4 - Application started (Dev)

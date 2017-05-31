@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
-// @SOURCE:D:/Unternehmensanwendungen/Uebungen/conf/routes
-// @DATE:Wed May 31 13:52:05 CEST 2017
+// @SOURCE:D:/Studium/UNA/Unternehmensanwendungen/conf/routes
+// @DATE:Wed May 31 14:20:28 CEST 2017
 
 package router
 
