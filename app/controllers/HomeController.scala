@@ -128,10 +128,56 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
                     GROUP BY ac.KUNNR, u.UMSATZAB, ac.RHCUR"""
   val set3 = sqlRunner.runSql(query3)
 
+    //making the date and numbers great again
+    val keys2 = set2.apply(0).keys
+    var newSet2 = scala.collection.immutable.Vector[Map[String, Object]]()
+    for (m <- set2) {
+      var newMap = scala.collection.immutable.Map[String, Object]()
+      for (col <- keys2) {
+        col match {
+          case "EINGANGSTAG" =>
+            var  sdf = new SimpleDateFormat("yyyymmdd").parse(m(col).toString)
+            val ans = new SimpleDateFormat("yyyy-mm-dd").format(sdf)
+            newMap += col -> ans
+          case "PREIS" =>
+            val decFormat = new DecimalFormat("#,###,###,##0.00")
+            val ans = decFormat.format(m(col))
+            newMap += col -> ans
+          case _ =>
+            val temp: String = m(col).toString
+            newMap += col -> temp
+        }
+      }
+      newSet2 = newSet2 :+ newMap
+    }
+
+    //making SET 3 great again
+    val keys3 = set3.apply(0).keys
+    var newSet3 = scala.collection.immutable.Vector[Map[String, Object]]()
+    for (m <- set3) {
+      var newMap = scala.collection.immutable.Map[String, Object]()
+      for (col <- keys3) {
+        col match {
+          case "ERGEBNIS" =>
+            val decFormat = new DecimalFormat("#,###,###,##0.00")
+            val ans = decFormat.format(m(col))
+            newMap += col -> ans
+          case "UMSATZ" =>
+            val decFormat = new DecimalFormat("#,###,###,##0.00")
+            val ans = decFormat.format(m(col))
+            newMap += col -> ans
+          case _ =>
+            val temp = m getOrElse(col,"")
+            newMap += col -> temp
+        }
+      }
+      newSet3 = newSet3 :+ newMap
+    }
+
 	set1 match{
 		case null => Ok(views.html.welcome("Invalid Input"))
 		case Vector() => Ok(views.html.welcome("Invalid Input"))
-		case _ => Ok(views.html.table(set1,set2,set3))
+		case _ => Ok(views.html.table(set1,newSet2,newSet3))
 	}
 		
 
@@ -158,15 +204,26 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
                   ORDER BY k.ERDAT DESC, k.ERZET DESC""";
     val set2 = sqlRunner.runSql(query2)
 
+	// AUFGABE 3
+  var query3 = s"""SELECT ac.RHCUR AS FIRMENWAEHRUNG,SUM(ac.KSL) AS UMSATZ, CASE WHEN(UMSATZAB IS NULL) THEN(SUM(ac.KSL)) ELSE(SUM(ac.KSL)+ u.UMSATZAB)END AS ERGEBNIS FROM SAPHPB.ACDOCA_VIEW ac
+                LEFT OUTER JOIN (SELECT SUM(KSL) AS UMSATZAB, a.KUNNR  FROM SAPHPB.ACDOCA_VIEW a
+                JOIN SAPHPB.KNA1 s
+                ON s.KUNNR = a.KUNNR
+                WHERE (a.GJAHR='2017' OR a.GJAHR='2016') AND a.KUNNR = '$kn' AND a.RACCT = '0050301000'
+                GROUP BY a.KUNNR) u
+                ON u.KUNNR= ac.KUNNR
+                JOIN SAPHPB.KNA1 s
+                ON s.KUNNR = ac.KUNNR
+                WHERE (ac.GJAHR='2017' OR ac.GJAHR='2016') AND ac.KUNNR = '$kn' AND ac.RACCT = '0041000000'
+                GROUP BY ac.KUNNR, u.UMSATZAB, ac.RHCUR"""
+
+    val set3 = sqlRunner.runSql(query3)
     // making the date great again
     val keys2 = set2.apply(0).keys
-
-
     var newSet2 = scala.collection.immutable.Vector[Map[String, Object]]()
     for (m <- set2) {
       var newMap = scala.collection.immutable.Map[String, Object]()
       for (col <- keys2) {
-        println(col)
         col match {
           case "EINGANGSTAG" =>
             var  sdf = new SimpleDateFormat("yyyymmdd").parse(m(col).toString)
@@ -183,26 +240,33 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
       }
       newSet2 = newSet2 :+ newMap
     }
-
-	// AUFGABE 3
-  var query3 = s"""SELECT ac.RHCUR AS FIRMENWAEHRUNG,SUM(ac.KSL) AS UMSATZ, CASE WHEN(UMSATZAB IS NULL) THEN(SUM(ac.KSL)) ELSE(SUM(ac.KSL)+ u.UMSATZAB)END AS ERGEBNIS FROM SAPHPB.ACDOCA_VIEW ac
-                LEFT OUTER JOIN (SELECT SUM(KSL) AS UMSATZAB, a.KUNNR  FROM SAPHPB.ACDOCA_VIEW a
-                JOIN SAPHPB.KNA1 s
-                ON s.KUNNR = a.KUNNR
-                WHERE (a.GJAHR='2017' OR a.GJAHR='2016') AND a.KUNNR = '$kn' AND a.RACCT = '0050301000'
-                GROUP BY a.KUNNR) u
-                ON u.KUNNR= ac.KUNNR
-                JOIN SAPHPB.KNA1 s
-                ON s.KUNNR = ac.KUNNR
-                WHERE (ac.GJAHR='2017' OR ac.GJAHR='2016') AND ac.KUNNR = '$kn' AND ac.RACCT = '0041000000'
-                GROUP BY ac.KUNNR, u.UMSATZAB, ac.RHCUR"""
-
-	val set3 = sqlRunner.runSql(query3)
+    //making SET 3 great again
+    val keys3 = set3.apply(0).keys
+    var newSet3 = scala.collection.immutable.Vector[Map[String, Object]]()
+    for (m <- set3) {
+      var newMap = scala.collection.immutable.Map[String, Object]()
+      for (col <- keys3) {
+        col match {
+          case "ERGEBNIS" =>
+            val decFormat = new DecimalFormat("#,###,###,##0.00")
+            val ans = decFormat.format(m(col))
+            newMap += col -> ans
+          case "UMSATZ" =>
+            val decFormat = new DecimalFormat("#,###,###,##0.00")
+            val ans = decFormat.format(m(col))
+            newMap += col -> ans
+          case _ =>
+            val temp = m getOrElse(col,"")
+            newMap += col -> temp
+        }
+      }
+      newSet3 = newSet3 :+ newMap
+    }
 	
 	set1 match{
 		case null => Ok(views.html.welcome("Invalid Input"))
 		case Vector() => Ok(views.html.welcome("Invalid Input"))
-		case _ => Ok(views.html.table(set1,newSet2,set3))
+		case _ => Ok(views.html.table(set1,newSet2,newSet3))
 	}
   }
 
