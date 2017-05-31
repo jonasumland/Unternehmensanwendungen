@@ -107,14 +107,14 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
   val set1 = sqlRunner.runSql(query1)
 
 	// AUFGABE 2
-  var query2 = s""" SELECT TOP 10 k.ERDAT AS EINGANGSTAG,k.ERZET AS EINGANGSZEIT,p.MATNR AS MATERIALNUMMER,p.ARKTX AS ARTIKEL,ZIEME AS ZIELMENGE,p.NETPR AS STUECKPREIS, p.NETWR AS PREIS FROM SAPHPB.VBAK k
+  var query2 = s""" SELECT TOP 10 k.ERDAT AS EINGANGSTAG, k.ERZET AS EINGANGSZEIT,p.MATNR AS MATERIALNUMMER,p.ARKTX AS ARTIKEL,ZIEME AS ZIELMENGE,k.WAERK AS DOKUMENTENWAEHRUNG,p.NETPR AS STUECKPREIS, p.NETWR AS PREIS FROM SAPHPB.VBAK k
                   JOIN SAPHPB.KNA1 s ON s.KUNNR = k.KUNNR AND s.MANDT = k.MANDT
                   JOIN SAPHPB.VBAP p ON p.VBELN=k.VBELN AND p.MANDT = k.MANDT
                   WHERE s.NAME1 ='$nm' AND s.PSTLZ= '$pl'
                   ORDER BY k.ERDAT DESC, k.ERZET DESC"""
 	val set2 = sqlRunner.runSql(query2)
 
-  var query3 = s"""SELECT SUM(ac.KSL) AS UMSATZ, CASE WHEN(UMSATZAB IS NULL) THEN(SUM(ac.KSL)) ELSE(SUM(ac.KSL)+ u.UMSATZAB)END AS ERGEBNIS FROM SAPHPB.ACDOCA_VIEW ac
+  var query3 = s"""SELECT ac.RHCUR AS FIRMENWAEHRUNG,SUM(ac.KSL) AS UMSATZ, CASE WHEN(UMSATZAB IS NULL) THEN(SUM(ac.KSL)) ELSE(SUM(ac.KSL)+ u.UMSATZAB)END AS ERGEBNIS FROM SAPHPB.ACDOCA_VIEW ac
                     LEFT OUTER JOIN (SELECT SUM(KSL) AS UMSATZAB, a.KUNNR  FROM SAPHPB.ACDOCA_VIEW a
                     JOIN SAPHPB.KNA1 s
                     ON s.KUNNR = a.KUNNR
@@ -124,7 +124,7 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
                     JOIN SAPHPB.KNA1 s
                     ON s.KUNNR = ac.KUNNR
                     WHERE (ac.GJAHR='2017' OR ac.GJAHR='2016') AND s.NAME1 = '$nm' AND s.PSTLZ= '$pl'AND ac.RACCT = '0041000000'
-                    GROUP BY ac.KUNNR, u.UMSATZAB"""
+                    GROUP BY ac.KUNNR, u.UMSATZAB, ac.RHCUR"""
   val set3 = sqlRunner.runSql(query3)
 
 	set1 match{
@@ -149,7 +149,7 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
 	// AUFGABE 1.2
 	val set1 = sqlRunner.runSql(s"SELECT KUNNR AS KUNDENNUMMER,NAME1 AS KUNDENNAME,TELF1 AS TELEFONNUMMER,LAND1 AS LAND,ORT01 AS ORT,STRAS AS STRASSE,PSTLZ AS POSTLEITZAHL,REGIO AS REGION FROM SAPHPB.KNA1 WHERE KUNNR='$kn'")
 
-  var query2 = s""" SELECT TOP 10 k.ERDAT AS EINGANGSTAG,k.ERZET AS EINGANGSZEIT,p.MATNR AS MATERIALNUMMER,p.ARKTX AS ARTIKEL,ZIEME AS ZIELMENGE,p.NETPR AS STUECKPREIS, p.NETWR AS PREIS FROM SAPHPB.VBAK k
+  var query2 = s""" SELECT TOP 10 k.ERDAT AS EINGANGSTAG, k.ERZET AS EINGANGSZEIT,p.MATNR AS MATERIALNUMMER,p.ARKTX AS ARTIKEL,ZIEME AS ZIELMENGE,k.WAERK AS DOKUMENTENWAEHRUNG,p.NETPR AS STUECKPREIS, p.NETWR AS PREIS FROM SAPHPB.VBAK k
                   JOIN SAPHPB.KNA1 s ON s.KUNNR = k.KUNNR AND s.MANDT = k.MANDT
                   JOIN SAPHPB.VBAP p ON p.VBELN=k.VBELN AND p.MANDT = k.MANDT
                   WHERE s.KUNNR='$kn'
@@ -157,7 +157,7 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
 	val set2 = sqlRunner.runSql(query2)
 
 	// AUFGABE 3
-  var query3 = s"""SELECT SUM(ac.KSL) AS UMSATZ, CASE WHEN(UMSATZAB IS NULL) THEN(SUM(ac.KSL)) ELSE(SUM(ac.KSL)+ u.UMSATZAB)END AS ERGEBNIS FROM SAPHPB.ACDOCA_VIEW ac
+  var query3 = s"""SELECT ac.RHCUR AS FIRMENWAEHRUNG,SUM(ac.KSL) AS UMSATZ, CASE WHEN(UMSATZAB IS NULL) THEN(SUM(ac.KSL)) ELSE(SUM(ac.KSL)+ u.UMSATZAB)END AS ERGEBNIS FROM SAPHPB.ACDOCA_VIEW ac
                 LEFT OUTER JOIN (SELECT SUM(KSL) AS UMSATZAB, a.KUNNR  FROM SAPHPB.ACDOCA_VIEW a
                 JOIN SAPHPB.KNA1 s
                 ON s.KUNNR = a.KUNNR
@@ -167,7 +167,7 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
                 JOIN SAPHPB.KNA1 s
                 ON s.KUNNR = ac.KUNNR
                 WHERE (ac.GJAHR='2017' OR ac.GJAHR='2016') AND ac.KUNNR = '$kn' AND ac.RACCT = '0041000000'
-                GROUP BY ac.KUNNR, u.UMSATZAB"""
+                GROUP BY ac.KUNNR, u.UMSATZAB, ac.RHCUR"""
 
 	val set3 = sqlRunner.runSql(query3)
 	
