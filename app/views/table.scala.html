@@ -1,0 +1,62 @@
+@(set1: Vector[Map[String, Object]],set2: Vector[Map[String, Object]],set3: Vector[Map[String, Object]])
+
+
+
+
+<link rel="stylesheet" media="screen" href="/@@documentation/resources/style/main.css">
+
+<section id="top">
+  <div class="wrapper" align="center">
+    <h1 align="center">Kundenübersicht</h1>
+  </div>
+</section>
+
+
+<div id="content">
+  <article>
+    <p>
+      <h3> Kundendaten </h3>
+      <table style="width:100%">
+        @defining(set1.apply(0).keys) { columns =>
+          @for(key <- columns){
+            <tr>
+              <th> @key </th>
+              @for(m <- set1){
+                <td> @m(key).toString </td>
+              }
+           </tr>
+          }
+        }
+      </table>
+    </p>
+    <p>
+      <h3> Letzte Verkäufe </h3>
+      <table style="width:100%">
+        @defining(set2.apply(0).keys) { columns =>
+          @for(key <- columns){
+            <tr>
+              <th> @key </th>
+              @for(m <- set2){
+                <td> @m(key).toString </td>
+              }
+           </tr>
+          }
+        }
+      </table>
+    </p>
+    <p>
+      <h3> Einnahmen </h3>
+      <table style="width:100%">
+        @defining(set3.apply(0).keys) { columns =>
+          @for(key <- columns){
+            <tr>
+              <th> @key </th>
+              @for(m <- set3){
+                <td> @m(key).toString </td>
+              }
+           </tr>
+          }
+        }
+      </table>
+    </p>
+</div>

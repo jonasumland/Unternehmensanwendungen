@@ -1,0 +1,49 @@
+@(message: String, style: String = "scala")
+
+@defining(play.core.PlayVersion.current) { version =>
+
+<link rel="stylesheet" media="screen" href="/@@documentation/resources/style/main.css">
+
+<section id="top">
+  <div class="wrapper" align="right">
+    <h1>@message</h1>
+  </div>
+</section>
+
+<div id="content" class="wrapper doc">
+<article>
+
+  <h2>Übung 1</h2>
+
+
+	<p>
+
+	@helper.form(action=routes.HomeController.submitNamePostleitzahl()){
+  <table>
+    <tr>
+    <td width ="30%"> Name: </td> <td> <input type='text' name='Name' hint="help" /> </td>
+    </tr>
+    	<td>Postleitzahl: </td> <td><input type='text' name='Postleitzahl' /></td>
+    </tr>
+  </table>
+  </br>
+  <input type='submit' name='mysubmit' value='Submit Query' />
+	}
+  </p>
+
+  <p>
+    @helper.form(action=routes.HomeController.submitKundennummer()){
+    <table>
+      <tr>
+        <td width="30%">Kundennummer:</td> <td> <input type='text' name='Kundennummer' /></td>
+      </tr>
+    </table>
+    </br>
+    <input type='submit' name='mysubmit' value='Submit Query' />
+  	}
+  </p>
+
+
+
+</div>
+}
