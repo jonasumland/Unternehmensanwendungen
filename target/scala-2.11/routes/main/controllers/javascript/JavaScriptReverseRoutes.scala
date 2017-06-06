@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:D:/Studium/UNA/Unternehmensanwendungen/conf/routes
-// @DATE:Wed May 31 14:20:28 CEST 2017
+// @DATE:Tue Jun 06 16:10:16 CEST 2017
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -42,32 +42,22 @@ package controllers.javascript {
     }
 
   
+    // @LINE:16
+    def submitKundenInfo: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.HomeController.submitKundenInfo",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "stammdaten"})
+        }
+      """
+    )
+  
     // @LINE:6
     def index: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.HomeController.index",
       """
         function() {
           return _wA({method:"GET", url:"""" + _prefix + """"})
-        }
-      """
-    )
-  
-    // @LINE:18
-    def submitKundennummer: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.submitKundennummer",
-      """
-        function() {
-          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "submitKundennummer"})
-        }
-      """
-    )
-  
-    // @LINE:16
-    def submitNamePostleitzahl: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.submitNamePostleitzahl",
-      """
-        function() {
-          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "submitNamePostleitzahl"})
         }
       """
     )

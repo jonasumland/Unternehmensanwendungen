@@ -89,135 +89,32 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
     Ok(views.html.index("Your SAP HANA is ready."))
   }
 
-// NAME UND POSTLEITZAHL
-
-  val formNP = Form(
-    tuple(
-      "Name" -> text,
-      "Postleitzahl" -> text
-    )
-  )
-
-
-  def submitNamePostleitzahl = Action { implicit request =>
-    val (nm, pl) = formNP.bindFromRequest.get
-
-	// AUFGABE 1a)
-  var query1 = s"""SELECT KUNNR AS KUNDENNUMMER,NAME1 AS KUNDENNAME,TELF1 AS TELEFONNUMMER,LAND1 AS LAND,ORT01 AS ORT,STRAS AS STRASSE,PSTLZ AS POSTLEITZAHL,REGIO AS REGION FROM SAPHPB.KNA1
-                  WHERE NAME1 ='$nm' AND PSTLZ='$pl'"""
-  val set1 = sqlRunner.runSql(query1)
-
-	// AUFGABE 2
-  var query2 = s""" SELECT TOP 10 k.ERDAT AS EINGANGSTAG, k.ERZET AS EINGANGSZEIT,p.MATNR AS MATERIALNUMMER,p.ARKTX AS ARTIKEL,ZIEME AS ZIELMENGE,k.WAERK AS DOKUMENTENWAEHRUNG,p.NETPR AS STUECKPREIS, p.NETWR AS PREIS FROM SAPHPB.VBAK k
-                  JOIN SAPHPB.KNA1 s ON s.KUNNR = k.KUNNR AND s.MANDT = k.MANDT
-                  JOIN SAPHPB.VBAP p ON p.VBELN=k.VBELN AND p.MANDT = k.MANDT
-                  WHERE s.NAME1 ='$nm' AND s.PSTLZ= '$pl'
-                  ORDER BY k.ERDAT DESC, k.ERZET DESC"""
-	val set2 = sqlRunner.runSql(query2)
-
-  var query3 = s"""SELECT ac.RHCUR AS FIRMENWAEHRUNG,SUM(ac.KSL) AS UMSATZ, CASE WHEN(UMSATZAB IS NULL) THEN(SUM(ac.KSL)) ELSE(SUM(ac.KSL)+ u.UMSATZAB)END AS ERGEBNIS FROM SAPHPB.ACDOCA_VIEW ac
-                    LEFT OUTER JOIN (SELECT SUM(KSL) AS UMSATZAB, a.KUNNR  FROM SAPHPB.ACDOCA_VIEW a
-                    JOIN SAPHPB.KNA1 s
-                    ON s.KUNNR = a.KUNNR
-                    WHERE (a.GJAHR='2017' OR a.GJAHR='2016') AND s.NAME1 = '$nm' AND s.PSTLZ= '$pl' AND a.RACCT = '0050301000'
-                    GROUP BY a.KUNNR) u
-                    ON u.KUNNR= ac.KUNNR
-                    JOIN SAPHPB.KNA1 s
-                    ON s.KUNNR = ac.KUNNR
-                    WHERE (ac.GJAHR='2017' OR ac.GJAHR='2016') AND s.NAME1 = '$nm' AND s.PSTLZ= '$pl'AND ac.RACCT = '0041000000'
-                    GROUP BY ac.KUNNR, u.UMSATZAB, ac.RHCUR"""
-  val set3 = sqlRunner.runSql(query3)
-
-    //making the date and numbers great again
-    val keys2 = set2.apply(0).keys
-    var newSet2 = scala.collection.immutable.Vector[Map[String, Object]]()
-    for (m <- set2) {
-      var newMap = scala.collection.immutable.Map[String, Object]()
-      for (col <- keys2) {
-        col match {
-          case "EINGANGSTAG" =>
-            var  sdf = new SimpleDateFormat("yyyymmdd").parse(m(col).toString)
-            val ans = new SimpleDateFormat("yyyy-mm-dd").format(sdf)
-            newMap += col -> ans
-          case "PREIS" =>
-            val decFormat = new DecimalFormat("#,###,###,##0.00")
-            val ans = decFormat.format(m(col))
-            newMap += col -> ans
-          case _ =>
-            val temp: String = m(col).toString
-            newMap += col -> temp
-        }
-      }
-      newSet2 = newSet2 :+ newMap
+  def findeKunde(name: String, plz: String): String =
+    {
+      var query1 = s"""SELECT KUNNR FROM SAPHPB.KNA1 WHERE UPPER(NAME1) LIKE UPPER('%$name%') AND PSTLZ='$plz' AND MANDT='400'"""
+      val set1 = sqlRunner.runSql(query1)
+      println(set1)
+      val kundenNummer:String = set1(0)("KUNNR").toString
+      return(kundenNummer)
     }
 
-    //making SET 3 great again
-    val keys3 = set3.apply(0).keys
-    var newSet3 = scala.collection.immutable.Vector[Map[String, Object]]()
-    for (m <- set3) {
-      var newMap = scala.collection.immutable.Map[String, Object]()
-      for (col <- keys3) {
-        col match {
-          case "ERGEBNIS" =>
-            val decFormat = new DecimalFormat("#,###,###,##0.00")
-            val ans = decFormat.format(m(col))
-            newMap += col -> ans
-          case "UMSATZ" =>
-            val decFormat = new DecimalFormat("#,###,###,##0.00")
-            val ans = decFormat.format(m(col))
-            newMap += col -> ans
-          case _ =>
-            val temp = m getOrElse(col,"")
-            newMap += col -> temp
-        }
-      }
-      newSet3 = newSet3 :+ newMap
-    }
 
-	set1 match{
-		case null => Ok(views.html.welcome("Invalid Input"))
-		case Vector() => Ok(views.html.welcome("Invalid Input"))
-		case _ => Ok(views.html.table(set1,newSet2,newSet3))
-	}
-		
-
+  def kundenInfo(kundenNr:String): Vector[Map[String, Object]] =
+  {
+    val set1 = sqlRunner.runSql(s"SELECT KUNNR AS KUNDENNUMMER,NAME1 AS KUNDENNAME,TELF1 AS TELEFONNUMMER,LAND1 AS LAND,ORT01 AS ORT,STRAS AS STRASSE,PSTLZ AS POSTLEITZAHL,REGIO AS REGION FROM SAPHPB.KNA1 WHERE KUNNR='$kundenNr'")
+    return set1
   }
 
-
-// KUNDENNUMMER
-  val formK = Form(
-      "Kundennummer" -> text
-  )
-
-  def submitKundennummer = Action { implicit request =>
-    val kn = formK.bindFromRequest.get
-
-
-    // AUFGABE 1.2
-    val set1 = sqlRunner.runSql(s"SELECT KUNNR AS KUNDENNUMMER,NAME1 AS KUNDENNAME,TELF1 AS TELEFONNUMMER,LAND1 AS LAND,ORT01 AS ORT,STRAS AS STRASSE,PSTLZ AS POSTLEITZAHL,REGIO AS REGION FROM SAPHPB.KNA1 WHERE KUNNR='$kn'")
-
+  def last10Sells(kundenNr:String): Vector[Map[String, Object]] =
+  {
     var query2 =
       s""" SELECT TOP 10 k.ERDAT AS EINGANGSTAG, k.ERZET AS EINGANGSZEIT,p.MATNR AS MATERIALNUMMER,p.ARKTX AS ARTIKEL,ZIEME AS ZIELMENGE,k.WAERK AS DOKUMENTENWAEHRUNG,p.NETPR AS STUECKPREIS, p.NETWR AS PREIS FROM SAPHPB.VBAK k
                   JOIN SAPHPB.KNA1 s ON s.KUNNR = k.KUNNR AND s.MANDT = k.MANDT
                   JOIN SAPHPB.VBAP p ON p.VBELN=k.VBELN AND p.MANDT = k.MANDT
-                  WHERE s.KUNNR='$kn'
+                  WHERE s.KUNNR='$kundenNr'
                   ORDER BY k.ERDAT DESC, k.ERZET DESC""";
     val set2 = sqlRunner.runSql(query2)
 
-	// AUFGABE 3
-  var query3 = s"""SELECT ac.RHCUR AS FIRMENWAEHRUNG,SUM(ac.KSL) AS UMSATZ, CASE WHEN(UMSATZAB IS NULL) THEN(SUM(ac.KSL)) ELSE(SUM(ac.KSL)+ u.UMSATZAB)END AS ERGEBNIS FROM SAPHPB.ACDOCA_VIEW ac
-                LEFT OUTER JOIN (SELECT SUM(KSL) AS UMSATZAB, a.KUNNR  FROM SAPHPB.ACDOCA_VIEW a
-                JOIN SAPHPB.KNA1 s
-                ON s.KUNNR = a.KUNNR
-                WHERE (a.GJAHR='2017' OR a.GJAHR='2016') AND a.KUNNR = '$kn' AND a.RACCT = '0050301000'
-                GROUP BY a.KUNNR) u
-                ON u.KUNNR= ac.KUNNR
-                JOIN SAPHPB.KNA1 s
-                ON s.KUNNR = ac.KUNNR
-                WHERE (ac.GJAHR='2017' OR ac.GJAHR='2016') AND ac.KUNNR = '$kn' AND ac.RACCT = '0041000000'
-                GROUP BY ac.KUNNR, u.UMSATZAB, ac.RHCUR"""
-
-    val set3 = sqlRunner.runSql(query3)
     // making the date great again
     val keys2 = set2.apply(0).keys
     var newSet2 = scala.collection.immutable.Vector[Map[String, Object]]()
@@ -229,6 +126,10 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
             var  sdf = new SimpleDateFormat("yyyymmdd").parse(m(col).toString)
             val ans = new SimpleDateFormat("yyyy-mm-dd").format(sdf)
             newMap += col -> ans
+          case "EINGANGSZEIT" =>
+            var  sdf = new SimpleDateFormat("hhmmss").parse(m(col).toString)
+            val ans = new SimpleDateFormat("hh:mm:ss").format(sdf)
+            newMap += col -> ans
           case "PREIS" =>
             val decFormat = new DecimalFormat("#,###,###,##0.00")
             val ans = decFormat.format(m(col))
@@ -240,6 +141,25 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
       }
       newSet2 = newSet2 :+ newMap
     }
+    return newSet2
+  }
+
+  def calculateProfit(kundenNr:String): Vector[Map[String, Object]] =
+  {
+    var query3 = s"""SELECT ac.RHCUR AS FIRMENWAEHRUNG,-SUM(ac.KSL) AS UMSATZ, CASE WHEN(UMSATZAB IS NULL) THEN(-SUM(ac.KSL)) ELSE(-(SUM(ac.KSL)+ u.UMSATZAB))END AS ERGEBNIS FROM SAPHPB.ACDOCA_VIEW ac
+                LEFT OUTER JOIN (SELECT SUM(KSL) AS UMSATZAB, a.KUNNR  FROM SAPHPB.ACDOCA_VIEW a
+                JOIN SAPHPB.KNA1 s
+                ON s.KUNNR = a.KUNNR
+                WHERE (a.GJAHR='2017' OR a.GJAHR='2016') AND a.KUNNR = '$kundenNr' AND a.RACCT = '0050301000'
+                GROUP BY a.KUNNR) u
+                ON u.KUNNR= ac.KUNNR
+                JOIN SAPHPB.KNA1 s
+                ON s.KUNNR = ac.KUNNR
+                WHERE (ac.GJAHR='2017' OR ac.GJAHR='2016') AND ac.KUNNR = '$kundenNr' AND ac.RACCT = '0041000000'
+                GROUP BY ac.KUNNR, u.UMSATZAB, ac.RHCUR"""
+
+    val set3 = sqlRunner.runSql(query3)
+
     //making SET 3 great again
     val keys3 = set3.apply(0).keys
     var newSet3 = scala.collection.immutable.Vector[Map[String, Object]]()
@@ -262,12 +182,46 @@ class HomeController @Inject() (actorSystem: ActorSystem)(db: Database)(implicit
       }
       newSet3 = newSet3 :+ newMap
     }
-	
-	set1 match{
-		case null => Ok(views.html.welcome("Invalid Input"))
-		case Vector() => Ok(views.html.welcome("Invalid Input"))
-		case _ => Ok(views.html.table(set1,newSet2,newSet3))
-	}
+      return newSet3
+  }
+
+  def receiveInfoFromDatabse(kundenNr:String): Vector[Vector[Map[String,Object]]] =
+  {
+    return(Vector(kundenInfo(kundenNr),last10Sells(kundenNr),calculateProfit(kundenNr)))
+  }
+
+
+  val formS = Form(
+    tuple(
+      "Name" -> text,
+      "Postleitzahl" -> text,
+      "Kundennummer" -> text
+    )
+  )
+
+  def submitKundenInfo = Action { implicit request =>
+    val (name,plz,kundenNr) = formS.bindFromRequest.get
+    var kn = ""
+    kundenNr match
+    {
+      case null =>
+        kn = findeKunde(name,plz)
+      case "" =>
+        kn = findeKunde(name,plz)
+      case _ =>
+        kn = kundenNr.toUpperCase
+    }
+
+    val sets = receiveInfoFromDatabse(kn)
+    val set1 = sets(0)
+    val set2 = sets(1)
+    val set3 = sets(2)
+
+    set1 match{
+      case null => Ok(views.html.welcome("Invalid Input"))
+      case Vector() => Ok(views.html.welcome("Invalid Input"))
+      case _ => Ok(views.html.table(set1,set2,set3))
+    }
   }
 
 }

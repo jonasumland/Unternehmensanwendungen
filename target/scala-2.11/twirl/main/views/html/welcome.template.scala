@@ -46,37 +46,28 @@ Seq[Any](format.raw/*1.44*/("""
   <h2>Übung 1</h2>
 
 
-	<p>
-
-	"""),_display_(/*27.3*/helper/*27.9*/.form(action=routes.HomeController.submitNamePostleitzahl())/*27.69*/{_display_(Seq[Any](format.raw/*27.70*/("""
-  """),format.raw/*28.3*/("""<table>
-    <tr>
-    <td width ="30%"> Name: </td> <td> <input type='text' name='Name' hint="help" /> </td>
-    </tr>
-    	<td>Postleitzahl: </td> <td><input type='text' name='Postleitzahl' /></td>
-    </tr>
-  </table>
-  </br>
-  <input type='submit' name='mysubmit' value='Submit Query' />
-	""")))}),format.raw/*37.3*/("""
-  """),format.raw/*38.3*/("""</p>
 
   <p>
-    """),_display_(/*41.6*/helper/*41.12*/.form(action=routes.HomeController.submitKundennummer())/*41.68*/{_display_(Seq[Any](format.raw/*41.69*/("""
-    """),format.raw/*42.5*/("""<table>
+
+  """),_display_(/*28.4*/helper/*28.10*/.form(action=routes.HomeController.submitKundenInfo())/*28.64*/{_display_(Seq[Any](format.raw/*28.65*/("""
+    """),format.raw/*29.5*/("""<table>
       <tr>
-        <td width="30%">Kundennummer:</td> <td> <input type='text' name='Kundennummer' /></td>
+        <td width ="30%"> Name: </td> <td> <input type='text' name='Name' hint="help" /> </td>
+      </tr>
+       <td>Postleitzahl: </td> <td><input type='text' name='Postleitzahl' /></td>
+      </tr>
+       <td width="30%">Kundennummer:</td> <td> <input type='text' name='Kundennummer' /></td>
       </tr>
     </table>
     </br>
     <input type='submit' name='mysubmit' value='Submit Query' />
-  	""")))}),format.raw/*49.5*/("""
-  """),format.raw/*50.3*/("""</p>
+  """)))}),format.raw/*40.4*/("""
+  """),format.raw/*41.3*/("""</p>
 
 
 
 </div>
-""")))}),format.raw/*55.2*/("""
+""")))}),format.raw/*46.2*/("""
 """))
       }
     }
@@ -97,11 +88,11 @@ Seq[Any](format.raw/*1.44*/("""
 object welcome extends welcome_Scope0.welcome
               /*
                   -- GENERATED --
-                  DATE: Wed May 31 14:28:42 CEST 2017
+                  DATE: Tue Jun 06 16:10:16 CEST 2017
                   SOURCE: D:/Studium/UNA/Unternehmensanwendungen/app/views/welcome.scala.html
-                  HASH: d2f07a6da2cce0308cc783790db8805b87e9f66e
-                  MATRIX: 538->1|675->43|703->46|750->85|800->98|828->100|1066->312|1094->319|1226->425|1240->431|1309->491|1348->492|1378->495|1700->787|1730->790|1773->807|1788->813|1853->869|1892->870|1924->875|2172->1093|2202->1096|2248->1112
-                  LINES: 20->1|25->1|27->3|27->3|27->3|29->5|39->15|39->15|51->27|51->27|51->27|51->27|52->28|61->37|62->38|65->41|65->41|65->41|65->41|66->42|73->49|74->50|79->55
+                  HASH: 7dbf9f102924c0d7aa3099871df33339ba154ac8
+                  MATRIX: 538->1|675->43|703->46|750->85|800->98|828->100|1066->312|1094->319|1229->428|1244->434|1307->488|1346->489|1378->494|1825->911|1855->914|1901->930
+                  LINES: 20->1|25->1|27->3|27->3|27->3|29->5|39->15|39->15|52->28|52->28|52->28|52->28|53->29|64->40|65->41|70->46
                   -- GENERATED --
               */
           

@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:D:/Studium/UNA/Unternehmensanwendungen/conf/routes
-// @DATE:Wed May 31 14:20:28 CEST 2017
+// @DATE:Tue Jun 06 16:10:16 CEST 2017
 
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
 import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamicString }
@@ -34,22 +34,16 @@ package controllers {
     }
 
   
+    // @LINE:16
+    def submitKundenInfo(): Call = {
+      import ReverseRouteContext.empty
+      Call("POST", _prefix + { _defaultPrefix } + "stammdaten")
+    }
+  
     // @LINE:6
     def index(): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix)
-    }
-  
-    // @LINE:18
-    def submitKundennummer(): Call = {
-      import ReverseRouteContext.empty
-      Call("POST", _prefix + { _defaultPrefix } + "submitKundennummer")
-    }
-  
-    // @LINE:16
-    def submitNamePostleitzahl(): Call = {
-      import ReverseRouteContext.empty
-      Call("POST", _prefix + { _defaultPrefix } + "submitNamePostleitzahl")
     }
   
   }

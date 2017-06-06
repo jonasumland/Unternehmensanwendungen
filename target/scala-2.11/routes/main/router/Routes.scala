@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:D:/Studium/UNA/Unternehmensanwendungen/conf/routes
-// @DATE:Wed May 31 14:20:28 CEST 2017
+// @DATE:Tue Jun 06 16:10:16 CEST 2017
 
 package router
 
@@ -54,8 +54,7 @@ class Routes(
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """count""", """controllers.CountController.count"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """message""", """controllers.AsyncController.message"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(path:String = "/public", file:Asset)"""),
-    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """submitNamePostleitzahl""", """controllers.HomeController.submitNamePostleitzahl"""),
-    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """submitKundennummer""", """controllers.HomeController.submitKundennummer"""),
+    ("""POST""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """stammdaten""", """controllers.HomeController.submitKundenInfo"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
     case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
@@ -132,36 +131,19 @@ class Routes(
   )
 
   // @LINE:16
-  private[this] lazy val controllers_HomeController_submitNamePostleitzahl4_route = Route("POST",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("submitNamePostleitzahl")))
+  private[this] lazy val controllers_HomeController_submitKundenInfo4_route = Route("POST",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("stammdaten")))
   )
-  private[this] lazy val controllers_HomeController_submitNamePostleitzahl4_invoker = createInvoker(
-    HomeController_0.submitNamePostleitzahl,
+  private[this] lazy val controllers_HomeController_submitKundenInfo4_invoker = createInvoker(
+    HomeController_0.submitKundenInfo,
     HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.HomeController",
-      "submitNamePostleitzahl",
+      "submitKundenInfo",
       Nil,
       "POST",
       """""",
-      this.prefix + """submitNamePostleitzahl"""
-    )
-  )
-
-  // @LINE:18
-  private[this] lazy val controllers_HomeController_submitKundennummer5_route = Route("POST",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("submitKundennummer")))
-  )
-  private[this] lazy val controllers_HomeController_submitKundennummer5_invoker = createInvoker(
-    HomeController_0.submitKundennummer,
-    HandlerDef(this.getClass.getClassLoader,
-      "router",
-      "controllers.HomeController",
-      "submitKundennummer",
-      Nil,
-      "POST",
-      """""",
-      this.prefix + """submitKundennummer"""
+      this.prefix + """stammdaten"""
     )
   )
 
@@ -193,15 +175,9 @@ class Routes(
       }
   
     // @LINE:16
-    case controllers_HomeController_submitNamePostleitzahl4_route(params) =>
+    case controllers_HomeController_submitKundenInfo4_route(params) =>
       call { 
-        controllers_HomeController_submitNamePostleitzahl4_invoker.call(HomeController_0.submitNamePostleitzahl)
-      }
-  
-    // @LINE:18
-    case controllers_HomeController_submitKundennummer5_route(params) =>
-      call { 
-        controllers_HomeController_submitKundennummer5_invoker.call(HomeController_0.submitKundennummer)
+        controllers_HomeController_submitKundenInfo4_invoker.call(HomeController_0.submitKundenInfo)
       }
   }
 }
