@@ -184,106 +184,147 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
   }
 
   def abzahlzeit(kundenNr: String): Vector[Map[String, Object]] = {
-    val set4 = sqlRunner.runSql(s"SELECT AVG(CASE WHEN(AUGDT='00000000') THEN DAYS_BETWEEN(BUDAT,NOW()) ELSE DAYS_BETWEEN(BUDAT,AUGDT)END) AS DURCHSCHNITTLICHEABZAHLZEIT
-      FROM SAPHPB.ACDOCA_VIEW WHERE RACCT = ' 0012100000 ' AND DRCRK = 'S' AND GJAHR = ' 2016 ' AND BUDAT != ' 00000000 ' AND KUNNR = '$kundenNr '
-      ")
-      return set4}
+    val set4 = sqlRunner.runSql(
+      s"""SELECT AVG(CASE WHEN(AUGDT='00000000') THEN DAYS_BETWEEN(BUDAT,NOW()) ELSE DAYS_BETWEEN(BUDAT,AUGDT)END) AS DURCHSCHNITTLICHEABZAHLZEIT
+FROM SAPHPB.ACDOCA_VIEW WHERE RACCT='0012100000' AND DRCRK='S' AND GJAHR='2016' AND BUDAT!='00000000' AND KUNNR='$kundenNr'
+""")
+    return set4
+  }
 
-
-
-      def umsatzHitliste (kundenNr: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
-      val set5 = sqlRunner.runSql (s"SELECT -(SUM(ac.KSL)) AS UMSATZ, ac.MATNR as MATERIALNUMMER,GEWEI AS GEWICHTSEINHEIT, NTGEW AS NETTOGEWICHT, BRGEW AS BRUTTOGEWICHT, ERNAM AS HERSTELLER, MTART AS MATERIALART, ac.RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
-      JOIN MARA m
-      ON m.MATNR = ac.MATNR
-      WHERE BUDAT BETWEEN '$startDate ' AND '$endDate ' AND UPPER (ac.KUNNR) LIKE (UPPER ('% $kundenNr % ') ) AND ac.RACCT = ' 0041000000 '
-      GROUP BY ac.MATNR, GEWEI, NTGEW, BRGEW, ERNAM, MTART
-      ORDER BY - SUM (ac.KSL) DESC
-      ")
-      val keys5 = set5.apply (0).keys
-      var newSet5 = scala.collection.immutable.Vector[Map[String, Object]] ()
-      for (m <- set5) {
-      var newMap = scala.collection.immutable.Map[String, Object] ()
+  def umsatzHitliste(kundenNr: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
+    val set5 = sqlRunner.runSql(
+      s"""SELECT -(SUM(ac.KSL)) AS UMSATZ, ac.MATNR as MATERIALNUMMER,GEWEI AS GEWICHTSEINHEIT, NTGEW AS NETTOGEWICHT, BRGEW AS BRUTTOGEWICHT, ERNAM AS HERSTELLER, MTART AS MATERIALART, ac.RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
+JOIN MARA m
+ON m.MATNR=ac.MATNR
+WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) LIKE (UPPER('%$kundenNr%'))  AND ac.RACCT = '0041000000'
+GROUP BY ac.MATNR, GEWEI, NTGEW, BRGEW, ERNAM, MTART
+ORDER BY -SUM(ac.KSL) DESC
+""")
+    val keys5 = set5.apply(0).keys
+    var newSet5 = scala.collection.immutable.Vector[Map[String, Object]]()
+    for (m <- set5) {
+      var newMap = scala.collection.immutable.Map[String, Object]()
       for (col <- keys5) {
-      col match {
-      case "UMSATZ" =>
-      val decFormat = new DecimalFormat ("#,###,###,##0.00")
-      val ans = decFormat.format (m (col) )
-      newMap += col -> ans
-      case _ =>
-      val temp: String = m (col).toString
-      newMap += col -> temp
-      }
+        col match {
+          case "UMSATZ" =>
+            val decFormat = new DecimalFormat("#,###,###,##0.00")
+            val ans = decFormat.format(m(col))
+            newMap += col -> ans
+          case _ =>
+            val temp: String = m(col).toString
+            newMap += col -> temp
+        }
       }
       newSet5 = newSet5 :+ newMap
-      }
-      return newSet5
-      }
+    }
+    return newSet5
+  }
 
-      def umsatzProdukt (kundenNr: String, produkt: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
-      val set6 = sqlRunner.runSql (s"SELECT TOP 10 -(SUM(ac.KSL))/(UMSATZ/100) AS UMSATZANTEIL, ac.MATNR, ac.RKCUR AS WAEHRUNG   FROM SAPHPB.ACDOCA_VIEW ac
-      JOIN (SELECT - (SUM (KSL) ) AS UMSATZ, KUNNR FROM SAPHPB.ACDOCA_VIEW
-      WHERE BUDAT BETWEEN '$startDate ' AND '$endDate ' AND UPPER (ac.KUNNR) = LIKE (UPPER ('% $kundenNr % ') ) AND RACCT = ' 0041000000 '
-      GROUP BY KUNNR
-      ) u
-      ON u.KUNNR = ac.KUNNR
-      WHERE BUDAT BETWEEN '$startDate ' AND '$endDate ' AND UPPER (ac.KUNNR) = LIKE (UPPER ('% $kundenNr % ') ) AND ac.RACCT = ' 0041000000 ' AND UPPER (ac.MATNR) = LIKE (UPPER ('% $produkt % ') )
-      GROUP BY u.UMSATZ, ac.MATNR
-      ")
-      return set6
-      }
+  def umsatzProdukt(kundenNr: String, produkt: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
+    val set6 = sqlRunner.runSql(
+      s"""SELECT TOP 10 -(SUM(ac.KSL))/(UMSATZ/100) AS UMSATZANTEIL, ac.MATNR, ac.RKCUR AS WAEHRUNG   FROM SAPHPB.ACDOCA_VIEW ac
+JOIN (SELECT -(SUM(KSL)) AS UMSATZ, KUNNR FROM SAPHPB.ACDOCA_VIEW
+WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) = LIKE(UPPER('%$kundenNr%')) AND RACCT = '0041000000'
+GROUP BY KUNNR
+) u
+ON u.KUNNR = ac.KUNNR
+WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) = LIKE(UPPER('%$kundenNr%')) AND ac.RACCT = '0041000000' AND UPPER(ac.MATNR) = LIKE(UPPER('%$produkt%'))
+GROUP BY u.UMSATZ, ac.MATNR
+""")
+    return set6
+  }
 
-      def umsatzRegion (region: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
-      val set7 = sqlRunner.runSql (s"SELECT -(SUM(ac.KSL)) AS UMSATZ, REGIO AS REGION, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
-      JOIN SAPHPB.KNA1 k
-      ON k.KUNNR = ac.KUNNR
-      WHERE BUDAT BETWEEN '$startDate ' AND '$endDate ' AND ac.RACCT = ' 0041000000 ' AND REGIO = LIKE (UPPER ('% $region % ') )
-      GROUP BY LAND1
-
-      ")
-      val keys7 = set7.apply (0).keys
-      var newSet7 = scala.collection.immutable.Vector[Map[String, Object]] ()
-      for (m <- set7) {
-      var newMap = scala.collection.immutable.Map[String, Object] ()
+  def umsatzRegion(region: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
+    val set7 = sqlRunner.runSql(
+      s"""SELECT -(SUM(ac.KSL)) AS UMSATZ, REGIO AS REGION, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
+JOIN SAPHPB.KNA1 k
+ON k.KUNNR = ac.KUNNR
+WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND REGIO =LIKE(UPPER('%$region%'))
+GROUP BY LAND1
+""")
+    val keys7 = set7.apply(0).keys
+    var newSet7 = scala.collection.immutable.Vector[Map[String, Object]]()
+    for (m <- set7) {
+      var newMap = scala.collection.immutable.Map[String, Object]()
       for (col <- keys7) {
-      col match {
-      case "UMSATZ" =>
-      val decFormat = new DecimalFormat ("#,###,###,##0.00")
-      val ans = decFormat.format (m (col) )
-      newMap += col -> ans
-      case _ =>
-      val temp: String = m (col).toString
-      newMap += col -> temp
-      }
+        col match {
+          case "UMSATZ" =>
+            val decFormat = new DecimalFormat("#,###,###,##0.00")
+            val ans = decFormat.format(m(col))
+            newMap += col -> ans
+          case _ =>
+            val temp: String = m(col).toString
+            newMap += col -> temp
+        }
       }
       newSet7 = newSet7 :+ newMap
-      }
-      return newSet7
-      }
+    }
+    return newSet7
+  }
 
-      def umsatzLand (land: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
-      val set8 = sqlRunner.runSql (s"SELECT -(SUM(ac.KSL)) AS UMSATZ, LAND1 as LAND, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
-      JOIN SAPHPB.KNA1 k
-      ON k.KUNNR = ac.KUNNR
-      WHERE BUDAT BETWEEN '$startDate ' AND '$endDate ' AND ac.RACCT = ' 0041000000 ' AND LAND1 = LIKE (UPPER ('% $land % ') )
-      GROUP BY LAND1
-
-      ")
-      val keys8 = set8.apply (0).keys
-      var newSet8 = scala.collection.immutable.Vector[Map[String, Object]] ()
-      for (m <- set8) {
-      var newMap = scala.collection.immutable.Map[String, Object] ()
+  def umsatzLand(land: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
+    val set8 = sqlRunner.runSql(
+      s"""SELECT -(SUM(ac.KSL)) AS UMSATZ, LAND1 as LAND, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
+JOIN SAPHPB.KNA1 k
+ON k.KUNNR = ac.KUNNR
+WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND LAND1 =LIKE(UPPER('%$land%'))
+GROUP BY LAND1
+""")
+    val keys8 = set8.apply(0).keys
+    var newSet8 = scala.collection.immutable.Vector[Map[String, Object]]()
+    for (m <- set8) {
+      var newMap = scala.collection.immutable.Map[String, Object]()
       for (col <- keys8) {
-      col match {
-      case "UMSATZ" =>
-      val decFormat = new DecimalFormat ("#,###,###,##0.00")
-      val ans = decFormat.format (m (col) )
-      newMap += col -> ans
-      case _ =>
-      val temp: String = m (col).toString
-      newMap += col -> temp
-      }
+        col match {
+          case "UMSATZ" =>
+            val decFormat = new DecimalFormat("#,###,###,##0.00")
+            val ans = decFormat.format(m(col))
+            newMap += col -> ans
+          case _ =>
+            val temp: String = m(col).toString
+            newMap += col -> temp
+        }
       }
       newSet8 = newSet8 :+ newMap
-      }
-      return newSet8
-      }
+    }
+    return newSet8
+  }
+
+  def receiveInfoFromDatabse(kundenNr: String): Vector[Vector[Map[String, Object]]] = {
+    return (Vector(kundenInfo(kundenNr), last10Sells(kundenNr), calculateProfit(kundenNr)))
+  }
+
+  val formS = Form(
+    tuple(
+      "Name" -> text,
+      "Postleitzahl" -> text,
+      "Kundennummer" -> text
+    )
+  )
+
+  def submitKundenInfo = Action { implicit request =>
+    val (name, plz, kundenNr) = formS.bindFromRequest.get
+    var kn = ""
+    kundenNr match {
+      case null =>
+        kn = findeKunde(name, plz)
+      case "" =>
+        kn = findeKunde(name, plz)
+      case _ =>
+        kn = kundenNr.toUpperCase
+    }
+
+    val sets = receiveInfoFromDatabse(kn)
+    val set1 = sets(0)
+    val set2 = sets(1)
+    val set3 = sets(2)
+
+    set1 match {
+      case null => Ok(views.html.welcome("Invalid Input"))
+      case Vector() => Ok(views.html.welcome("Invalid Input"))
+      case _ => Ok(views.html.table(set1, set2, set3))
+    }
+  }
+
+}
+
