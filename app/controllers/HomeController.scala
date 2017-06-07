@@ -154,7 +154,7 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
                 JOIN SAPHPB.KNA1 s
                 ON s.KUNNR = ac.KUNNR
                 WHERE (ac.GJAHR='2017' OR ac.GJAHR='2016') AND ac.KUNNR = '$kundenNr' AND ac.RACCT = '0041000000'
-                GROUP BY ac.KUNNR, u.UMSATZAB, ac.RHCUR"""
+                GROUP BY ac.KUNNR, u.UMSATZAB, ac.RKCUR"""
 
     val set3 = sqlRunner.runSql(query3)
 

@@ -1,126 +1,12 @@
-2017-06-07 13:39:45,911 [INFO] from application in ForkJoinPool-1-worker-2 - Creating Pool for datasource 'default'
-2017-06-07 13:39:46,104 [INFO] from play.api.db.DefaultDBApi in ForkJoinPool-1-worker-2 - Database [default] connected at jdbc:sap://192.168.31.39:30215
-2017-06-07 13:39:46,199 [INFO] from application in ForkJoinPool-1-worker-2 - ApplicationTimer demo: Starting application at 2017-06-07T11:39:46.191Z.
-2017-06-07 13:39:46,389 [INFO] from play.api.Play in ForkJoinPool-1-worker-2 - Application started (Dev)
-2017-06-07 13:40:49,929 [ERROR] from application in netty-event-loop-4 - 
+2017-06-07 14:51:10,539 [INFO] from application in ForkJoinPool-1-worker-3 - Creating Pool for datasource 'default'
+2017-06-07 14:51:10,825 [INFO] from play.api.db.DefaultDBApi in ForkJoinPool-1-worker-3 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-06-07 14:51:10,915 [INFO] from application in ForkJoinPool-1-worker-3 - ApplicationTimer demo: Starting application at 2017-06-07T12:51:10.901Z.
+2017-06-07 14:51:11,073 [INFO] from play.api.Play in ForkJoinPool-1-worker-3 - Application started (Dev)
+2017-06-07 14:53:46,395 [ERROR] from application in application-akka.actor.default-dispatcher-11 - 
 
-! @749bhe809 - Internal server error, for (GET) [/] ->
+! @749c1381p - Internal server error, for (POST) [/stammdaten] ->
  
-play.sbt.PlayExceptions$CompilationException: Compilation error[not found: value set1]
-	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27)
-	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27)
-	at scala.Option.map(Option.scala:145)
-	at play.sbt.run.PlayReload$$anonfun$taskFailureHandler$1.apply(PlayReload.scala:49)
-	at play.sbt.run.PlayReload$$anonfun$taskFailureHandler$1.apply(PlayReload.scala:44)
-	at scala.Option.map(Option.scala:145)
-	at play.sbt.run.PlayReload$.taskFailureHandler(PlayReload.scala:44)
-	at play.sbt.run.PlayReload$.compileFailure(PlayReload.scala:40)
-	at play.sbt.run.PlayReload$$anonfun$compile$1.apply(PlayReload.scala:17)
-	at play.sbt.run.PlayReload$$anonfun$compile$1.apply(PlayReload.scala:17)
-	at scala.util.Either$LeftProjection.map(Either.scala:377)
-	at play.sbt.run.PlayReload$.compile(PlayReload.scala:17)
-	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3$$anonfun$2.apply(PlayRun.scala:61)
-	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3$$anonfun$2.apply(PlayRun.scala:61)
-	at play.runsupport.Reloader$$anonfun$reload$1.apply(Reloader.scala:339)
-	at play.runsupport.Reloader$$anon$3.run(Reloader.scala:44)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at play.runsupport.Reloader$.play$runsupport$Reloader$$withReloaderContextClassLoader(Reloader.scala:40)
-	at play.runsupport.Reloader.reload(Reloader.scala:337)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1.apply(DevServerStart.scala:123)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1.apply(DevServerStart.scala:121)
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
-	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39)
-	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:415)
-	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
-	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
-	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
-	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
-2017-06-07 13:41:36,807 [INFO] from application in application-akka.actor.default-dispatcher-4 - ApplicationTimer demo: Stopping application at 2017-06-07T11:41:36.807Z after 110s.
-2017-06-07 13:41:36,811 [INFO] from application in application-akka.actor.default-dispatcher-4 - Shutting down connection pool.
-2017-06-07 13:41:36,991 [INFO] from application in application-akka.actor.default-dispatcher-4 - Creating Pool for datasource 'default'
-2017-06-07 13:41:37,043 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-4 - Database [default] connected at jdbc:sap://192.168.31.39:30215
-2017-06-07 13:41:37,052 [INFO] from application in application-akka.actor.default-dispatcher-4 - ApplicationTimer demo: Starting application at 2017-06-07T11:41:37.051Z.
-2017-06-07 13:41:37,138 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-4 - Application started (Dev)
-2017-06-07 13:44:36,039 [ERROR] from application in netty-event-loop-5 - 
-
-! @749bi14cn - Internal server error, for (POST) [/stammdaten] ->
- 
-play.sbt.PlayExceptions$CompilationException: Compilation error[too many arguments for method apply: (message: String)play.twirl.api.HtmlFormat.Appendable in class welcome]
-	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27)
-	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27)
-	at scala.Option.map(Option.scala:145)
-	at play.sbt.run.PlayReload$$anonfun$taskFailureHandler$1.apply(PlayReload.scala:49)
-	at play.sbt.run.PlayReload$$anonfun$taskFailureHandler$1.apply(PlayReload.scala:44)
-	at scala.Option.map(Option.scala:145)
-	at play.sbt.run.PlayReload$.taskFailureHandler(PlayReload.scala:44)
-	at play.sbt.run.PlayReload$.compileFailure(PlayReload.scala:40)
-	at play.sbt.run.PlayReload$$anonfun$compile$1.apply(PlayReload.scala:17)
-	at play.sbt.run.PlayReload$$anonfun$compile$1.apply(PlayReload.scala:17)
-	at scala.util.Either$LeftProjection.map(Either.scala:377)
-	at play.sbt.run.PlayReload$.compile(PlayReload.scala:17)
-	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3$$anonfun$2.apply(PlayRun.scala:61)
-	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3$$anonfun$2.apply(PlayRun.scala:61)
-	at play.runsupport.Reloader$$anonfun$reload$1.apply(Reloader.scala:339)
-	at play.runsupport.Reloader$$anon$3.run(Reloader.scala:44)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at play.runsupport.Reloader$.play$runsupport$Reloader$$withReloaderContextClassLoader(Reloader.scala:40)
-	at play.runsupport.Reloader.reload(Reloader.scala:337)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1.apply(DevServerStart.scala:123)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1.apply(DevServerStart.scala:121)
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
-	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39)
-	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:415)
-	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
-	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
-	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
-	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
-2017-06-07 13:45:10,884 [ERROR] from application in netty-event-loop-5 - 
-
-! @749bi3413 - Internal server error, for (POST) [/stammdaten] ->
- 
-play.sbt.PlayExceptions$CompilationException: Compilation error[illegal start of simple expression]
-	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27)
-	at play.sbt.PlayExceptions$CompilationException$.apply(PlayExceptions.scala:27)
-	at scala.Option.map(Option.scala:145)
-	at play.sbt.run.PlayReload$$anonfun$taskFailureHandler$1.apply(PlayReload.scala:49)
-	at play.sbt.run.PlayReload$$anonfun$taskFailureHandler$1.apply(PlayReload.scala:44)
-	at scala.Option.map(Option.scala:145)
-	at play.sbt.run.PlayReload$.taskFailureHandler(PlayReload.scala:44)
-	at play.sbt.run.PlayReload$.compileFailure(PlayReload.scala:40)
-	at play.sbt.run.PlayReload$$anonfun$compile$1.apply(PlayReload.scala:17)
-	at play.sbt.run.PlayReload$$anonfun$compile$1.apply(PlayReload.scala:17)
-	at scala.util.Either$LeftProjection.map(Either.scala:377)
-	at play.sbt.run.PlayReload$.compile(PlayReload.scala:17)
-	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3$$anonfun$2.apply(PlayRun.scala:61)
-	at play.sbt.run.PlayRun$$anonfun$playRunTask$1$$anonfun$apply$2$$anonfun$apply$3$$anonfun$2.apply(PlayRun.scala:61)
-	at play.runsupport.Reloader$$anonfun$reload$1.apply(Reloader.scala:339)
-	at play.runsupport.Reloader$$anon$3.run(Reloader.scala:44)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at play.runsupport.Reloader$.play$runsupport$Reloader$$withReloaderContextClassLoader(Reloader.scala:40)
-	at play.runsupport.Reloader.reload(Reloader.scala:337)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1.apply(DevServerStart.scala:123)
-	at play.core.server.DevServerStart$$anonfun$mainDev$1$$anon$1$$anonfun$get$1.apply(DevServerStart.scala:121)
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.liftedTree1$1(Future.scala:24)
-	at scala.concurrent.impl.Future$PromiseCompletingRunnable.run(Future.scala:24)
-	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39)
-	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:415)
-	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
-	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
-	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
-	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
-2017-06-07 13:45:18,097 [INFO] from application in application-akka.actor.default-dispatcher-4 - ApplicationTimer demo: Stopping application at 2017-06-07T11:45:18.097Z after 221s.
-2017-06-07 13:45:18,098 [INFO] from application in application-akka.actor.default-dispatcher-4 - Shutting down connection pool.
-2017-06-07 13:45:18,246 [INFO] from application in application-akka.actor.default-dispatcher-4 - Creating Pool for datasource 'default'
-2017-06-07 13:45:18,301 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-4 - Database [default] connected at jdbc:sap://192.168.31.39:30215
-2017-06-07 13:45:18,304 [INFO] from application in application-akka.actor.default-dispatcher-4 - ApplicationTimer demo: Starting application at 2017-06-07T11:45:18.303Z.
-2017-06-07 13:45:18,392 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-4 - Application started (Dev)
-2017-06-07 13:45:33,436 [ERROR] from application in application-akka.actor.default-dispatcher-4 - 
-
-! @749bi4bad - Internal server error, for (POST) [/stammdaten] ->
- 
-play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[IndexOutOfBoundsException: 0]]
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[NullPointerException: null]]
 	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:293)
 	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:220)
 	at play.api.GlobalSettings$class.onError(GlobalSettings.scala:160)
@@ -167,13 +53,11 @@ play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[IndexOutO
 	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
 	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
 	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
-Caused by: java.lang.IndexOutOfBoundsException: 0
-	at scala.collection.immutable.Vector.checkRangeConvert(Vector.scala:132)
-	at scala.collection.immutable.Vector.apply(Vector.scala:122)
-	at controllers.HomeController.last10Sells(HomeController.scala:119)
-	at controllers.HomeController.receiveInfoFromDatabse(HomeController.scala:190)
-	at controllers.HomeController$$anonfun$submitKundenInfo$1.apply(HomeController.scala:215)
-	at controllers.HomeController$$anonfun$submitKundenInfo$1.apply(HomeController.scala:202)
+Caused by: java.lang.NullPointerException: null
+	at controllers.HomeController.calculateProfit(HomeController.scala:162)
+	at controllers.HomeController.receiveInfoFromDatabse(HomeController.scala:294)
+	at controllers.HomeController$$anonfun$submitKundenInfo$1.apply(HomeController.scala:317)
+	at controllers.HomeController$$anonfun$submitKundenInfo$1.apply(HomeController.scala:305)
 	at play.api.mvc.ActionBuilder$$anonfun$apply$13.apply(Action.scala:371)
 	at play.api.mvc.ActionBuilder$$anonfun$apply$13.apply(Action.scala:370)
 	at play.api.mvc.Action$.invokeBlock(Action.scala:498)
@@ -190,3 +74,81 @@ Caused by: java.lang.IndexOutOfBoundsException: 0
 	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:253)
 	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:251)
 	... 13 common frames omitted
+2017-06-07 14:59:14,769 [ERROR] from application in application-akka.actor.default-dispatcher-14 - 
+
+! @749c1lplj - Internal server error, for (POST) [/stammdaten] ->
+ 
+play.api.http.HttpErrorHandlerExceptions$$anon$1: Execution exception[[NullPointerException: null]]
+	at play.api.http.HttpErrorHandlerExceptions$.throwableToUsefulException(HttpErrorHandler.scala:293)
+	at play.api.http.DefaultHttpErrorHandler.onServerError(HttpErrorHandler.scala:220)
+	at play.api.GlobalSettings$class.onError(GlobalSettings.scala:160)
+	at play.api.DefaultGlobal$.onError(GlobalSettings.scala:188)
+	at play.api.http.GlobalSettingsHttpErrorHandler.onServerError(HttpErrorHandler.scala:100)
+	at play.core.server.netty.PlayRequestHandler$$anonfun$2$$anonfun$apply$1.applyOrElse(PlayRequestHandler.scala:100)
+	at play.core.server.netty.PlayRequestHandler$$anonfun$2$$anonfun$apply$1.applyOrElse(PlayRequestHandler.scala:99)
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:346)
+	at scala.concurrent.Future$$anonfun$recoverWith$1.apply(Future.scala:345)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:36)
+	at play.api.libs.iteratee.Execution$trampoline$.execute(Execution.scala:70)
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:44)
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:252)
+	at scala.concurrent.Promise$class.complete(Promise.scala:55)
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:157)
+	at scala.concurrent.Future$$anonfun$recoverWith$1$$anonfun$apply$6.apply(Future.scala:346)
+	at scala.concurrent.Future$$anonfun$recoverWith$1$$anonfun$apply$6.apply(Future.scala:346)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:36)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.processBatch$1(BatchingExecutor.scala:63)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.apply$mcV$sp(BatchingExecutor.scala:78)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.apply(BatchingExecutor.scala:55)
+	at scala.concurrent.BatchingExecutor$Batch$$anonfun$run$1.apply(BatchingExecutor.scala:55)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:72)
+	at scala.concurrent.BatchingExecutor$Batch.run(BatchingExecutor.scala:54)
+	at scala.concurrent.Future$InternalCallbackExecutor$.unbatchedExecute(Future.scala:601)
+	at scala.concurrent.BatchingExecutor$class.execute(BatchingExecutor.scala:106)
+	at scala.concurrent.Future$InternalCallbackExecutor$.execute(Future.scala:599)
+	at scala.concurrent.impl.CallbackRunnable.executeWithValue(Promise.scala:44)
+	at scala.concurrent.impl.Promise$DefaultPromise.tryComplete(Promise.scala:252)
+	at scala.concurrent.Promise$class.complete(Promise.scala:55)
+	at scala.concurrent.impl.Promise$DefaultPromise.complete(Promise.scala:157)
+	at scala.concurrent.Future$$anonfun$map$1.apply(Future.scala:237)
+	at scala.concurrent.Future$$anonfun$map$1.apply(Future.scala:237)
+	at scala.concurrent.impl.CallbackRunnable.run(Promise.scala:36)
+	at akka.dispatch.BatchingExecutor$AbstractBatch.processBatch(BatchingExecutor.scala:55)
+	at akka.dispatch.BatchingExecutor$BlockableBatch$$anonfun$run$1.apply$mcV$sp(BatchingExecutor.scala:91)
+	at akka.dispatch.BatchingExecutor$BlockableBatch$$anonfun$run$1.apply(BatchingExecutor.scala:91)
+	at akka.dispatch.BatchingExecutor$BlockableBatch$$anonfun$run$1.apply(BatchingExecutor.scala:91)
+	at scala.concurrent.BlockContext$.withBlockContext(BlockContext.scala:72)
+	at akka.dispatch.BatchingExecutor$BlockableBatch.run(BatchingExecutor.scala:90)
+	at akka.dispatch.TaskInvocation.run(AbstractDispatcher.scala:39)
+	at akka.dispatch.ForkJoinExecutorConfigurator$AkkaForkJoinTask.exec(AbstractDispatcher.scala:415)
+	at scala.concurrent.forkjoin.ForkJoinTask.doExec(ForkJoinTask.java:260)
+	at scala.concurrent.forkjoin.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1339)
+	at scala.concurrent.forkjoin.ForkJoinPool.runWorker(ForkJoinPool.java:1979)
+	at scala.concurrent.forkjoin.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:107)
+Caused by: java.lang.NullPointerException: null
+	at controllers.HomeController.calculateProfit(HomeController.scala:162)
+	at controllers.HomeController.receiveInfoFromDatabse(HomeController.scala:294)
+	at controllers.HomeController$$anonfun$submitKundenInfo$1.apply(HomeController.scala:317)
+	at controllers.HomeController$$anonfun$submitKundenInfo$1.apply(HomeController.scala:305)
+	at play.api.mvc.ActionBuilder$$anonfun$apply$13.apply(Action.scala:371)
+	at play.api.mvc.ActionBuilder$$anonfun$apply$13.apply(Action.scala:370)
+	at play.api.mvc.Action$.invokeBlock(Action.scala:498)
+	at play.api.mvc.Action$.invokeBlock(Action.scala:495)
+	at play.api.mvc.ActionBuilder$$anon$2.apply(Action.scala:458)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5$$anonfun$apply$6.apply(Action.scala:112)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5$$anonfun$apply$6.apply(Action.scala:112)
+	at play.utils.Threads$.withContextClassLoader(Threads.scala:21)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5.apply(Action.scala:111)
+	at play.api.mvc.Action$$anonfun$apply$2$$anonfun$apply$5.apply(Action.scala:110)
+	at scala.Option.map(Option.scala:146)
+	at play.api.mvc.Action$$anonfun$apply$2.apply(Action.scala:110)
+	at play.api.mvc.Action$$anonfun$apply$2.apply(Action.scala:103)
+	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:253)
+	at scala.concurrent.Future$$anonfun$flatMap$1.apply(Future.scala:251)
+	... 13 common frames omitted
+2017-06-07 15:02:48,510 [INFO] from application in application-akka.actor.default-dispatcher-12 - ApplicationTimer demo: Stopping application at 2017-06-07T13:02:48.510Z after 698s.
+2017-06-07 15:02:48,514 [INFO] from application in application-akka.actor.default-dispatcher-12 - Shutting down connection pool.
+2017-06-07 15:02:49,766 [INFO] from application in application-akka.actor.default-dispatcher-12 - Creating Pool for datasource 'default'
+2017-06-07 15:02:49,954 [INFO] from play.api.db.DefaultDBApi in application-akka.actor.default-dispatcher-12 - Database [default] connected at jdbc:sap://192.168.31.39:30215
+2017-06-07 15:02:49,956 [INFO] from application in application-akka.actor.default-dispatcher-12 - ApplicationTimer demo: Starting application at 2017-06-07T13:02:49.955Z.
+2017-06-07 15:02:50,014 [INFO] from play.api.Play in application-akka.actor.default-dispatcher-12 - Application started (Dev)
