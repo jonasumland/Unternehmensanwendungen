@@ -1,4 +1,6 @@
 target/*
-project/*
+project/project/*
+project/target/*
 .idea/*
 logs/*
+_windows/*
