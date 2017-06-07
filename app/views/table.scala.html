@@ -1,45 +1,90 @@
 @(set1: Vector[Map[String, Object]],set2: Vector[Map[String, Object]],set3: Vector[Map[String, Object]])
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-@navbar()
 
-<h3> Kundendaten </h3>
-<table class="table table-striped">
-  @defining(set1.apply(0).keys) { columns =>
-    @for(key <- columns){
-      <tr>
-        <th> @key </th>
-        @for(m <- set1){
-          <td> @m(key).toString </td>
-        }
-     </tr>
-    }
-  }
-</table>
-<h3> Letzte Verkäufe </h3>
-  <table class="table table-striped">
-    @defining(set2.apply(0).keys) { columns =>
-      @for(key <- columns){
-        <tr>
-          <th> @key </th>
-          @for(m <- set2){
-            <td> @m(key).toString </td>
-          }
-       </tr>
-      }
-    }
-  </table>
-<h3> Einnahmen </h3>
-<table class="table table-striped">
-  @defining(set3.apply(0).keys) { columns =>
-    @for(key <- columns){
-      <tr>
-        <th> @key </th>
-        @for(m <- set3){
-          <td> @m(key).toString </td>
-        }
-     </tr>
-    }
-  }
-</table>
+
+  @navbar()
+
+  <div class="panel-group">
+   <div class="panel panel-default">
+     <div class="panel-heading">
+       <h4 class="panel-title">
+         <a data-toggle="collapse" href="#kundendaten">Kundendaten</a>
+       </h4>
+     </div>
+     <div id="kundendaten" class="panel-collapse collapse in">
+         <table class="table table-striped">
+           @defining(set1.apply(0).keys) { columns =>
+             @for(key <- columns){
+               <tr>
+                 <th> @key </th>
+                 @for(m <- set1){
+                   <td> @m(key).toString </td>
+                 }
+              </tr>
+             }
+           }
+         </table>
+       </div>
+     </div>
+   </div>
+  </div>
+
+  <div class="panel-group">
+   <div class="panel panel-default">
+     <div class="panel-heading">
+       <h4 class="panel-title">
+         <a data-toggle="collapse" href="#sells">Letzte Verkäufe</a>
+       </h4>
+     </div>
+     <div id="sells" class="panel-collapse collapse">
+         <table class="table table-striped">
+           @defining(set2.apply(0).keys) { columns =>
+             @for(key <- columns){
+               <tr>
+                 <th> @key </th>
+                 @for(m <- set2){
+                   <td> @m(key).toString </td>
+                 }
+              </tr>
+             }
+           }
+         </table>
+       </div>
+     </div>
+   </div>
+  </div>
+
+  <div class="panel-group">
+   <div class="panel panel-default">
+     <div class="panel-heading">
+       <h4 class="panel-title">
+         <a data-toggle="collapse" href="#einnahmen">Einnahmen</a>
+       </h4>
+     </div>
+     <div id="einnahmen" class="panel-collapse collapse">
+         <table class="table table-striped">
+           @defining(set3.apply(0).keys) { columns =>
+             @for(key <- columns){
+               <tr>
+                 <th> @key </th>
+                 @for(m <- set3){
+                   <td> @m(key).toString </td>
+                 }
+              </tr>
+             }
+           }
+         </table>
+       </div>
+     </div>
+   </div>
+  </div>
