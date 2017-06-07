@@ -14,68 +14,71 @@ import play.api.templates.PlayMagic._
 import play.api.mvc._
 import play.api.data._
 
-class welcome extends BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with play.twirl.api.Template2[String,String,play.twirl.api.HtmlFormat.Appendable] {
+class welcome extends BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with play.twirl.api.Template1[String,play.twirl.api.HtmlFormat.Appendable] {
 
   /**/
-  def apply/*1.2*/(message: String, style: String = "scala"):play.twirl.api.HtmlFormat.Appendable = {
+  def apply/*1.2*/(message: String):play.twirl.api.HtmlFormat.Appendable = {
     _display_ {
       {
 
 
-Seq[Any](format.raw/*1.44*/("""
-
-"""),_display_(/*3.2*/defining(play.core.PlayVersion.current)/*3.41*/ { version =>_display_(Seq[Any](format.raw/*3.54*/("""
-
-"""),format.raw/*5.1*/("""<link rel="stylesheet" media="screen" href="/@documentation/resources/style/main.css">
-
-<head>
-  <title>
-    Call Center App
-  </title>
-</head>
-
-<section id="top">
-  <div class="wrapper" align="right">
-    <h1>"""),_display_(/*15.10*/message),format.raw/*15.17*/("""</h1>
-  </div>
-</section>
-
-<div id="content" class="wrapper doc">
-<article>
-
-  <h2>Übung 1</h2>
+Seq[Any](format.raw/*1.19*/("""
+"""),format.raw/*2.1*/("""<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 
+"""),_display_(/*5.2*/navbar()),format.raw/*5.10*/("""
+"""),format.raw/*6.1*/("""<div class="container-fluid text-center">
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
 
-  <p>
+<div class="col-sm-8 text-left">
+      <h2 align = "center">Übung 1</h2>
 
-  """),_display_(/*28.4*/helper/*28.10*/.form(action=routes.HomeController.submitKundenInfo())/*28.64*/{_display_(Seq[Any](format.raw/*28.65*/("""
-    """),format.raw/*29.5*/("""<table>
-      <tr>
-        <td width ="30%"> Name: </td> <td> <input type='text' name='Name' hint="help" /> </td>
-      </tr>
-       <td>Postleitzahl: </td> <td><input type='text' name='Postleitzahl' /></td>
-      </tr>
-       <td width="30%">Kundennummer:</td> <td> <input type='text' name='Kundennummer' /></td>
-      </tr>
-    </table>
-    </br>
-    <input type='submit' name='mysubmit' value='Submit Query' />
-  """)))}),format.raw/*40.4*/("""
-  """),format.raw/*41.3*/("""</p>
+  <div class="row">
+          """),_display_(/*15.12*/helper/*15.18*/.form(action=routes.HomeController.submitKundenInfo())/*15.72*/{_display_(Seq[Any](format.raw/*15.73*/("""
+            """),format.raw/*16.13*/("""<form class="form-horizontal">
+             <div class="form-group">
+               <label class="control-label col-sm-2">Name:</label>
+               <div class="col-sm-10">
+                 <input class="form-control" name='Name' placeholder="Enter name">
+               </div>
+             </div>
+             <div class="form-group">
+               <label class="control-label col-sm-2" >Postleitzahl:</label>
+               <div class="col-sm-10">
+                 <input class="form-control" name='Postleitzahl' placeholder="Enter PLZ">
+               </div>
+             </div>
+             <div class="form-group">
+               <label class="control-label col-sm-2">Kundennummer:</label>
+               <div class="col-sm-10">
+                 <input class="form-control" name='Kundennummer' placeholder="Enter PLZ">
+               </div>
+             </div>
+             <div class="form-group">
+               <div class="col-sm-offset-2 col-sm-10">
+                 <button type="submit" name='mysubmit' class="btn btn-default">Submit</button>
+               </div>
+             </div>
+            </form>
+          """)))}),format.raw/*41.12*/("""
+        """),format.raw/*42.9*/("""</div>
+        """),_display_(/*43.10*/message),format.raw/*43.17*/("""
+"""),format.raw/*44.1*/("""</div>
+
 
 
 
 </div>
-""")))}),format.raw/*46.2*/("""
 """))
       }
     }
   }
 
-  def render(message:String,style:String): play.twirl.api.HtmlFormat.Appendable = apply(message,style)
+  def render(message:String): play.twirl.api.HtmlFormat.Appendable = apply(message)
 
-  def f:((String,String) => play.twirl.api.HtmlFormat.Appendable) = (message,style) => apply(message,style)
+  def f:((String) => play.twirl.api.HtmlFormat.Appendable) = (message) => apply(message)
 
   def ref: this.type = this
 
@@ -88,11 +91,11 @@ Seq[Any](format.raw/*1.44*/("""
 object welcome extends welcome_Scope0.welcome
               /*
                   -- GENERATED --
-                  DATE: Tue Jun 06 16:10:16 CEST 2017
-                  SOURCE: D:/Studium/UNA/Unternehmensanwendungen/app/views/welcome.scala.html
-                  HASH: 7dbf9f102924c0d7aa3099871df33339ba154ac8
-                  MATRIX: 538->1|675->43|703->46|750->85|800->98|828->100|1066->312|1094->319|1229->428|1244->434|1307->488|1346->489|1378->494|1825->911|1855->914|1901->930
-                  LINES: 20->1|25->1|27->3|27->3|27->3|29->5|39->15|39->15|52->28|52->28|52->28|52->28|53->29|64->40|65->41|70->46
+                  DATE: Wed Jun 07 13:44:34 CEST 2017
+                  SOURCE: /home/jonas/Desktop/Unternehmensanwendungen/app/views/welcome.scala.html
+                  HASH: 4ed7df31ca6952c7306c6c51221dd66b4f07f3f0
+                  MATRIX: 531->1|643->18|670->19|799->123|827->131|854->132|1103->354|1118->360|1181->414|1220->415|1261->428|2422->1558|2458->1567|2501->1583|2529->1590|2557->1591
+                  LINES: 20->1|25->1|26->2|29->5|29->5|30->6|39->15|39->15|39->15|39->15|40->16|65->41|66->42|67->43|67->43|68->44
                   -- GENERATED --
               */
           

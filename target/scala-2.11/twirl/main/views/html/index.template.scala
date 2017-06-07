@@ -28,10 +28,10 @@ class index extends BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,Forma
 Seq[Any](format.raw/*5.19*/("""
 
 """),format.raw/*11.4*/("""
-"""),_display_(/*12.2*/main("Welcome to Play")/*12.25*/ {_display_(Seq[Any](format.raw/*12.27*/("""
+"""),_display_(/*12.2*/main("Callcenter App")/*12.24*/ {_display_(Seq[Any](format.raw/*12.26*/("""
 
     """),format.raw/*17.8*/("""
-    """),_display_(/*18.6*/welcome(message, style = "scala")),format.raw/*18.39*/("""
+    """),_display_(/*18.6*/welcome(message)),format.raw/*18.22*/("""
 
 """)))}),format.raw/*20.2*/("""
 """))
@@ -57,10 +57,10 @@ Seq[Any](format.raw/*5.19*/("""
 object index extends index_Scope0.index
               /*
                   -- GENERATED --
-                  DATE: Wed May 31 14:20:28 CEST 2017
-                  SOURCE: D:/Studium/UNA/Unternehmensanwendungen/app/views/index.scala.html
-                  HASH: f276c6de270303ef74b0e6c2f0e5916575e8cdd6
-                  MATRIX: 616->95|728->112|757->308|785->310|817->333|857->335|890->464|922->470|976->503|1009->506
+                  DATE: Wed Jun 07 13:45:16 CEST 2017
+                  SOURCE: /home/jonas/Desktop/Unternehmensanwendungen/app/views/index.scala.html
+                  HASH: 5634ba481ed920b02fb03d903ab695c6b7c86d5e
+                  MATRIX: 616->95|728->112|757->308|785->310|816->332|856->334|889->463|921->469|958->485|991->488
                   LINES: 23->5|28->5|30->11|31->12|31->12|31->12|33->17|34->18|34->18|36->20
                   -- GENERATED --
               */
