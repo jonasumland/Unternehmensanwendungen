@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
-// @SOURCE:D:/Studium/UNA/Unternehmensanwendungen/conf/routes
-// @DATE:Tue Jun 06 16:10:16 CEST 2017
+// @SOURCE:/home/jonas/Desktop/Unternehmensanwendungen/conf/routes
+// @DATE:Wed Jun 07 12:37:27 CEST 2017
 
 package controllers;
 
