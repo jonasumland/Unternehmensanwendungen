@@ -327,4 +327,3 @@ GROUP BY LAND1
   }
 
 }
-
