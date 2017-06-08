@@ -103,6 +103,16 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
     return set1
   }
 
+  def getLaender(): Vector[Map[String, Object]] = {
+    val set = sqlRunner.runSql(s"SELECT DISTINCT LAND1 AS LAND FROM KNA1'")
+    return set
+  }
+
+  def getRegio(): Vector[Map[String, Object]] = {
+    val set = sqlRunner.runSql(s"SELECT DISTINCT REGIO AS REGION FROM KNA1'")
+    return set
+  }
+
 
   def last10Sells(kundenNr: String): Vector[Map[String, Object]] = {
     var query2 =
@@ -185,19 +195,21 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
 
   def abzahlzeit(kundenNr: String): Vector[Map[String, Object]] = {
     val set4 = sqlRunner.runSql(
-      s"""SELECT AVG(CASE WHEN(AUGDT='00000000') THEN DAYS_BETWEEN(BUDAT,NOW()) ELSE DAYS_BETWEEN(BUDAT,AUGDT)END) AS DURCHSCHNITTLICHEABZAHLZEIT
-FROM SAPHPB.ACDOCA_VIEW WHERE RACCT='0012100000' AND DRCRK='S' AND GJAHR='2016' AND BUDAT!='00000000' AND KUNNR='$kundenNr'
+      s"""SELECT AVG(DAYS_BETWEEN(BUDAT,AUGDT) AS DURCHSCHNITTLICHEABZAHLZEIT
+FROM SAPHPB.ACDOCA_VIEW WHERE RACCT='0012100000' AND DRCRK='S' AND GJAHR='2016' AND BUDAT!='00000000' AND AUGDT!='00000000' AND KUNNR='$kundenNr'
 """)
     return set4
   }
 
+  // for all following Sets: if the input for kundenNr is empty, give the function an empty String as value for it. The same applies for produkt in Umsatzprodukt
+
   def umsatzHitliste(kundenNr: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val set5 = sqlRunner.runSql(
       s"""SELECT -(SUM(ac.KSL)) AS UMSATZ, ac.MATNR as MATERIALNUMMER,GEWEI AS GEWICHTSEINHEIT, NTGEW AS NETTOGEWICHT, BRGEW AS BRUTTOGEWICHT, ERNAM AS HERSTELLER, MTART AS MATERIALART, ac.RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
-JOIN MARA m
+JOIN SAPHPB.MARA m
 ON m.MATNR=ac.MATNR
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) LIKE (UPPER('%$kundenNr%'))  AND ac.RACCT = '0041000000'
-GROUP BY ac.MATNR, GEWEI, NTGEW, BRGEW, ERNAM, MTART
+GROUP BY ac.MATNR, GEWEI, NTGEW, BRGEW, ERNAM, MTART, RKCUR
 ORDER BY -SUM(ac.KSL) DESC
 """)
     val keys5 = set5.apply(0).keys
@@ -222,13 +234,13 @@ ORDER BY -SUM(ac.KSL) DESC
 
   def umsatzProdukt(kundenNr: String, produkt: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val set6 = sqlRunner.runSql(
-      s"""SELECT TOP 10 -(SUM(ac.KSL))/(UMSATZ/100) AS UMSATZANTEIL, ac.MATNR, ac.RKCUR AS WAEHRUNG   FROM SAPHPB.ACDOCA_VIEW ac
+      s"""SELECT TOP 10 -(SUM(ac.KSL))/(UMSATZ/100) AS UMSATZANTEIL, ac.MATNR   FROM SAPHPB.ACDOCA_VIEW ac
 JOIN (SELECT -(SUM(KSL)) AS UMSATZ, KUNNR FROM SAPHPB.ACDOCA_VIEW
-WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) = LIKE(UPPER('%$kundenNr%')) AND RACCT = '0041000000'
+WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(KUNNR) LIKE(UPPER('%$kundenNr%')) AND RACCT = '0041000000'
 GROUP BY KUNNR
 ) u
 ON u.KUNNR = ac.KUNNR
-WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) = LIKE(UPPER('%$kundenNr%')) AND ac.RACCT = '0041000000' AND UPPER(ac.MATNR) = LIKE(UPPER('%$produkt%'))
+WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) LIKE(UPPER('%$kundenNr%')) AND ac.RACCT = '0041000000' AND UPPER(ac.MATNR) LIKE(UPPER('%$produkt%'))
 GROUP BY u.UMSATZ, ac.MATNR
 """)
     return set6
@@ -236,11 +248,11 @@ GROUP BY u.UMSATZ, ac.MATNR
 
   def umsatzRegion(region: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val set7 = sqlRunner.runSql(
-      s"""SELECT -(SUM(ac.KSL)) AS UMSATZ, REGIO AS REGION, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
+      s"""SELECT CASE WHEN(-(SUM(ac.KSL)) IS NULL) THEN 0 ELSE -SUM(ac.KSL) END AS UMSATZ, REGIO AS REGION, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
 JOIN SAPHPB.KNA1 k
 ON k.KUNNR = ac.KUNNR
-WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND REGIO =LIKE(UPPER('%$region%'))
-GROUP BY LAND1
+WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND REGIO LIKE(UPPER('%$region%'))
+GROUP BY REGIO, RKCUR
 """)
     val keys7 = set7.apply(0).keys
     var newSet7 = scala.collection.immutable.Vector[Map[String, Object]]()
@@ -264,11 +276,11 @@ GROUP BY LAND1
 
   def umsatzLand(land: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val set8 = sqlRunner.runSql(
-      s"""SELECT -(SUM(ac.KSL)) AS UMSATZ, LAND1 as LAND, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
+      s"""SELECT CASE WHEN(-(SUM(ac.KSL)) IS NULL) THEN 0 ELSE -SUM(ac.KSL) END AS UMSATZ, LAND1 as LAND, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
 JOIN SAPHPB.KNA1 k
 ON k.KUNNR = ac.KUNNR
-WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND LAND1 =LIKE(UPPER('%$land%'))
-GROUP BY LAND1
+WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND LAND1 LIKE(UPPER('%$land%'))
+GROUP BY LAND1, RKCUR
 """)
     val keys8 = set8.apply(0).keys
     var newSet8 = scala.collection.immutable.Vector[Map[String, Object]]()
