@@ -86,7 +86,7 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
 
   def index = Action {
 
-    Ok(views.html.index("Your SAP HANA is ready."))
+    Ok(views.html.index())
   }
 
   def findeKunde(name: String, plz: String): String = {
@@ -314,7 +314,7 @@ GROUP BY LAND1, RKCUR
     )
   )
 
-  def submitKundenInfo = Action { implicit request =>
+  def computeKundenInfo() = Action { implicit request =>
     val (name, plz, kundenNr) = formS.bindFromRequest.get
     var kn = ""
     kundenNr match {
@@ -332,8 +332,8 @@ GROUP BY LAND1, RKCUR
     val set3 = sets(2)
 
     set1 match {
-      case null => Ok(views.html.welcome("Invalid Input"))
-      case Vector() => Ok(views.html.welcome("Invalid Input"))
+      //case null => Ok(views.html.welcome("Invalid Input"))
+      //case Vector() => Ok(views.html.welcome("Invalid Input"))
       case _ => Ok(views.html.table(set1, set2, set3))
     }
   }
