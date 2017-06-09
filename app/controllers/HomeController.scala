@@ -314,8 +314,10 @@ GROUP BY LAND1, RKCUR
     )
   )
 
-  def computeKundenInfo() = Action { implicit request =>
+  def computeKundenInfo(/*Name:String, postleitzahl:String, kundennummer:String*/) = Action { implicit request =>
+    println(request)
     val (name, plz, kundenNr) = formS.bindFromRequest.get
+
     var kn = ""
     kundenNr match {
       case null =>

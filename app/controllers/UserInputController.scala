@@ -70,12 +70,10 @@ class UserInputController @Inject()(actorSystem: ActorSystem)(db: Database)(impl
     if (kundeKn.length > 0) {
       Ok(views.html.welcome(kundeKn))
     }
-    println("Check one")
 
     if (kundeNmPlz.length > 0) {
       Ok(views.html.welcome(kundeNmPlz))
     }
-    println("Check two")
 
     if (kundeNmOrPlz.length > 0) {
       Ok(views.html.welcome(kundeNmOrPlz))
