@@ -43,14 +43,23 @@
 
     <table class="table table-striped">
     @defining(Kunden.apply(0).keys) { columns =>
-        @for(key <- columns){
-            <tr>
-                <th> @key </th>
-                @for(m <- Kunden){
+        <thead>
+        @for(key <- columns) {
+                <th> @key</th>
+        }
+        </thead>
+    <tbody>
+        @for(m <- Kunden ){
+                <tr>
+                @for(key<-columns){
                     <td> @m(key).toString </td>
                 }
-            </tr>
+                </tr>
+
+
         }
+    </tbody>
+
     }
     </table>
 </div>
