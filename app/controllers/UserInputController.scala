@@ -33,22 +33,22 @@ class UserInputController @Inject()(actorSystem: ActorSystem)(db: Database)(impl
     * a path of `/`.
     */
 
-  def findeKundeWithNameAndPLZ(name: String, plz: String): Vector[Map[String,Object]] = {
+  def findeKundeWithNameAndPLZ(name: String, plz: String): Vector[Map[String, Object]] = {
     var query1 = s"""SELECT KUNNR, NAME1, PSTLZ FROM SAPHPB.KNA1 WHERE UPPER(NAME1) LIKE UPPER('%$name%') AND PSTLZ LIKE '%$plz%' AND MANDT='400'"""
     val set1 = controllers.sqlRunner.runSql(query1)
-    return(set1)
+    return (set1)
   }
 
-  def findeKundeWithKundennummer(kundenNr: String): Vector[Map[String,Object]] = {
-    var query1 = s"""SELECT KUNNR, NAME1, PSTLZ FROM SAPHPB.KNA1 WHERE KUNNR LIKE '%$kundenNr%' AND MANDT='400'"""
+  def findeKundeWithKundennummer(kundenNr: String): Vector[Map[String, Object]] = {
+    var query1 = s"""SELECT KUNNR, NAME1, PSTLZ FROM SAPHPB.KNA1 WHERE UPPER(KUNNR) LIKE UPPER('%$kundenNr%') AND MANDT='400'"""
     val set1 = controllers.sqlRunner.runSql(query1)
-    return(set1)
+    return (set1)
   }
 
-  def findeKundeWithAll(name: String, plz: String, kn:String): Vector[Map[String,Object]] = {
-    var query1 = s"""SELECT KUNNR FROM SAPHPB.KNA1 WHERE UPPER(NAME1) LIKE UPPER('%$name%')OR KUNNR LIKE '%$kn%' OR PSTLZ='$plz' AND MANDT='400'"""
+  def findeKundeWithAll(name: String, plz: String, kn: String): Vector[Map[String, Object]] = {
+    var query1 = s"""SELECT KUNNR FROM SAPHPB.KNA1 WHERE UPPER(NAME1) LIKE UPPER('%$name%')OR UPPER(KUNNR) LIKE UPPER('%$kn%') OR PSTLZ='$plz' AND MANDT='400'"""
     val set1 = controllers.sqlRunner.runSql(query1)
-    return(set1)
+    return (set1)
   }
 
   val formS = Form(
@@ -62,32 +62,27 @@ class UserInputController @Inject()(actorSystem: ActorSystem)(db: Database)(impl
   def submitKundenInfo = Action { implicit request =>
     val (name, plz, kundenNr) = formS.bindFromRequest.get
 
-    val kundeNmPlz = findeKundeWithNameAndPLZ(name,plz)
+    val kundeNmPlz = findeKundeWithNameAndPLZ(name, plz)
     val kundeKn = findeKundeWithKundennummer(kundenNr)
-    val kundeNmOrPlz = findeKundeWithNameAndPLZ(name,plz)
+    val kundeNmOrPlz = findeKundeWithNameAndPLZ(name, plz)
 
-    kundeKn.length match {
-      case 0 =>
 
-      case _ =>
-        Ok(views.html.welcome(kundeKn))
+    if (kundeKn.length > 0) {
+      Ok(views.html.welcome(kundeKn))
     }
+    println("Check one")
 
-    kundeNmPlz.length match {
-      case 0 =>
-
-      case _ =>
-        Ok(views.html.welcome(kundeNmPlz))
+    if (kundeNmPlz.length > 0) {
+      Ok(views.html.welcome(kundeNmPlz))
     }
+    println("Check two")
 
-    kundeNmOrPlz.length match {
-      case 0 =>
-
-      case _ =>
-        Ok(views.html.welcome(kundeNmOrPlz))
+    if (kundeNmOrPlz.length > 0) {
+      Ok(views.html.welcome(kundeNmOrPlz))
     }
-
-    Ok(views.html.welcome(Vector(Map("ERROR" -> "NOTHING FOUND"))))
+    else {
+      Ok(views.html.welcome(Vector(Map("ERROR" -> "NOTHING FOUND"))))
+    }
   }
 
 }
