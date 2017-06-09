@@ -308,9 +308,9 @@ GROUP BY LAND1, RKCUR
 
   val formS = Form(
     tuple(
-      "Name" -> text,
-      "Postleitzahl" -> text,
-      "Kundennummer" -> text
+      "name" -> text,
+      "plz" -> text,
+      "kundennummer" -> text
     )
   )
 
