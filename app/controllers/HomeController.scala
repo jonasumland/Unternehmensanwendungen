@@ -195,10 +195,17 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
 
   def abzahlzeit(kundenNr: String): Vector[Map[String, Object]] = {
     val set4 = sqlRunner.runSql(
-      s"""SELECT AVG(DAYS_BETWEEN(BUDAT,AUGDT)) AS DURCHSCHNITTLICHEABZAHLZEIT
+      s"""SELECT CEIL(AVG(DAYS_BETWEEN(BUDAT,AUGDT))) AS DURCHSCHNITTLICHEABZAHLZEIT
 FROM SAPHPB.ACDOCA_VIEW WHERE RACCT='0012100000' AND DRCRK='S' AND GJAHR='2016' AND BUDAT!='00000000' AND AUGDT!='00000000' AND KUNNR='$kundenNr'
 """)
+    if(set4.length>0){
+      val zeit = (set4(0)("DURCHSCHNITTLICHEABZAHLZEIT")).toString + " Tage"
+      val data = Array[Object](zeit)
+      val newSet4 = Vector(Map("DURCHSCHNITTLICHE ABZAHLZEIT" -> data(0)))
+      return newSet4
+    }
     return set4
+
   }
 
   // for all following Sets: if the input for kundenNr is empty, give the function an empty String as value for it. The same applies for produkt in Umsatzprodukt
