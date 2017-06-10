@@ -92,7 +92,6 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
   def findeKunde(name: String, plz: String): String = {
     var query1 = s"""SELECT KUNNR FROM SAPHPB.KNA1 WHERE UPPER(NAME1) LIKE UPPER('%$name%') AND PSTLZ='$plz' AND MANDT='400'"""
     val set1 = sqlRunner.runSql(query1)
-    println(set1)
     val kundenNummer: String = set1(0)("KUNNR").toString
     return (kundenNummer)
   }
@@ -223,7 +222,6 @@ FROM SAPHPB.ACDOCA_VIEW WHERE RACCT='0012100000' AND DRCRK='S' AND GJAHR='2016' 
   )
 
   def computeKundenInfo(/*Name:String, postleitzahl:String, kundennummer:String*/) = Action { implicit request =>
-    println(request)
     val (name, plz, kundenNr) = formS.bindFromRequest.get
 
     var kn = ""
@@ -242,7 +240,6 @@ FROM SAPHPB.ACDOCA_VIEW WHERE RACCT='0012100000' AND DRCRK='S' AND GJAHR='2016' 
     val set3 = sets(2)
     val set4 = sets(3)
 
-    println(set4)
     Ok(views.html.table(set1, set2, set3, set4))
   }
 

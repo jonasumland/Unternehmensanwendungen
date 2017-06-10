@@ -1,3 +1,4 @@
+@(activeTab: Int)
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -10,10 +11,8 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home</a></li>
-        <li><a href="/analysis">Analysis</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
+        <li @if(activeTab==0){class="active"}><a href="/">Home</a></li>
+        <li @if(activeTab==1){class="active"}><a href="/analysis">Analysis</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       </ul>

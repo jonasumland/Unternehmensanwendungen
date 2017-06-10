@@ -137,7 +137,6 @@ GROUP BY LAND1, RKCUR
   def findeKunde(name: String, plz: String): String = {
     var query1 = s"""SELECT KUNNR FROM SAPHPB.KNA1 WHERE UPPER(NAME1) LIKE UPPER('%$name%') AND PSTLZ='$plz' AND MANDT='400'"""
     val set1 = sqlRunner.runSql(query1)
-    println(set1)
     val kundenNummer: String = set1(0)("KUNNR").toString
     return (kundenNummer)
   }
