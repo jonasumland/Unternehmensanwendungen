@@ -1,0 +1,25 @@
+@(tableSet: Vector[Map[String, Object]], title: String)
+
+<div class="panel-group">
+ <div class="panel panel-default">
+   <div class="panel-heading">
+     <h4 class="panel-title">
+       <a data-toggle="collapse" href="#@title">@title</a>
+     </h4>
+   </div>
+   <div id="@title" class="panel-collapse collapse">
+       <table class="table table-striped">
+         @defining(tableSet.apply(0).keys) { columns =>
+           @for(key <- columns){
+             <tr>
+               <th> @key </th>
+               @for(m <- tableSet){
+                 <td> @m(key).toString </td>
+               }
+            </tr>
+           }
+         }
+       </table>
+     </div>
+   </div>
+ </div>
