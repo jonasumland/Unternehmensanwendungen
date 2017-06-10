@@ -155,6 +155,13 @@ GROUP BY LAND1, RKCUR
 
     )
   )
+  def convertDate(inputDate: String): String = {
+    var substrings = inputDate.split("/")
+    var month = substrings(0)
+    var day = substrings(1)
+    var year = substrings(2)
+     return(year + month + day)
+  }
 
   def analyse = Action { implicit request =>
     val (name, plz, kn,produkt, region , land ,von,bis) = formS.bindFromRequest.get
@@ -167,13 +174,15 @@ GROUP BY LAND1, RKCUR
     else{
       kNr = kn
     }
-    val hitList = umsatzHitliste(kNr, von, bis)
-    val umsatzEinProdukt = umsatzProdukt(kNr,produkt,von,bis)
-    val umsatzReg = umsatzRegion(region,von,bis)
-    val umsatzLd = umsatzLand(land, von , bis)
+    val convertedVon = convertDate(von)
+    val convertedBis = convertDate(bis)
+    val hitList = umsatzHitliste(kNr, convertedVon, convertedBis)
+    val umsatzEinProdukt = umsatzProdukt(kNr,produkt,convertedVon,convertedBis)
+    val umsatzReg = umsatzRegion(region,convertedVon,convertedBis)
+    val umsatzLd = umsatzLand(land,convertedVon,convertedBis)
 
 
-    Ok(views.html.analysisHome(Vector(Map())))
+    Ok(views.html.analysisResult(hitList,umsatzEinProdukt,umsatzReg,umsatzLd))
   }
 
   def index = Action { implicit request =>
