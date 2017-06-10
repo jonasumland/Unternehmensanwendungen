@@ -61,8 +61,11 @@ class UserInputController @Inject()(actorSystem: ActorSystem)(db: Database)(impl
 
   def submitKundenInfo = Action { implicit request =>
     val (name, plz, kundenNr) = formS.bindFromRequest.get
-
-    val kundeKn = findeKundeWithKundennummer(kundenNr)
+    val kundeKn = if(kundenNr.isEmpty) {
+      findeKundeWithKundennummer("NULL")
+    } else {
+      findeKundeWithKundennummer(kundenNr)
+    }
     println(kundeKn)
     val kundeNmPlz = findeKundeWithNameAndPLZ(name, plz)
     val kundeAll = findeKundeWithAll(name, plz,kundenNr)
