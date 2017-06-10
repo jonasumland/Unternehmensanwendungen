@@ -18,3 +18,5 @@ POST /                              controllers.UserInputController.submitKunden
 POST /results                        controllers.HomeController.computeKundenInfo
 
 GET  /analysis                       controllers.AnalysisController.index
+
+POST /analysis                      controllers.AnalysisController.analyse
