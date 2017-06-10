@@ -195,7 +195,7 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
 
   def abzahlzeit(kundenNr: String): Vector[Map[String, Object]] = {
     val set4 = sqlRunner.runSql(
-      s"""SELECT AVG(DAYS_BETWEEN(BUDAT,AUGDT) AS DURCHSCHNITTLICHEABZAHLZEIT
+      s"""SELECT AVG(DAYS_BETWEEN(BUDAT,AUGDT)) AS DURCHSCHNITTLICHEABZAHLZEIT
 FROM SAPHPB.ACDOCA_VIEW WHERE RACCT='0012100000' AND DRCRK='S' AND GJAHR='2016' AND BUDAT!='00000000' AND AUGDT!='00000000' AND KUNNR='$kundenNr'
 """)
     return set4
@@ -303,7 +303,7 @@ GROUP BY LAND1, RKCUR
   }
 
   def receiveInfoFromDatabse(kundenNr: String): Vector[Vector[Map[String, Object]]] = {
-    return (Vector(kundenInfo(kundenNr), last10Sells(kundenNr), calculateProfit(kundenNr)))
+    return (Vector(kundenInfo(kundenNr), last10Sells(kundenNr), calculateProfit(kundenNr),abzahlzeit(kundenNr)))
   }
 
   val formS = Form(
@@ -332,12 +332,10 @@ GROUP BY LAND1, RKCUR
     val set1 = sets(0)
     val set2 = sets(1)
     val set3 = sets(2)
+    val set4 = sets(3)
 
-    set1 match {
-      //case null => Ok(views.html.welcome("Invalid Input"))
-      //case Vector() => Ok(views.html.welcome("Invalid Input"))
-      case _ => Ok(views.html.table(set1, set2, set3))
-    }
+    println(set4)
+    Ok(views.html.table(set1, set2, set3, set4))
   }
 
 }

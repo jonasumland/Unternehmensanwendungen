@@ -66,7 +66,6 @@ class UserInputController @Inject()(actorSystem: ActorSystem)(db: Database)(impl
     } else {
       findeKundeWithKundennummer(kundenNr)
     }
-    println(kundeKn)
     val kundeNmPlz = findeKundeWithNameAndPLZ(name, plz)
     val kundeAll = findeKundeWithAll(name, plz,kundenNr)
 
