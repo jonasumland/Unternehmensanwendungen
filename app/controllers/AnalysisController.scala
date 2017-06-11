@@ -55,6 +55,7 @@ WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) LIKE (UPPER(
 GROUP BY ac.MATNR, GEWEI, NTGEW, BRGEW, ERNAM, MTART, RKCUR
 ORDER BY -SUM(ac.KSL) DESC
 """)
+    println(origset5)
     val set5 = fillIfEmpty(origset5)
 
     val keys5 = set5.apply(0).keys
