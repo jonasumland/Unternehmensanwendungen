@@ -79,13 +79,14 @@ ORDER BY -SUM(ac.KSL) DESC
 
   def umsatzProdukt(kundenNr: String, produkt: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val set6 = sqlRunner.runSql(
-      s"""SELECT TOP 10 CEIL(-(SUM(ac.KSL))/(UMSATZ/100)) AS UMSATZANTEIL, ac.MATNR   FROM SAPHPB.ACDOCA_VIEW ac
+      s"""SELECT CEIL(-(SUM(ac.KSL))/(UMSATZ/100)) AS UMSATZANTEIL, ac.MATNR   FROM SAPHPB.ACDOCA_VIEW ac
 JOIN (SELECT -(SUM(KSL)) AS UMSATZ, KUNNR FROM SAPHPB.ACDOCA_VIEW
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(KUNNR) LIKE(UPPER('%$kundenNr%')) AND RACCT = '0041000000'
 GROUP BY KUNNR) u
 ON u.KUNNR = ac.KUNNR
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) LIKE(UPPER('%$kundenNr%')) AND ac.RACCT = '0041000000' AND UPPER(ac.MATNR) LIKE(UPPER('%$produkt%'))
 GROUP BY u.UMSATZ, ac.MATNR
+ORDER BY UMSATZANTEIL DESC
 """)
 
 
@@ -99,6 +100,7 @@ JOIN SAPHPB.KNA1 k
 ON k.KUNNR = ac.KUNNR
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND REGIO LIKE(UPPER('%$region%'))
 GROUP BY REGIO, RKCUR
+ORDER BY UMSATZ DESC
 """)
     val set7 = fillIfEmpty(origset7)
 
@@ -129,6 +131,7 @@ JOIN SAPHPB.KNA1 k
 ON k.KUNNR = ac.KUNNR
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND LAND1 LIKE(UPPER('%$land%'))
 GROUP BY LAND1, RKCUR
+ORDER BY UMSATZ DESC
 """)
     val set8 = fillIfEmpty(origset8)
 
