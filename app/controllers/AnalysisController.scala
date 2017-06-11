@@ -159,7 +159,7 @@ GROUP BY LAND1, RKCUR
       {
         return set1(0)("KUNNR").toString
       }else{
-      return "XXX"
+      return ""
     }
 
   }

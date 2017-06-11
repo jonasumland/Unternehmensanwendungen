@@ -201,14 +201,21 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
       s"""SELECT CEIL(AVG(DAYS_BETWEEN(BUDAT,AUGDT))) AS DURCHSCHNITTLICHEABZAHLZEIT
 FROM SAPHPB.ACDOCA_VIEW WHERE RACCT='0012100000' AND DRCRK='S' AND GJAHR='2016' AND BUDAT!='00000000' AND AUGDT!='00000000' AND KUNNR='$kundenNr'
 """)
-    if(set4.length>0){
-      val zeit = (set4(0)("DURCHSCHNITTLICHEABZAHLZEIT")).toString + " Tage"
-      val data = Array[Object](zeit)
-      val newSet4 = Vector(Map("DURCHSCHNITTLICHE ABZAHLZEIT" -> data(0)))
-      return newSet4
-    }
-    return set4
 
+    if(set4.length>0){
+      if(set4(0)("DURCHSCHNITTLICHEABZAHLZEIT") == null)
+        {
+          return(Vector(Map("NO VALUES FOUND" -> "-")))
+        }
+      else {
+        val zeit = (set4(0)("DURCHSCHNITTLICHEABZAHLZEIT")).toString + " Tage"
+        val data = Array[Object](zeit)
+        val newSet4 = Vector(Map("DURCHSCHNITTLICHE ABZAHLZEIT" -> data(0)))
+        return newSet4
+      }
+    }else{
+      return set4
+    }
   }
 
 
