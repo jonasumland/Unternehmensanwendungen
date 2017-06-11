@@ -48,7 +48,7 @@ class AnalysisController @Inject()(actorSystem: ActorSystem)(db: Database)(impli
 
   def umsatzHitliste(kundenNr: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val origset5 = sqlRunner.runSql(
-      s"""SELECT -(SUM(ac.KSL)) AS UMSATZ, ac.MATNR as MATERIALNUMMER,GEWEI AS GEWICHTSEINHEIT, NTGEW AS NETTOGEWICHT, BRGEW AS BRUTTOGEWICHT, ERNAM AS HERSTELLER, MTART AS MATERIALART, ac.RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
+      s"""SELECT TOP 10 -(SUM(ac.KSL)) AS UMSATZ, ac.MATNR as MATERIALNUMMER,GEWEI AS GEWICHTSEINHEIT, NTGEW AS NETTOGEWICHT, BRGEW AS BRUTTOGEWICHT, ERNAM AS HERSTELLER, MTART AS MATERIALART, ac.RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
 JOIN SAPHPB.MARA m
 ON m.MATNR=ac.MATNR
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) LIKE (UPPER('%$kundenNr%'))  AND ac.RACCT = '0041000000'
@@ -80,7 +80,7 @@ ORDER BY -SUM(ac.KSL) DESC
 
   def umsatzProdukt(kundenNr: String, produkt: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val set6 = sqlRunner.runSql(
-      s"""SELECT ROUND(-(SUM(ac.KSL))/(UMSATZ/100),5) AS UMSATZANTEIL, ac.MATNR   FROM SAPHPB.ACDOCA_VIEW ac
+      s"""SELECT TOP 10 ROUND(-(SUM(ac.KSL))/(UMSATZ/100),5) AS UMSATZANTEIL, ac.MATNR   FROM SAPHPB.ACDOCA_VIEW ac
 JOIN (SELECT -(SUM(KSL)) AS UMSATZ, RACCT FROM SAPHPB.ACDOCA_VIEW
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(KUNNR) LIKE(UPPER('%$kundenNr%')) AND RACCT = '0041000000'
 GROUP BY RACCT) u
@@ -96,7 +96,7 @@ ORDER BY UMSATZANTEIL DESC
 
   def umsatzRegion(region: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val origset7 = sqlRunner.runSql(
-      s"""SELECT CASE WHEN(-(SUM(ac.KSL)) IS NULL) THEN 0 ELSE -SUM(ac.KSL) END AS UMSATZ, REGIO AS REGION, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
+      s"""SELECT TOP 10 CASE WHEN(-(SUM(ac.KSL)) IS NULL) THEN 0 ELSE -SUM(ac.KSL) END AS UMSATZ, REGIO AS REGION, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
 JOIN SAPHPB.KNA1 k
 ON k.KUNNR = ac.KUNNR
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND REGIO LIKE(UPPER('%$region%'))
@@ -127,7 +127,7 @@ ORDER BY UMSATZ DESC
 
   def umsatzLand(land: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val origset8 = sqlRunner.runSql(
-      s"""SELECT CASE WHEN(-(SUM(ac.KSL)) IS NULL) THEN 0 ELSE -SUM(ac.KSL) END AS UMSATZ, LAND1 as LAND, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
+      s"""SELECT TOP 10 CASE WHEN(-(SUM(ac.KSL)) IS NULL) THEN 0 ELSE -SUM(ac.KSL) END AS UMSATZ, LAND1 as LAND, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
 JOIN SAPHPB.KNA1 k
 ON k.KUNNR = ac.KUNNR
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND LAND1 LIKE(UPPER('%$land%'))
