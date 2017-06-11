@@ -36,6 +36,16 @@ class AnalysisController @Inject()(actorSystem: ActorSystem)(db: Database)(impli
 
   // for all following Sets: if the input for kundenNr is empty, give the function an empty String as value for it. The same applies for produkt in Umsatzprodukt
 
+  def getLaender(): Vector[Map[String, Object]] = {
+    val set = sqlRunner.runSql(s"SELECT DISTINCT LAND1 AS LAND FROM KNA1'")
+    return set
+  }
+
+  def getRegio(): Vector[Map[String, Object]] = {
+    val set = sqlRunner.runSql(s"SELECT DISTINCT REGIO AS REGION FROM KNA1'")
+    return set
+  }
+
   def umsatzHitliste(kundenNr: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val origset5 = sqlRunner.runSql(
       s"""SELECT -(SUM(ac.KSL)) AS UMSATZ, ac.MATNR as MATERIALNUMMER,GEWEI AS GEWICHTSEINHEIT, NTGEW AS NETTOGEWICHT, BRGEW AS BRUTTOGEWICHT, ERNAM AS HERSTELLER, MTART AS MATERIALART, ac.RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac

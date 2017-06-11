@@ -89,6 +89,17 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
     Ok(views.html.index())
   }
 
+  def fillIfEmpty(inputSet: Vector[Map[String,Object]]): Vector[Map[String,Object]] =
+  {
+    if(inputSet.length == 0)
+    {
+      return(Vector(Map("NO VALUES FOUND" -> "-")))
+    }
+    else{
+      return inputSet
+    }
+  }
+
   def findeKunde(name: String, plz: String): String = {
     var query1 = s"""SELECT KUNNR FROM SAPHPB.KNA1 WHERE UPPER(NAME1) LIKE UPPER('%$name%') AND PSTLZ='$plz' AND MANDT='400'"""
     val set1 = sqlRunner.runSql(query1)
@@ -102,17 +113,6 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
     return set1
   }
 
-  def getLaender(): Vector[Map[String, Object]] = {
-    val set = sqlRunner.runSql(s"SELECT DISTINCT LAND1 AS LAND FROM KNA1'")
-    return set
-  }
-
-  def getRegio(): Vector[Map[String, Object]] = {
-    val set = sqlRunner.runSql(s"SELECT DISTINCT REGIO AS REGION FROM KNA1'")
-    return set
-  }
-
-
   def last10Sells(kundenNr: String): Vector[Map[String, Object]] = {
     var query2 =
       s""" SELECT TOP 10 k.ERDAT AS EINGANGSTAG, k.ERZET AS EINGANGSZEIT,p.MATNR AS MATERIALNUMMER,p.ARKTX AS ARTIKEL,ZIEME AS ZIELMENGE,k.WAERK AS DOKUMENTENWAEHRUNG,p.NETPR AS STUECKPREIS, p.NETWR AS PREIS FROM SAPHPB.VBAK k
@@ -120,7 +120,9 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
                   JOIN SAPHPB.VBAP p ON p.VBELN=k.VBELN AND p.MANDT = k.MANDT
                   WHERE s.KUNNR='$kundenNr'
                   ORDER BY k.ERDAT DESC, k.ERZET DESC""";
-    val set2 = sqlRunner.runSql(query2)
+    val origset2 = sqlRunner.runSql(query2)
+
+    val set2 = fillIfEmpty(origset2)
 
     // making the date great again
     val keys2 = set2.apply(0).keys
@@ -165,7 +167,9 @@ class HomeController @Inject()(actorSystem: ActorSystem)(db: Database)(implicit 
                 WHERE (ac.GJAHR='2017' OR ac.GJAHR='2016') AND ac.KUNNR = '$kundenNr' AND ac.RACCT = '0041000000'
                 GROUP BY ac.KUNNR, u.UMSATZAB, ac.RKCUR"""
 
-    val set3 = sqlRunner.runSql(query3)
+    val origset3 = sqlRunner.runSql(query3)
+
+    val set3 = fillIfEmpty(origset3)
 
     //making SET 3 great again
     val keys3 = set3.apply(0).keys
