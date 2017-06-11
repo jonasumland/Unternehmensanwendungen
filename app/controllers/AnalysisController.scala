@@ -204,9 +204,6 @@ ORDER BY UMSATZ DESC
   def analyse = Action { implicit request =>
     val (name, plz, kn,produkt, region , land ,von,bis) = formS.bindFromRequest.get
 
-    println(von)
-    println(bis)
-
     var kNr = ""
     if(kn == "")
       {
@@ -216,8 +213,23 @@ ORDER BY UMSATZ DESC
       kNr = kn
     }
     // CONVERT DATE
-    val convertedVon = convertDate(von)
-    val convertedBis = convertDate(bis)
+    var convertedBis = ""
+    var convertedVon = ""
+
+    if(von == "")
+      {
+        convertedVon = "19790101"
+      }else{
+      convertedVon = convertDate(von)
+    }
+    if(bis == "")
+      {
+        convertedBis = "20170612"
+      }else{
+      convertedBis = convertDate(bis)
+    }
+
+
 
     //GET FROM DATABASE
     val hitList = umsatzHitliste(kNr, convertedVon, convertedBis)
