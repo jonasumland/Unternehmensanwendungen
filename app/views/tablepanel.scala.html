@@ -8,17 +8,24 @@
      </h4>
    </div>
    <div id="@title" class="panel-collapse collapse">
-       <table class="table table-striped">
-         @defining(tableSet.apply(0).keys) { columns =>
-           @for(key <- columns){
-             <tr>
-               <th> @key </th>
-               @for(m <- tableSet){
-                 <td> @m(key).toString </td>
+       <table id="results" class="table table-striped table-hover">
+       @defining(tableSet.apply(0).keys) { columns =>
+           <thead>
+               @for(key <- columns) {
+                   <th> @key</th>
                }
-            </tr>
+           </thead>
+           <tbody>
+           @for(m <- tableSet) {
+               <tr class='clickable-row' onclick="sendRow(this)">
+               @for(key <- columns) {
+                   <td> @m(key).toString </td>
+               }
+               </tr>
            }
-         }
+           </tbody>
+
+       }
        </table>
      </div>
    </div>
