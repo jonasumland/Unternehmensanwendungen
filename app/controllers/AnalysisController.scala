@@ -37,7 +37,7 @@ class AnalysisController @Inject()(actorSystem: ActorSystem)(db: Database)(impli
   // for all following Sets: if the input for kundenNr is empty, give the function an empty String as value for it. The same applies for produkt in Umsatzprodukt
 
   def umsatzHitliste(kundenNr: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
-    val set5 = sqlRunner.runSql(
+    val origset5 = sqlRunner.runSql(
       s"""SELECT -(SUM(ac.KSL)) AS UMSATZ, ac.MATNR as MATERIALNUMMER,GEWEI AS GEWICHTSEINHEIT, NTGEW AS NETTOGEWICHT, BRGEW AS BRUTTOGEWICHT, ERNAM AS HERSTELLER, MTART AS MATERIALART, ac.RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
 JOIN SAPHPB.MARA m
 ON m.MATNR=ac.MATNR
@@ -45,6 +45,8 @@ WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) LIKE (UPPER(
 GROUP BY ac.MATNR, GEWEI, NTGEW, BRGEW, ERNAM, MTART, RKCUR
 ORDER BY -SUM(ac.KSL) DESC
 """)
+    val set5 = fillIfEmpty(origset5)
+
     val keys5 = set5.apply(0).keys
     var newSet5 = scala.collection.immutable.Vector[Map[String, Object]]()
     for (m <- set5) {
@@ -67,7 +69,7 @@ ORDER BY -SUM(ac.KSL) DESC
 
   def umsatzProdukt(kundenNr: String, produkt: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
     val set6 = sqlRunner.runSql(
-      s"""SELECT TOP 10 -(SUM(ac.KSL))/(UMSATZ/100) AS UMSATZANTEIL, ac.MATNR   FROM SAPHPB.ACDOCA_VIEW ac
+      s"""SELECT TOP 10 CEIL(-(SUM(ac.KSL))/(UMSATZ/100)) AS UMSATZANTEIL, ac.MATNR   FROM SAPHPB.ACDOCA_VIEW ac
 JOIN (SELECT -(SUM(KSL)) AS UMSATZ, KUNNR FROM SAPHPB.ACDOCA_VIEW
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(KUNNR) LIKE(UPPER('%$kundenNr%')) AND RACCT = '0041000000'
 GROUP BY KUNNR) u
@@ -75,17 +77,21 @@ ON u.KUNNR = ac.KUNNR
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND UPPER(ac.KUNNR) LIKE(UPPER('%$kundenNr%')) AND ac.RACCT = '0041000000' AND UPPER(ac.MATNR) LIKE(UPPER('%$produkt%'))
 GROUP BY u.UMSATZ, ac.MATNR
 """)
-    return set6
+
+
+    return fillIfEmpty(set6)
   }
 
   def umsatzRegion(region: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
-    val set7 = sqlRunner.runSql(
+    val origset7 = sqlRunner.runSql(
       s"""SELECT CASE WHEN(-(SUM(ac.KSL)) IS NULL) THEN 0 ELSE -SUM(ac.KSL) END AS UMSATZ, REGIO AS REGION, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
 JOIN SAPHPB.KNA1 k
 ON k.KUNNR = ac.KUNNR
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND REGIO LIKE(UPPER('%$region%'))
 GROUP BY REGIO, RKCUR
 """)
+    val set7 = fillIfEmpty(origset7)
+
     val keys7 = set7.apply(0).keys
     var newSet7 = scala.collection.immutable.Vector[Map[String, Object]]()
     for (m <- set7) {
@@ -107,13 +113,15 @@ GROUP BY REGIO, RKCUR
   }
 
   def umsatzLand(land: String, startDate: String, endDate: String): Vector[Map[String, Object]] = {
-    val set8 = sqlRunner.runSql(
+    val origset8 = sqlRunner.runSql(
       s"""SELECT CASE WHEN(-(SUM(ac.KSL)) IS NULL) THEN 0 ELSE -SUM(ac.KSL) END AS UMSATZ, LAND1 as LAND, RKCUR AS WAEHRUNG  FROM SAPHPB.ACDOCA_VIEW ac
 JOIN SAPHPB.KNA1 k
 ON k.KUNNR = ac.KUNNR
 WHERE BUDAT BETWEEN '$startDate' AND '$endDate' AND ac.RACCT = '0041000000' AND LAND1 LIKE(UPPER('%$land%'))
 GROUP BY LAND1, RKCUR
 """)
+    val set8 = fillIfEmpty(origset8)
+
     val keys8 = set8.apply(0).keys
     var newSet8 = scala.collection.immutable.Vector[Map[String, Object]]()
     for (m <- set8) {
@@ -137,8 +145,13 @@ GROUP BY LAND1, RKCUR
   def findeKunde(name: String, plz: String): String = {
     var query1 = s"""SELECT KUNNR FROM SAPHPB.KNA1 WHERE UPPER(NAME1) LIKE UPPER('%$name%') AND PSTLZ='$plz' AND MANDT='400'"""
     val set1 = sqlRunner.runSql(query1)
-    val kundenNummer: String = set1(0)("KUNNR").toString
-    return (kundenNummer)
+    if(set1.length > 0)
+      {
+        return set1(0)("KUNNR").toString
+      }else{
+      return "XXX"
+    }
+
   }
 
   val formS = Form(
@@ -154,16 +167,31 @@ GROUP BY LAND1, RKCUR
 
     )
   )
+
+  def fillIfEmpty(inputSet: Vector[Map[String,Object]]): Vector[Map[String,Object]] =
+  {
+     if(inputSet.length == 0)
+       {
+         return(Vector(Map("NO VALUES FOUND" -> "-")))
+       }
+    else{
+       return inputSet
+     }
+  }
+
   def convertDate(inputDate: String): String = {
     var substrings = inputDate.split("/")
-    var month = substrings(0)
-    var day = substrings(1)
-    var year = substrings(2)
+    var month = substrings(1)
+    var day = substrings(2)
+    var year = substrings(0)
      return(year + month + day)
   }
 
   def analyse = Action { implicit request =>
     val (name, plz, kn,produkt, region , land ,von,bis) = formS.bindFromRequest.get
+
+    println(von)
+    println(bis)
 
     var kNr = ""
     if(kn == "")
@@ -173,8 +201,11 @@ GROUP BY LAND1, RKCUR
     else{
       kNr = kn
     }
+    // CONVERT DATE
     val convertedVon = convertDate(von)
     val convertedBis = convertDate(bis)
+
+    //GET FROM DATABASE
     val hitList = umsatzHitliste(kNr, convertedVon, convertedBis)
     val umsatzEinProdukt = umsatzProdukt(kNr,produkt,convertedVon,convertedBis)
     val umsatzReg = umsatzRegion(region,convertedVon,convertedBis)

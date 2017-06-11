@@ -56,19 +56,27 @@
                             <input class="form-control" name='Land' placeholder="Enter Land">
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Produkt:</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name='Produkt' placeholder="Enter Produktname">
+                        </div>
+                    </div>
+
                         <!-- Form code begins -->
 
                         <div class="form-group"> <!-- Date input -->
                             <label class="control-label col-sm-2" for="date">Von:</label>
                             <div class="col-sm-10">
-                                <input class="form-control" id="date1" name="Von" placeholder="MM/DD/YYY" type="text"/>
+                                <input class="form-control" id="date1" name="Von" placeholder="YYYY/MM/DD" type="text"/>
                             </div>
                         </div>
 
                     <div class="form-group"> <!-- Date input -->
                         <label class="control-label col-sm-2" for="date">Bis:</label>
                         <div class="col-sm-10">
-                            <input class="form-control" id="date2" name="Bis" placeholder="MM/DD/YYY" type="text"/>
+                            <input class="form-control" id="date2" name="Bis" placeholder="YYYY/MM/DD" type="text"/>
                         </div>
                     </div>
                         <!-- Form code ends -->
@@ -77,7 +85,7 @@
                             var date_input=$('input[name="Von"]'); //our date input has the name "Von"
                             var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
                             var options={
-                            format: 'mm/dd/yyyy',
+                            format: 'yyyy/mm/dd',
                             container: container,
                             todayHighlight: true,
                             autoclose: true,
@@ -91,7 +99,7 @@
                                 var date_input=$('input[name="Bis"]'); //our date input has the name "Bis"
                                 var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
                                 var options={
-                                    format: 'mm/dd/yyyy',
+                                    format: 'yyyy/mm/dd',
                                     container: container,
                                     todayHighlight: true,
                                     autoclose: true,
@@ -100,12 +108,7 @@
                             })
                     </script>
 
-                    <div class="form-group">
-                        <label class="control-label col-sm-2">Produkt:</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" name='Produkt' placeholder="Enter Produktname">
-                        </div>
-                    </div>
+
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
