@@ -50,12 +50,7 @@ object DisplayLineItems extends MarmolataShell {
   //val render = App().initialPage(Page().content(filter above table)).build
 
   val button = Button().text("Go to page 2").build
-
-    val page1 = Page().title("Page 1").content(button above filter above table above input).build()
-    val page2 = Page().title("Page 2").showNavButton(true).content(Label("Hello 2")).build()
-
-
-    val pageTransitions: EventSource[PageTransition] = EventSource()
+  
     table.selectedRows.observe(x => println(x.map( row => row.KUNNR.value).mkString(",")))
     button.clicks.observe(_ => pageTransitions := PageTransition(StaticBuilder(page2)))
 //    page2.navButtonPress.observe(_ => pageTransitions := PageTransition(StaticBuilder(page1.build()), PageTransitionEffect.SlideRight))
