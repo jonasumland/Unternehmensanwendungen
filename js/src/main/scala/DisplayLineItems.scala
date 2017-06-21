@@ -17,7 +17,7 @@ import reactive.library._
 import com.sap.marmolata.ui.dataImplicits._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-
+import com.sap.marmolata.utils.builder.StaticBuilder
 
 @MarmolataClient(com.sap.marmolata.data.query.untyped.QueryExecAPI)
 object DisplayLineItems extends MarmolataShell {
@@ -26,17 +26,38 @@ object DisplayLineItems extends MarmolataShell {
   val filter = FilterBar.datasource(query).build
 
   val table = Table.datasource(filter.output).selectionMode(SelectionMode.Single).build
+
+  type Row = (String, String, String, String)
+
+  val input:Table[Row] =
+    Table[Row]()
+      .visibleRowCountMode(VisibleRowCountMode.Fixed)
+      .selectionMode(SelectionMode.Single)
+      .columns(
+        Column().heading("KUNNR").controlFromText((a: Row) => a._1).build,
+        Column().heading("NAME1").controlFromText((a: Row) => a._2).build,
+        Column().heading("ORT01").controlFromText((a: Row) => a._3).build,
+        Column().heading("PSTLZ").controlFromText((a: Row) => a._4).build
+      )
+      .content(filter.output).build()
+
+  val helloLabel = Label(
+    input.selectedRows.map(rows => {
+      rows.headOption.map(row => s"hello ${row._1}").getOrElse("")
+    })).build
+
+
   //val render = App().initialPage(Page().content(filter above table)).build
 
   val button = Button().text("Go to page 2").build
-    val page1 = Page().title("Page 1").content(button above filter above table)
+    val page1 = Page().title("Page 1").content(button above filter above table above input).build()
     val page2 = Page().title("Page 2").showNavButton(true).content(Label("Hello 2")).build()
 
 
     val pageTransitions: EventSource[PageTransition] = EventSource()
-    import com.sap.marmolata.utils.builder.StaticBuilder
+    table.selectedRows.observe(x => println(x.map( row => row.KUNNR.value).mkString(",")))
     button.clicks.observe(_ => pageTransitions := PageTransition(StaticBuilder(page2)))
-    page2.navButtonPress.observe(_ => pageTransitions := PageTransition(StaticBuilder(page1.build()), PageTransitionEffect.SlideRight))
+//    page2.navButtonPress.observe(_ => pageTransitions := PageTransition(StaticBuilder(page1.build()), PageTransitionEffect.SlideRight))
 
     val render = App().initialPage(page1).pageTransitions(pageTransitions).build
 
