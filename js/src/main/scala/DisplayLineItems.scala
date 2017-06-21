@@ -22,8 +22,25 @@ import scala.concurrent.ExecutionContext.Implicits.global
 @MarmolataClient(com.sap.marmolata.data.query.untyped.QueryExecAPI)
 object DisplayLineItems extends MarmolataShell {
 
-  val query = sql"""select kunnr, name1, ort01, pstlz from SAPHPB.KNA1
-    where contains(kunnr, '', fuzzy(0.1)) and contains(name1, '', fuzzy(0.1)) and  contains(ort01, '', fuzzy(0.1)) and contains(pstlz, '', fuzzy(0.1))"""
+  val query = sql"select KUNNR , NAME1,ORT01,PSTLZ from KNA1"
+  val filter = FilterBar.datasource(query).build
+
+  val table = Table.datasource(filter.output).selectionMode(SelectionMode.Single).build
+  //val render = App().initialPage(Page().content(filter above table)).build
+
+  val button = Button().text("Go to page 2").build
+    val page1 = Page().title("Page 1").content(button above filter above table)
+    val page2 = Page().title("Page 2").showNavButton(true).content(Label("Hello 2")).build()
+
+
+    val pageTransitions: EventSource[PageTransition] = EventSource()
+    import com.sap.marmolata.utils.builder.StaticBuilder
+    button.clicks.observe(_ => pageTransitions := PageTransition(StaticBuilder(page2)))
+    page2.navButtonPress.observe(_ => pageTransitions := PageTransition(StaticBuilder(page1.build()), PageTransitionEffect.SlideRight))
+
+    val render = App().initialPage(page1).pageTransitions(pageTransitions).build
+
+/*  val query = sql"""select KUNNR, NAME1, ORT01, PSTLZ from KNA1"""  //contains(KUNNR, '', fuzzy(0.1) and contains(name1, '', fuzzy(0.1)) and  contains(ort01, '', fuzzy(0.1)) and contains(pstlz, '', fuzzy(0.1))"""
   val filter = FilterBar.datasource(query).build
 
   type Row = (String, String, Int)
@@ -43,5 +60,5 @@ object DisplayLineItems extends MarmolataShell {
       rows.headOption.map(row => s"hello ${row._1}").getOrElse("")
     })).build
 
-  val render = App().initialPage(Page().content(filter above helloLabel above input)).build
+  val render = App().initialPage(Page().content(filter above helloLabel above input)).build*/
 }
