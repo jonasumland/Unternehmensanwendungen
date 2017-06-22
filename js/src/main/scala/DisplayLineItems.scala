@@ -41,9 +41,7 @@ object DisplayLineItems extends MarmolataShell {
   val page1 = Page().title("Customer Selection").content(button above filter above table).build()
   val page2 = Page().title("Customer Details").showNavButton(true).content(tableTarget above filter3 above table3).build()
 
-
   val pageTransitions: EventSource[PageTransition] = EventSource()
-
 
   table.selectedRows.observe(_ => pageTransitions := PageTransition(StaticBuilder(page2)))
   button.clicks.observe(_ => pageTransitions := PageTransition(StaticBuilder(page2)))
