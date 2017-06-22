@@ -31,11 +31,15 @@ object DisplayLineItems extends MarmolataShell {
   val query2 = sql"select KUNNR,NAME1,ORT01,PSTLZ from KNA1 where KUNNR=${kundennummer}"
   val tableTarget = Table.datasource(query2).selectionMode(SelectionMode.None).build
 
+  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA"
+  val filter3 = FilterBar.datasource(query3).build
+  val table3 = Table.datasource(filter3.output).selectionMode(SelectionMode.None).build
+
 
     val button = Button().text("Go to page 2").build
 
   val page1 = Page().title("Customer Selection").content(button above filter above table).build()
-  val page2 = Page().title("Customer Details").showNavButton(true).content(tableTarget).build()
+  val page2 = Page().title("Customer Details").showNavButton(true).content(tableTarget above filter3 above table3).build()
 
 
   val pageTransitions: EventSource[PageTransition] = EventSource()
