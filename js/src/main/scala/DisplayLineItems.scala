@@ -22,22 +22,24 @@ import com.sap.marmolata.utils.builder.StaticBuilder
 @MarmolataClient(com.sap.marmolata.data.query.untyped.QueryExecAPI)
 object DisplayLineItems extends MarmolataShell {
 
-  val query = sql"select KUNNR , NAME1,ORT01,PSTLZ from KNA1"
+  val query = sql"select KUNNR,NAME1,ORT01,PSTLZ from KNA1"
   val filter = FilterBar.datasource(query).build
   val table = Table.datasource(filter.output).selectionMode(SelectionMode.Single).build
 
   val selectedColOfRow: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.KUNNR.value))
-  val query2 = sql"select KUNNR , NAME1,ORT01,PSTLZ from KNA1 where KUNNR=${selectedColOfRow.map(_.getOrElse("USCU_L01"))}"
-  val filter2 = FilterBar.datasource(query2).build
-  val tableTarget = Table.datasource(filter2.output).selectionMode(SelectionMode.None).build
+  val kundennummer = selectedColOfRow.map(_.getOrElse("USCU_L01"))
+  val query2 = sql"select KUNNR,NAME1,ORT01,PSTLZ from KNA1 where KUNNR=${kundennummer}"
+  val tableTarget = Table.datasource(query2).selectionMode(SelectionMode.None).build
+
 
     val button = Button().text("Go to page 2").build
 
-  val page1 = Page().title("Page 1").content(button above filter above table).build()
-  val page2 = Page().title("Page 2").showNavButton(true).content(tableTarget).build()
+  val page1 = Page().title("Customer Selection").content(button above filter above table).build()
+  val page2 = Page().title("Customer Details").showNavButton(true).content(tableTarget).build()
 
 
   val pageTransitions: EventSource[PageTransition] = EventSource()
+
 
   table.selectedRows.observe(_ => pageTransitions := PageTransition(StaticBuilder(page2)))
   button.clicks.observe(_ => pageTransitions := PageTransition(StaticBuilder(page2)))
