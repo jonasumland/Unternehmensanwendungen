@@ -26,11 +26,8 @@ object DisplayLineItems extends MarmolataShell {
   val filter = FilterBar.datasource(query).build
   val table = Table.datasource(filter.output).selectionMode(SelectionMode.Single).build
 
-
-  val kunnr = table.selectedRows.map(rows => {
-    rows.headOption.map(row => s"SELECT KUNNR FROM KNA1 WHERE KUNNR = '${row.KUNNR.value}'").getOrElse(s"SELECT KUNNR FROM KNA1 WHERE KUNNR = 'NULL'")})
   val selectedColOfRow: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.KUNNR.value))
-  val query2 = sql"select KUNNR , NAME1,ORT01,PSTLZ from KNA1 where KUNNR=${selectedColOfRow.map(_.getOrElse(""))}"
+  val query2 = sql"select KUNNR , NAME1,ORT01,PSTLZ from KNA1 where KUNNR=${selectedColOfRow.map(_.getOrElse("USCU_L01"))}"
   val filter2 = FilterBar.datasource(query2).build
   val tableTarget = Table.datasource(filter2.output).selectionMode(SelectionMode.None).build
 
