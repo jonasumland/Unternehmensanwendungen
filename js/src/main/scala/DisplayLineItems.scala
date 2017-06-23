@@ -1,4 +1,5 @@
 import com.sap.marmolata.ui.App
+
 import scala.language.existentials
 import com.sap.marmolata.app.MarmolataClient
 import com.sap.marmolata.app.client.MarmolataShell
@@ -8,16 +9,13 @@ import com.sap.marmolata.data.types._
 import com.sap.marmolata.erp._
 import com.sap.marmolata.ui
 import com.sap.marmolata.ui.{List => _, _}
-import com.sap.marmolata.ui.layout.Vertical
+import com.sap.marmolata.ui.layout.{Form, FormContainer, FormElement, FormTitle, Vertical, _}
 import reactive.library._
 import com.sap.marmolata.ui.dataImplicits._
-import com.sap.marmolata.ui.layout._
-import com.sap.marmolata.ui.layout.FormElement
-import com.sap.marmolata.ui.layout.FormContainer
-import com.sap.marmolata.ui.layout.Form
-import com.sap.marmolata.ui.layout.FormTitle
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import com.sap.marmolata.utils.builder.StaticBuilder
+import com.sap.marmolata.ui.extensions.implicitExtensions._
 
 @MarmolataClient(com.sap.marmolata.data.query.untyped.QueryExecAPI)
 object DisplayLineItems extends MarmolataShell {
@@ -42,8 +40,10 @@ object DisplayLineItems extends MarmolataShell {
         .title(FormTitle().text("containertitle"))
         .elements(
           Seq(
-            FormElement().label("hallo"),
-            FormElement().label("wie")
+            FormElement().label("Kundennummer").text("Kundennummer"),
+            FormElement().label("Name").text("test"),
+            FormElement().label("PLZ").text("test"),
+              FormElement().label("ORT").text("test")
           ))).build()
 
   val button = Button().text("Go Customer Details").build
