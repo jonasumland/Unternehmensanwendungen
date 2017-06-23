@@ -32,8 +32,6 @@ object DisplayLineItems extends MarmolataShell {
   val ort = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
   val selectedColOfRowPlz: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.PSTLZ.value))
   val plz = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
-  val query2 = sql"select KUNNR,NAME1,ORT01,PSTLZ from KNA1 where KUNNR=${kundennummer}"
-  val tableTarget = Table.datasource(query2).selectionMode(SelectionMode.None).build
 
   val kn = ReassignableVar(kundennummer)
 
@@ -42,22 +40,22 @@ object DisplayLineItems extends MarmolataShell {
   val table3 = Table.datasource(filter3.output).selectionMode(SelectionMode.None).build
 
   val form = Form()
-    .title(FormTitle().text("title"))
+    .title(FormTitle().text("Information"))
     .containers(
       FormContainer()
-        .title(FormTitle().text("containertitle"))
+        .title(FormTitle().text("Customer"))
         .elements(
           Seq(
-            FormElement().label("Kundennummer").text(s"kundennummer"),
-            FormElement().label("Name").text("test"),
-            FormElement().label("PLZ").text("test"),
-              FormElement().label("ORT").text("test")
+            FormElement().label("Kundennummer").fields(Text().text(kundennummer)),
+            FormElement().label("Name").fields(Text().text(name)),
+            FormElement().label("PLZ").fields(Text().text(ort)),
+              FormElement().label("ORT").fields(Text().text(plz))
           ))).build()
 
   val button = Button().text("Go Customer Details").build
 
   val page1 = Page().title("Customer Selection").content(button above filter above table).build()
-  val page2 = Page().title("Customer Details").showNavButton(true).content(form above tableTarget above filter3 above table3).build()
+  val page2 = Page().title("Customer Details").showNavButton(true).content(form above filter3 above table3).build()
 
   val pageTransitions: EventSource[PageTransition] = EventSource()
 
