@@ -1,9 +1,5 @@
-
-
 import com.sap.marmolata.ui.App
-
 import scala.language.existentials
-
 import com.sap.marmolata.app.MarmolataClient
 import com.sap.marmolata.app.client.MarmolataShell
 import com.sap.marmolata.data.query.untyped.ClientDataApi
@@ -15,7 +11,11 @@ import com.sap.marmolata.ui.{List => _, _}
 import com.sap.marmolata.ui.layout.Vertical
 import reactive.library._
 import com.sap.marmolata.ui.dataImplicits._
-
+import com.sap.marmolata.ui.layout._
+import com.sap.marmolata.ui.layout.FormElement
+import com.sap.marmolata.ui.layout.FormContainer
+import com.sap.marmolata.ui.layout.Form
+import com.sap.marmolata.ui.layout.FormTitle
 import scala.concurrent.ExecutionContext.Implicits.global
 import com.sap.marmolata.utils.builder.StaticBuilder
 
@@ -31,15 +31,25 @@ object DisplayLineItems extends MarmolataShell {
   val query2 = sql"select KUNNR,NAME1,ORT01,PSTLZ from KNA1 where KUNNR=${kundennummer}"
   val tableTarget = Table.datasource(query2).selectionMode(SelectionMode.None).build
 
-  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA"
+  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${kundennummer}"
   val filter3 = FilterBar.datasource(query3).build
   val table3 = Table.datasource(filter3.output).selectionMode(SelectionMode.None).build
 
+  val form = Form()
+    .title(FormTitle().text("title"))
+    .containers(
+      FormContainer()
+        .title(FormTitle().text("containertitle"))
+        .elements(
+          Seq(
+            FormElement().label("hallo"),
+            FormElement().label("wie")
+          ))).build()
 
-    val button = Button().text("Go to page 2").build
+  val button = Button().text("Go Customer Details").build
 
   val page1 = Page().title("Customer Selection").content(button above filter above table).build()
-  val page2 = Page().title("Customer Details").showNavButton(true).content(tableTarget above filter3 above table3).build()
+  val page2 = Page().title("Customer Details").showNavButton(true).content(form above tableTarget above filter3 above table3).build()
 
   val pageTransitions: EventSource[PageTransition] = EventSource()
 
