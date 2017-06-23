@@ -18,7 +18,7 @@ import com.sap.marmolata.utils.builder.StaticBuilder
 import com.sap.marmolata.ui.extensions.implicitExtensions._
 
 @MarmolataClient(com.sap.marmolata.data.query.untyped.QueryExecAPI)
-object DisplayLineItems extends MarmolataShell {
+object CallCenterApp extends MarmolataShell {
 
   val query = sql"select KUNNR,NAME1,ORT01,PSTLZ from KNA1"
   val filter = FilterBar.datasource(query).build
@@ -28,14 +28,15 @@ object DisplayLineItems extends MarmolataShell {
   val kundennummer = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
 
   val selectedColOfRowName: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.NAME1.value))
-  val name = selectedColOfRowName.map(_.getOrElse("USCU_L01"))
+  val name = selectedColOfRowName.map(_.getOrElse("Skymart Corp"))
 
   val selectedColOfRowOrt: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.ORT01.value))
-  val ort = selectedColOfRowOrt.map(_.getOrElse("USCU_L01"))
+  val ort = selectedColOfRowOrt.map(_.getOrElse("10007"))
 
   val selectedColOfRowPlz: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.PSTLZ.value))
-  val plz = selectedColOfRowPlz.map(_.getOrElse("USCU_L01"))
-
+  val plz = selectedColOfRowPlz.map(_.getOrElse("New york"))
+  //BUDAT;RACCT;RHCUR;BELNR;RBUKRS;KOART;HSL
+  //00000000;0012100000;USD;B000000732;1710;;129.258
   val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${kundennummer}"
   val filter3 = FilterBar.datasource(query3).build
   val table3 = Table.datasource(filter3.output).selectionMode(SelectionMode.None).build
