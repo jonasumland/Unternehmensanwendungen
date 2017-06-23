@@ -26,16 +26,19 @@ object DisplayLineItems extends MarmolataShell {
 
   val selectedColOfRowKundenNr: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.KUNNR.value))
   val kundennummer = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
+
   val selectedColOfRowName: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.NAME1.value))
-  val name = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
+  val name = selectedColOfRowName.map(_.getOrElse("USCU_L01"))
+
   val selectedColOfRowOrt: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.ORT01.value))
-  val ort = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
+  val ort = selectedColOfRowOrt.map(_.getOrElse("USCU_L01"))
+
   val selectedColOfRowPlz: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.PSTLZ.value))
-  val plz = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
+  val plz = selectedColOfRowPlz.map(_.getOrElse("USCU_L01"))
 
   val kn = ReassignableVar(kundennummer)
 
-  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${kundennummer}"
+  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${Text.text(kundennummer)}"
   val filter3 = FilterBar.datasource(query3).build
   val table3 = Table.datasource(filter3.output).selectionMode(SelectionMode.None).build
 
