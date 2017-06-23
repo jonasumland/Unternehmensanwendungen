@@ -36,7 +36,7 @@ object DisplayLineItems extends MarmolataShell {
   val selectedColOfRowPlz: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.PSTLZ.value))
   val plz = selectedColOfRowPlz.map(_.getOrElse("USCU_L01"))
 
-  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))}"
+  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${kundennummer}"
   val filter3 = FilterBar.datasource(query3).build
   val table3 = Table.datasource(filter3.output).selectionMode(SelectionMode.None).build
 
@@ -63,13 +63,6 @@ object DisplayLineItems extends MarmolataShell {
   table.selectedRows.observe(_ => pageTransitions := PageTransition(StaticBuilder(page2)))
   button.clicks.observe(_ => pageTransitions := PageTransition(StaticBuilder(page2)))
   page2.navButtonPress.observe(_ => pageTransitions := PageTransition(StaticBuilder(page1), PageTransitionEffect.SlideRight))
-  //page2.navButtonPress.observe(_ => pageTransitions := PageTransition(StaticBuilder(page1.build()), PageTransitionEffect.SlideRight))
+
   val render = App().initialPage(page1).pageTransitions(pageTransitions).build
-
-/*  val query = sql"""select KUNNR, NAME1, ORT01, PSTLZ from KNA1"""  //contains(KUNNR, '', fuzzy(0.1) and contains(name1, '', fuzzy(0.1)) and  contains(ort01, '', fuzzy(0.1)) and contains(pstlz, '', fuzzy(0.1))"""
-  val filter = FilterBar.datasource(query).build
-
-//val render = App().initialPage(Page().content(filter above table)).build
-
-  val render = App().initialPage(Page().content(filter above helloLabel above input)).build*/
 }
