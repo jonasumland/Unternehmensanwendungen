@@ -24,10 +24,18 @@ object DisplayLineItems extends MarmolataShell {
   val filter = FilterBar.datasource(query).build
   val table = Table.datasource(filter.output).selectionMode(SelectionMode.Single).build
 
-  val selectedColOfRow: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.KUNNR.value))
-  val kundennummer = selectedColOfRow.map(_.getOrElse("USCU_L01"))
+  val selectedColOfRowKundenNr: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.KUNNR.value))
+  val kundennummer = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
+  val selectedColOfRowName: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.NAME1.value))
+  val name = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
+  val selectedColOfRowOrt: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.ORT01.value))
+  val ort = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
+  val selectedColOfRowPlz: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.PSTLZ.value))
+  val plz = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
   val query2 = sql"select KUNNR,NAME1,ORT01,PSTLZ from KNA1 where KUNNR=${kundennummer}"
   val tableTarget = Table.datasource(query2).selectionMode(SelectionMode.None).build
+
+  val kn = ReassignableVar(kundennummer)
 
   val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${kundennummer}"
   val filter3 = FilterBar.datasource(query3).build
@@ -40,7 +48,7 @@ object DisplayLineItems extends MarmolataShell {
         .title(FormTitle().text("containertitle"))
         .elements(
           Seq(
-            FormElement().label("Kundennummer").text("Kundennummer"),
+            FormElement().label("Kundennummer").text(s"kundennummer"),
             FormElement().label("Name").text("test"),
             FormElement().label("PLZ").text("test"),
               FormElement().label("ORT").text("test")
