@@ -36,9 +36,7 @@ object DisplayLineItems extends MarmolataShell {
   val selectedColOfRowPlz: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.PSTLZ.value))
   val plz = selectedColOfRowPlz.map(_.getOrElse("USCU_L01"))
 
-  val kn = ReassignableVar(kundennummer)
-
-  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${Text().text(kundennummer)}"
+  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))}"
   val filter3 = FilterBar.datasource(query3).build
   val table3 = Table.datasource(filter3.output).selectionMode(SelectionMode.None).build
 
@@ -51,8 +49,8 @@ object DisplayLineItems extends MarmolataShell {
           Seq(
             FormElement().label("Kundennummer").fields(Text().text(kundennummer)),
             FormElement().label("Name").fields(Text().text(name)),
-            FormElement().label("PLZ").fields(Text().text(ort)),
-              FormElement().label("ORT").fields(Text().text(plz))
+            FormElement().label("PLZ").fields(Text().text(plz)),
+              FormElement().label("ORT").fields(Text().text(ort))
           ))).build()
 
   val button = Button().text("Go Customer Details").build
