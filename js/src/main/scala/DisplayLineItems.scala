@@ -38,7 +38,7 @@ object DisplayLineItems extends MarmolataShell {
 
   val kn = ReassignableVar(kundennummer)
 
-  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${Text.text(kundennummer)}"
+  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${Text().text(kundennummer)}"
   val filter3 = FilterBar.datasource(query3).build
   val table3 = Table.datasource(filter3.output).selectionMode(SelectionMode.None).build
 
