@@ -5,7 +5,7 @@ import com.sap.marmolata.sbt.MarmolataRootProject
 
 lazy val commonSettings = Seq(
   organization := "com.sap",
-  name := "displayLineItems", 
+  name := "CallCenterApp", 
   version := "0.1-SNAPSHOT",
   resolvers := Seq(
     Resolver.url("local", new URL(Path.userHome.asFile.toURI.toURL + "/.ivy2/local"))(Resolver.ivyStylePatterns),
@@ -19,13 +19,13 @@ lazy val commonSettings = Seq(
   externalResolvers := resolvers.value
 )
 
-lazy val displayLineItemsRoot: Project = (project in file("."))
+lazy val CallCenterAppRoot: Project = (project in file("."))
   .enablePlugins(MarmolataRootProject)
   .settings(commonSettings: _*)
-  .aggregate(displayLineItemsJS, displayLineItemsJVM)
+  .aggregate(CallCenterAppJS, CallCenterAppJVM)
 
-lazy val displayLineItems = (crossProject in file("."))
-  .marmolataCrossProject("displayLineItems")
+lazy val CallCenterApp = (crossProject in file("."))
+  .marmolataCrossProject("CallCenterApp")
   .jsSettings(commonSettings: _*)
   .jvmSettings(commonSettings: _*)
   .jsSettings(
@@ -36,7 +36,7 @@ lazy val displayLineItems = (crossProject in file("."))
     libraryDependencies += Dependencies.ngdbc.value % "compile,test,it"
   )
 
-lazy val displayLineItemsJS: Project = displayLineItems.js
+lazy val CallCenterAppJS: Project = CallCenterApp.js
   .settings(commonSettings: _*)
   .settings(
     libraryDependencies += "com.sap.marmolata" %%%! "app" % "hpi-5",
@@ -44,7 +44,7 @@ lazy val displayLineItemsJS: Project = displayLineItems.js
     libraryDependencies += "com.sap.marmolata" %%%! "data-sql" % "hpi-19"
   )
 
-lazy val displayLineItemsJVM: Project = displayLineItems.jvm
+lazy val CallCenterAppJVM: Project = CallCenterApp.jvm
   .settings(commonSettings: _*)
   .settings(
     libraryDependencies += "com.sap.marmolata" %% "app" % "hpi-5",

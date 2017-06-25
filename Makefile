@@ -8,7 +8,7 @@ clean:
 scalastyle:
 	sbt scalastyleGenerateConfig
 run:
-	sbt -J-Xms2g -J-Xmx8g fastOptJS displayLineItemsJVM/run
+	sbt -J-Xms2g -J-Xmx8g fastOptJS CallCenterAppJVM/run
 cont:
 	sbt -J-Xms2g -J-Xmx8g ~fastOptJS
 sbt:
