@@ -37,7 +37,7 @@ object CallCenterApp extends MarmolataShell {
   val plz = selectedColOfRowPlz.map(_.getOrElse("New york"))
   //BUDAT;RACCT;RHCUR;BELNR;RBUKRS;KOART;HSL
   //00000000;0012100000;USD;B000000732;1710;;129.258
-  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${kundennummer}"
+  val query3 = sql"select BUDAT, RACCT, RHCUR, BELNR, RBUKRS, KOART, HSL from ACDOCA where KUNNR=${kundennummer} and POPER is not initial"
   val filter3 = FilterBar.datasource(query3).build
   val table3 = Table.datasource(filter3.output).selectionMode(SelectionMode.None).build
 
