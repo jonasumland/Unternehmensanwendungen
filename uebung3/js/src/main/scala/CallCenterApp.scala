@@ -23,6 +23,7 @@ object CallCenterApp extends MarmolataShell {
   val query = sql"select KUNNR,NAME1,ORT01,PSTLZ from KNA1"
   val filter = FilterBar.datasource(query).build
   val table = Table.datasource(filter.output).selectionMode(SelectionMode.Single).build
+  val page1 = Page().title("Customer Selection").content(filter above table).build()
 
   val selectedColOfRowKundenNr: Signal[Option[String]] = table.selectedRows.map(_.headOption.map(_.KUNNR.value))
   val kundennummer = selectedColOfRowKundenNr.map(_.getOrElse("USCU_L01"))
@@ -56,7 +57,7 @@ object CallCenterApp extends MarmolataShell {
 
   val button = Button().text("Go Customer Details").build
 
-  val page1 = Page().title("Customer Selection").content(button above filter above table).build()
+
   val page2 = Page().title("Customer Details").showNavButton(true).content(form above filter3 above table3).build()
 
   val pageTransitions: EventSource[PageTransition] = EventSource()
