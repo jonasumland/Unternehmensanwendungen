@@ -14,7 +14,7 @@ trait CreditRequestApiImpl extends CreditRequestApi {
   val rnd = scala.util.Random
 
   override def getQuotes(): Seq[Credit.Offer] = { 
-    Seq.fill(rnd.nextInt(5) + 1)(Credit.Offer(rnd.alphanumeric.take(6).mkString, rnd.nextFloat))
+    Seq.fill(rnd.nextInt(5) + 5)(Credit.Offer(rnd.alphanumeric.take(6).mkString, rnd.nextFloat))
   }
 }
 

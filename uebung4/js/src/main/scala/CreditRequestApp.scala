@@ -32,13 +32,13 @@ object CreditRequestApp extends MarmolataShell {
     ).build
 
   val purpose = Input[String]()
-    .initialValue("0")
+    .initialValue("Car")
     .validator(
       StdValidators.longerThan(2)
     ).build
 
   val income = Input[Int]()
-    .initialValue("0")
+    .initialValue("5000")
     .validator(
       StdValidators.gtEq(500)
     ).build
@@ -76,16 +76,16 @@ object CreditRequestApp extends MarmolataShell {
       Seq(
         FormElement().label("Amount (EUR)").fields(amount),
         FormElement().label("Duration (Month)").fields(duration),
-        FormElement().label("Rates").fields(purpose)
+        FormElement().label("Purpose").fields(purpose)
       )
     )
 
   val formContainerPersonalData =
     FormContainer().title(FormTitle().text("Personal Data")).elements(
       Seq(
-        FormElement().label("4").fields(income),
-        FormElement().label("5").fields(firstName),
-        FormElement().label("6").fields(lastName)
+        FormElement().label("Income").fields(income),
+        FormElement().label("First Name").fields(firstName),
+        FormElement().label("Last Name").fields(lastName)
       )
     )
 
@@ -93,10 +93,14 @@ object CreditRequestApp extends MarmolataShell {
 
   val table = Table[Credit.Offer]()
     .columns(
-      Column()
-        .heading("SomeColumn")
-        .representation[Credit.Offer, String](row => s"${"%.2f".format(row.dbl)} - ${row.str}")
-        .build()
+        Column()
+          .heading("Bank")
+          .representation[Credit.Offer, String](row => s"${row.str}")
+          .build(),
+        Column()
+          .heading("Zinssatz")
+          .representation[Credit.Offer, String](row => s"${"%.2f".format(row.dbl)}")
+          .build()
     )
     .selectionMode(SelectionMode.None)
     .content(tblRowProvider)
