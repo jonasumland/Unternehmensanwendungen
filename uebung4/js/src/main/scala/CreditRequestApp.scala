@@ -6,6 +6,7 @@ import com.sap.marmolata.ui.dataImplicits._
 import com.sap.marmolata.ui.extensions.implicitExtensions._
 import com.sap.marmolata.ui.layout._
 import com.sap.marmolata.utils.validation.{Result, Success}
+import com.sap.marmolata.ui.suggestions.{SimpleSuggestion, SimpleSuggestionProvider}
 
 import reactive.library._
 
@@ -25,16 +26,21 @@ object CreditRequestApp extends MarmolataShell {
       StdValidators.ltEq(1000000)
     ).build
 
-  val duration = Input[Int]()
-    .initialValue("0")
+    val duration = Input[Int]()
+    .initialValue("12")
     .validator(
-      StdValidators.ltEq(48)
+      (StdValidators.gtEq(1) and StdValidators.ltEq(48))
     ).build
 
+  val suggestion = SimpleSuggestion().value("suggestion").build
+  val sequence = Seq(suggestion)
+  val signal = Signal.Const(sequence)
   val purpose = Input[String]()
     .initialValue("Car")
     .validator(
       StdValidators.longerThan(2)
+    ).suggestionProvider(
+      SimpleSuggestionProvider[String](signal)
     ).build
 
   val income = Input[Int]()
