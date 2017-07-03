@@ -7,7 +7,7 @@ import com.sap.marmolata.ui.extensions.implicitExtensions._
 import com.sap.marmolata.ui.layout._
 import com.sap.marmolata.utils.validation.{Result, Success}
 import com.sap.marmolata.ui.suggestions.{SimpleSuggestion, SimpleSuggestionProvider}
-
+import com.sap.marmolata.utils.Uri
 import reactive.library._
 
 import scala.concurrent.Future
@@ -74,9 +74,11 @@ object CreditRequestApp extends MarmolataShell {
      case Some(Success(v)) => true
      case _ => false
     })
-
+  //see https://sapui5.hana.ondemand.com/iconExplorer.html for more icons
+  val uri = new Uri("sap-icon://accept")
   val button = Button()
     .text("Calculate")
+    .icon(Signal.Const(Option(uri)))
     .enabled(
       (toBool(amount.validatedValue) |@| toBool(duration.validatedValue) |@| toBool(income.validatedValue) ).map(
         {case (a,b,c) => a && b && c }
@@ -121,7 +123,6 @@ object CreditRequestApp extends MarmolataShell {
     )
     .selectionMode(SelectionMode.None)
     .content(tblRowProvider)
-
   val page1 =
     Page().title("Credit request")
       .content(
