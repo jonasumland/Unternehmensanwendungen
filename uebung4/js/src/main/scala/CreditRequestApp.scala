@@ -1,7 +1,7 @@
 import com.sap.marmolata.utils.validation.withFuture.StdValidators
 import com.sap.marmolata.app.MarmolataClient
 import com.sap.marmolata.app.client.MarmolataShell
-import com.sap.marmolata.ui._
+import com.sap.marmolata.ui.{StandardListItem, _}
 import com.sap.marmolata.ui.dataImplicits._
 import com.sap.marmolata.ui.extensions.implicitExtensions._
 import com.sap.marmolata.ui.layout._
@@ -85,12 +85,23 @@ object CreditRequestApp extends MarmolataShell {
       )
     ).build
 
+ val list = List()
+   .mode(ListMode.SingleSelect)
+   .items(
+   Seq(
+     StandardListItem().title("Car").build(),
+     StandardListItem().title("Vacation").build(),
+     StandardListItem().title("Marriage").build(),
+     StandardListItem().title("FreePurpose").build()
+
+   )
+ )
   val formContainerRequest =
     FormContainer().title(FormTitle().text("General Data")).elements(
       Seq(
         FormElement().label("Amount (EUR)").fields(amount),
         FormElement().label("Duration (Month)").fields(duration),
-        FormElement().label("Purpose").fields(purpose)
+        FormElement().label("Purpose").fields(list)
       )
     )
 
