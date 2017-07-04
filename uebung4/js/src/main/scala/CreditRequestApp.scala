@@ -132,13 +132,13 @@ object CreditRequestApp extends MarmolataShell {
   val formContainerEnteredData =
     FormContainer().title(FormTitle().text("Personal Data")).elements(
       Seq(
-        FormElement().label("Amount").fields(Text().text(enteredAmount + " EUR")),
-        FormElement().label("Duration").fields(Text().text(enteredDuration + " month(s)" )),
+        FormElement().label("Amount").fields(Text().text(enteredAmount.map(_ + " EUR"))),
+        FormElement().label("Duration").fields(Text().text(enteredDuration.map(_ + " month(s)") )),
         FormElement().label("Purpose").fields(Text().text(dropdown.selectedItem.flatMap(v=>v.text))),
         FormElement().label("Requester Name").fields(Text().text(name.value)),
         FormElement().label("Employment Status").fields(Text().text(employment.value)),
         FormElement().label("Martial Status").fields(Text().text(martial.value)),
-        FormElement().label("Income").fields(Text().text(enteredIncome + " EUR/Month"))
+        FormElement().label("Income").fields(Text().text(enteredIncome.map(_ + " EUR/Month")))
         )
     )
 
