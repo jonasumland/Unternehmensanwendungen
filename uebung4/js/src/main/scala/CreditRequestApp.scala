@@ -96,12 +96,22 @@ object CreditRequestApp extends MarmolataShell {
 
    )
  )
+
+  val dropdown= Select(
+    Item("Car").text("Car"),
+    Item("Vacation").text("Vacation"),
+    Item("Marriage").text("Marriage"),
+    Item("Other").text("Other")
+  ).build
+
+
   val formContainerRequest =
     FormContainer().title(FormTitle().text("General Data")).elements(
       Seq(
         FormElement().label("Amount (EUR)").fields(amount),
         FormElement().label("Duration (Month)").fields(duration),
-        FormElement().label("Purpose").fields(list)
+        //FormElement().label("Purpose").fields(list),
+        FormElement().label("Purpose").fields(dropdown)
       )
     )
 
@@ -113,6 +123,13 @@ object CreditRequestApp extends MarmolataShell {
         FormElement().label("Martial Status").fields(martial),
         FormElement().label("Income (EUR)").fields(income)
       )
+    )
+
+  val formContainerEnteredData =
+    FormContainer().title(FormTitle().text("Personal Data")).elements(
+      Seq(
+        FormElement().label("Text").fields(Text().text(dropdown.selectedItem.flatMap(v=>v.text)))
+        )
     )
 
   val tblRowProvider: Var[RowProvider[Credit.Offer]] = Var(EmptyRowProvider)
@@ -153,7 +170,16 @@ object CreditRequestApp extends MarmolataShell {
   val page2 =
     Page().title("Credit offer list")
       .showNavButton(true)
-      .content(table)
+      .content(
+        Form().title(FormTitle()
+          .text("Credit Request")
+        ).containers(
+          Seq(
+            formContainerRequest,
+            formContainerPersonalData
+          )
+        )  above
+        table)
       .build()
 
   val pageTransitions: EventSource[PageTransition] = EventSource()
