@@ -125,10 +125,13 @@ object CreditRequestApp extends MarmolataShell {
       )
     )
 
+  //val enteredAmount = amount.valueChanges.observe
+
   val formContainerEnteredData =
     FormContainer().title(FormTitle().text("Personal Data")).elements(
       Seq(
-        FormElement().label("Text").fields(Text().text(dropdown.selectedItem.flatMap(v=>v.text)))
+        //FormElement().label("Amount").fields(Text().text(amount.valueChanges(_.flatMap(v=>v.text)))),
+        FormElement().label("Purpose").fields(Text().text(dropdown.selectedItem.flatMap(v=>v.text)))
         )
     )
 
@@ -172,11 +175,10 @@ object CreditRequestApp extends MarmolataShell {
       .showNavButton(true)
       .content(
         Form().title(FormTitle()
-          .text("Credit Request")
+          .text("Request Data")
         ).containers(
           Seq(
-            formContainerRequest,
-            formContainerPersonalData
+            formContainerEnteredData
           )
         )  above
         table)
