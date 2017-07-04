@@ -52,7 +52,7 @@ object CreditRequestApp extends MarmolataShell {
   val name = Input[String]()
     .initialValue("Enter Name here")
     .validator(
-      StdValidators.longerThan(2)
+      StdValidators.notEq("Enter Name here")
     )
     .build
 
