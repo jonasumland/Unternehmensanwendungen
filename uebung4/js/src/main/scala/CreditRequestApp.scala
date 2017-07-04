@@ -57,14 +57,14 @@ object CreditRequestApp extends MarmolataShell {
     .build
 
   val employment = Input[String]()
-    .initialValue("employee")
+    .initialValue("Employee")
     .validator(
       StdValidators.longerThan(2)
     )
     .build
 
   val martial = Input[String]()
-    .initialValue("single")
+    .initialValue("Single")
     .validator(
       StdValidators.longerThan(2)
     )
@@ -125,16 +125,20 @@ object CreditRequestApp extends MarmolataShell {
       )
     )
 
+  val enteredAmount = amount.value
+  val enteredDuration = duration.value
+  val enteredIncome = duration.value
+
   val formContainerEnteredData =
     FormContainer().title(FormTitle().text("Personal Data")).elements(
       Seq(
-        FormElement().label("Amount").fields(Text().text(amount.value + " EUR")),
-        FormElement().label("Duration").fields(Text().text(duration.value + " month(s)" )),
+        FormElement().label("Amount").fields(Text().text(enteredAmount + " EUR")),
+        FormElement().label("Duration").fields(Text().text(enteredDuration + " month(s)" )),
         FormElement().label("Purpose").fields(Text().text(dropdown.selectedItem.flatMap(v=>v.text))),
         FormElement().label("Requester Name").fields(Text().text(name.value)),
         FormElement().label("Employment Status").fields(Text().text(employment.value)),
         FormElement().label("Martial Status").fields(Text().text(martial.value)),
-        FormElement().label("Income").fields(Text().text(income.value + " EUR/Month"))
+        FormElement().label("Income").fields(Text().text(enteredIncome + " EUR/Month"))
         )
     )
 
