@@ -66,8 +66,8 @@ object CreditRequestApp extends MarmolataShell {
     .text("Calculate")
     .icon(Signal.Const(Option(uri)))
     .enabled(
-      (toBool(amount.validatedValue) |@| toBool(duration.validatedValue) |@| toBool(income.validatedValue) ).map(
-        {case (a,b,c) => a && b && c }
+      (toBool(amount.validatedValue) |@| toBool(duration.validatedValue) |@| toBool(income.validatedValue)|@| toBool(name.validatedValue) ).map(
+        {case (a,b,c,d) => a && b && c && d}
       )
     ).build
 
