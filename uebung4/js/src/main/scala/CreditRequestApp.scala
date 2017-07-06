@@ -1,6 +1,7 @@
 import com.sap.marmolata.utils.validation.withFuture.StdValidators
 import com.sap.marmolata.app.MarmolataClient
 import com.sap.marmolata.app.client.MarmolataShell
+import com.sap.marmolata.ui.VisibleRowCountMode.Interactive
 import com.sap.marmolata.ui.{StandardListItem, _}
 import com.sap.marmolata.ui.dataImplicits._
 import com.sap.marmolata.ui.extensions.implicitExtensions._
@@ -23,7 +24,7 @@ object CreditRequestApp extends MarmolataShell {
   val amount = Input[Int]()
     .initialValue("0")
     .validator(
-      StdValidators.ltEq(1000000)
+      StdValidators.ltEq(1000000000) and StdValidators.gtEq(1)
     ).build
 
     val duration = Input[Int]()
@@ -159,7 +160,9 @@ object CreditRequestApp extends MarmolataShell {
         .build()
     )
     .selectionMode(SelectionMode.None)
+    .visibleRowCountMode(Interactive)
     .content(tblRowProvider)
+
   val page1 =
     Page().title("Credit request")
       .content(
