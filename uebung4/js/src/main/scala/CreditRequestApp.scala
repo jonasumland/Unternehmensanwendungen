@@ -110,7 +110,6 @@ object CreditRequestApp extends MarmolataShell {
       Seq(
         FormElement().label("Amount (EUR)").fields(amount),
         FormElement().label("Duration (Month)").fields(duration),
-        //FormElement().label("Purpose").fields(list),
         FormElement().label("Purpose").fields(dropdownPurpose)
       )
     )
