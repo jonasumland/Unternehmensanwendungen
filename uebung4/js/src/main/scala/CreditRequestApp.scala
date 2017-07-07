@@ -1,6 +1,7 @@
 import com.sap.marmolata.utils.validation.withFuture.StdValidators
 import com.sap.marmolata.app.MarmolataClient
 import com.sap.marmolata.app.client.MarmolataShell
+import com.sap.marmolata.ui.VisibleRowCountMode.Interactive
 import com.sap.marmolata.ui.{StandardListItem, _}
 import com.sap.marmolata.ui.dataImplicits._
 import com.sap.marmolata.ui.extensions.implicitExtensions._
@@ -23,7 +24,7 @@ object CreditRequestApp extends MarmolataShell {
   val amount = Input[Int]()
     .initialValue("0")
     .validator(
-      StdValidators.ltEq(1000000)
+      StdValidators.ltEq(1000000000) and StdValidators.gtEq(1)
     ).build
 
     val duration = Input[Int]()
@@ -50,23 +51,9 @@ object CreditRequestApp extends MarmolataShell {
     ).build
 
   val name = Input[String]()
-    .initialValue("Enter Name here")
+    .initialValue("Lastname, Firstname Secondname")
     .validator(
-      StdValidators.notEq("Enter Name here")
-    )
-    .build
-
-  val employment = Input[String]()
-    .initialValue("Employee")
-    .validator(
-      StdValidators.longerThan(2)
-    )
-    .build
-
-  val martial = Input[String]()
-    .initialValue("Single")
-    .validator(
-      StdValidators.longerThan(2)
+      StdValidators.notEq("Lastname, Firstname Secondname")
     )
     .build
 
@@ -80,8 +67,8 @@ object CreditRequestApp extends MarmolataShell {
     .text("Calculate")
     .icon(Signal.Const(Option(uri)))
     .enabled(
-      (toBool(amount.validatedValue) |@| toBool(duration.validatedValue) |@| toBool(income.validatedValue) ).map(
-        {case (a,b,c) => a && b && c }
+      (toBool(amount.validatedValue) |@| toBool(duration.validatedValue) |@| toBool(income.validatedValue)|@| toBool(name.validatedValue) ).map(
+        {case (a,b,c,d) => a && b && c && d}
       )
     ).build
 
@@ -97,10 +84,24 @@ object CreditRequestApp extends MarmolataShell {
    )
  )
 
-  val dropdown= Select(
+  val dropdownPurpose= Select(
     Item("Car").text("Car"),
     Item("Vacation").text("Vacation"),
     Item("Marriage").text("Marriage"),
+    Item("Other").text("Other")
+  ).build
+
+  val dropdownEmployment = Select(
+    Item("Employee").text("Employee"),
+    Item("Employer").text("Employer"),
+    Item("Freelancer").text("Freelancer"),
+    Item("Other").text("Other")
+  ).build
+
+  val dropdownMartial= Select(
+    Item("Single").text("Single"),
+    Item("Married").text("Married"),
+    Item("Widowed").text("Widowed"),
     Item("Other").text("Other")
   ).build
 
@@ -110,8 +111,7 @@ object CreditRequestApp extends MarmolataShell {
       Seq(
         FormElement().label("Amount (EUR)").fields(amount),
         FormElement().label("Duration (Month)").fields(duration),
-        //FormElement().label("Purpose").fields(list),
-        FormElement().label("Purpose").fields(dropdown)
+        FormElement().label("Purpose").fields(dropdownPurpose)
       )
     )
 
@@ -119,8 +119,8 @@ object CreditRequestApp extends MarmolataShell {
     FormContainer().title(FormTitle().text("Personal Data")).elements(
       Seq(
         FormElement().label("Name").fields(name),
-        FormElement().label("Employment Status").fields(employment),
-        FormElement().label("Martial Status").fields(martial),
+        FormElement().label("Employment Status").fields(dropdownEmployment),
+        FormElement().label("Martial Status").fields(dropdownMartial),
         FormElement().label("Income (EUR/Month)").fields(income)
       )
     )
@@ -134,10 +134,10 @@ object CreditRequestApp extends MarmolataShell {
       Seq(
         FormElement().label("Amount").fields(Text().text(enteredAmount.map(_ + " EUR"))),
         FormElement().label("Duration").fields(Text().text(enteredDuration.map(_ + " month(s)") )),
-        FormElement().label("Purpose").fields(Text().text(dropdown.selectedItem.flatMap(v=>v.text))),
+        FormElement().label("Purpose").fields(Text().text(dropdownPurpose.selectedItem.flatMap(v=>v.text))),
         FormElement().label("Requester Name").fields(Text().text(name.value)),
-        FormElement().label("Employment Status").fields(Text().text(employment.value)),
-        FormElement().label("Martial Status").fields(Text().text(martial.value)),
+        FormElement().label("Employment Status").fields(Text().text(dropdownEmployment.selectedItem.flatMap(v=>v.text))),
+        FormElement().label("Martial Status").fields(Text().text(dropdownMartial.selectedItem.flatMap(v=>v.text))),
         FormElement().label("Income").fields(Text().text(enteredIncome.map(_ + " EUR/Month")))
         )
     )
@@ -160,7 +160,9 @@ object CreditRequestApp extends MarmolataShell {
         .build()
     )
     .selectionMode(SelectionMode.None)
+    .visibleRowCountMode(Interactive)
     .content(tblRowProvider)
+
   val page1 =
     Page().title("Credit request")
       .content(
