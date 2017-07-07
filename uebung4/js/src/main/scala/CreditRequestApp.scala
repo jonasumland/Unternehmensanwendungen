@@ -127,7 +127,7 @@ object CreditRequestApp extends MarmolataShell {
 
   val enteredAmount = amount.value
   val enteredDuration = duration.value
-  val enteredIncome = duration.value
+  val enteredIncome = income.value
 
   val formContainerEnteredData =
     FormContainer().title(FormTitle().text("Personal Data")).elements(
@@ -152,11 +152,11 @@ object CreditRequestApp extends MarmolataShell {
           .build(),
         Column()
           .heading("Zinssatz")
-          .representation[Credit.Offer, String](row => s"${"%.2f".format(row.dbl)}")
+          .representation[Credit.Offer, String](row => s"${"%.2f".format(row.dbl)}%")
           .build(),
       Column()
         .heading("Monthly Rate")
-        .representation[Credit.Offer, String](row => s"150")
+        .representation[Credit.Offer, String](row => s"${"%.2f".format(row.raten)}")
         .build()
     )
     .selectionMode(SelectionMode.None)
@@ -203,7 +203,7 @@ object CreditRequestApp extends MarmolataShell {
   })
 
   def callService(): Unit = {
-    val result: Future[Seq[Credit.Offer]] = Server.getQuotes().call
+    val result: Future[Seq[Credit.Offer]] = Server.getQuotes(enteredAmount.now, enteredIncome.now, enteredDuration.now).call
     val resRowProvider: Future[RowProvider[Credit.Offer]] = result.map(rows => {
       StaticRowProvider(rows)
     })
