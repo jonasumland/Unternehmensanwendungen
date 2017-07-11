@@ -28,6 +28,6 @@ trait CreditRequestApiImpl extends CreditRequestApi {
     var dataSets = ((0 until (bank.length)) map { i => DataSet(bank(i), zins(i), grenzen(i), raten(i)) })
     dataSets = dataSets.filter(dataSet => (dataSet.raten/income)<= dataSet.grenzen)
     val offer = dataSets map (dS => Credit.Offer(dS.bank,dS.raten,dS.zins))
-    return offer.asInstanceOf[Seq[Credit.Offer]]
+    return offer.asInstanceOf[Seq[Credit.Offer]].sortWith(_.raten < _.raten)
   }
 }
