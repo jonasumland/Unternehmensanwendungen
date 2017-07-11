@@ -38,12 +38,15 @@ object CreditRequestApp extends MarmolataShell {
     .validator(
       StdValidators.gtEq(500)
     ).build
+  var suggestionValueBuffer = scala.collection.mutable.ListBuffer("Mustermann, Max",
+  "Mustermann, Erika")
+  val suggestionBuffer = scala.collection.mutable.ListBuffer[SimpleSuggestion[String]]()
 
-  val suggestion = SimpleSuggestion().value("Mustermann, Max").build
-  val buffer = scala.collection.mutable.ListBuffer(suggestion)
-  val suggestionSignal = Var(buffer.toList)
-  buffer += SimpleSuggestion().value("Mustermann, Erika").build
-  suggestionSignal := buffer.toList
+  for (x <-suggestionValueBuffer) {
+    suggestionBuffer += SimpleSuggestion().value(x).build
+  }
+
+  val suggestionSignal = Var(suggestionBuffer.toList)
 
   val name = Input[String]()
     .placeholder("Lastname, Firstname Secondname")
@@ -116,7 +119,7 @@ object CreditRequestApp extends MarmolataShell {
       Seq(
         FormElement().label("Name").fields(name),
         FormElement().label("Employment Status").fields(dropdownEmployment),
-        FormElement().label("Martial Status").fields(dropdownMartial),
+        FormElement().label("Maritial Status").fields(dropdownMartial),
         FormElement().label("Income (EUR/Month)").fields(income)
       )
     )
@@ -133,7 +136,7 @@ object CreditRequestApp extends MarmolataShell {
         FormElement().label("Purpose").fields(Text().text(dropdownPurpose.selectedItem.flatMap(v=>v.text))),
         FormElement().label("Requester Name").fields(Text().text(name.value)),
         FormElement().label("Employment Status").fields(Text().text(dropdownEmployment.selectedItem.flatMap(v=>v.text))),
-        FormElement().label("Martial Status").fields(Text().text(dropdownMartial.selectedItem.flatMap(v=>v.text))),
+        FormElement().label("Maritial Status").fields(Text().text(dropdownMartial.selectedItem.flatMap(v=>v.text))),
         FormElement().label("Income").fields(Text().text(enteredIncome.map(_ + " EUR/Month")))
         )
     )
@@ -191,15 +194,16 @@ object CreditRequestApp extends MarmolataShell {
 
   val pageTransitions: EventSource[PageTransition] = EventSource()
 
- /* button.clicks.observe(_ => {
-    pageTransitions := PageTransition(StaticBuilder(page2))
-    callService()
-  })*/
   button.clicks.observe(_ => {
     var suggestionValue = ""
-    name.value.observe(x => suggestionValue = x)
-    buffer += SimpleSuggestion().value(suggestionValue).build
-    suggestionSignal := buffer.toList
+    name.value.observe(x => {
+      if(!suggestionValueBuffer.toList.contains(x)){
+        suggestionValue = x
+      }
+    })
+    suggestionBuffer += SimpleSuggestion().value(suggestionValue).build
+    suggestionValueBuffer += suggestionValue
+    suggestionSignal := suggestionBuffer.toList
     pageTransitions := PageTransition(StaticBuilder(page2))
     callService()
   })
