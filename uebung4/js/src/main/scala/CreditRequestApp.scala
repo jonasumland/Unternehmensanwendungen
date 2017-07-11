@@ -119,7 +119,7 @@ object CreditRequestApp extends MarmolataShell {
       Seq(
         FormElement().label("Name").fields(name),
         FormElement().label("Employment Status").fields(dropdownEmployment),
-        FormElement().label("Maritial Status").fields(dropdownMartial),
+        FormElement().label("Marital Status").fields(dropdownMartial),
         FormElement().label("Income (EUR/Month)").fields(income)
       )
     )
@@ -136,7 +136,7 @@ object CreditRequestApp extends MarmolataShell {
         FormElement().label("Purpose").fields(Text().text(dropdownPurpose.selectedItem.flatMap(v=>v.text))),
         FormElement().label("Requester Name").fields(Text().text(name.value)),
         FormElement().label("Employment Status").fields(Text().text(dropdownEmployment.selectedItem.flatMap(v=>v.text))),
-        FormElement().label("Maritial Status").fields(Text().text(dropdownMartial.selectedItem.flatMap(v=>v.text))),
+        FormElement().label("Marital Status").fields(Text().text(dropdownMartial.selectedItem.flatMap(v=>v.text))),
         FormElement().label("Income").fields(Text().text(enteredIncome.map(_ + " EUR/Month")))
         )
     )
