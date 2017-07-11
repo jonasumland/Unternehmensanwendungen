@@ -33,29 +33,25 @@ object CreditRequestApp extends MarmolataShell {
       (StdValidators.gtEq(1) and StdValidators.ltEq(48))
     ).build
 
-  val suggestion = SimpleSuggestion().value("suggestion").build
-  val sequence = Seq(suggestion)
-  val signal = Signal.Const(sequence)
-  val purpose = Input[String]()
-    .initialValue("Car")
-    .validator(
-      StdValidators.longerThan(2)
-    ).suggestionProvider(
-      SimpleSuggestionProvider[String](signal)
-    ).build
-
   val income = Input[Int]()
     .initialValue("5000")
     .validator(
       StdValidators.gtEq(500)
     ).build
 
+  val suggestion = SimpleSuggestion().value("Mustermann, Max").build
+  val buffer = scala.collection.mutable.ListBuffer(suggestion)
+  val suggestionSignal = Var(buffer.toList)
+  buffer += SimpleSuggestion().value("Mustermann, Erika").build
+  suggestionSignal := buffer.toList
+
   val name = Input[String]()
     .placeholder("Lastname, Firstname Secondname")
     .validator(
       StdValidators.notEq("")
-    )
-    .build
+    ).suggestionProvider(
+    SimpleSuggestionProvider[String](suggestionSignal)
+    ).build
 
   def toBool(s: Signal[Option[Result[_]]]): Signal[Boolean] = s.map(_ match {
      case Some(Success(v)) => true
@@ -195,7 +191,15 @@ object CreditRequestApp extends MarmolataShell {
 
   val pageTransitions: EventSource[PageTransition] = EventSource()
 
+ /* button.clicks.observe(_ => {
+    pageTransitions := PageTransition(StaticBuilder(page2))
+    callService()
+  })*/
   button.clicks.observe(_ => {
+    var suggestionValue = ""
+    name.value.observe(x => suggestionValue = x)
+    buffer += SimpleSuggestion().value(suggestionValue).build
+    suggestionSignal := buffer.toList
     pageTransitions := PageTransition(StaticBuilder(page2))
     callService()
   })
