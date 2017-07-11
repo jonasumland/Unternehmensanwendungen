@@ -51,9 +51,9 @@ object CreditRequestApp extends MarmolataShell {
     ).build
 
   val name = Input[String]()
-    .initialValue("Lastname, Firstname Secondname")
+    .placeholder("Lastname, Firstname Secondname")
     .validator(
-      StdValidators.notEq("Lastname, Firstname Secondname")
+      StdValidators.notEq("")
     )
     .build
 
