@@ -147,11 +147,11 @@ object CreditRequestApp extends MarmolataShell {
   val table = Table[Credit.Offer]()
     .columns(
         Column()
-          .heading("Bank")
+          .heading("Institution")
           .representation[Credit.Offer, String](row => s"${row.str}")
           .build(),
         Column()
-          .heading("Zinssatz")
+          .heading("Interest Rate per Annum")
           .representation[Credit.Offer, String](row => s"${"%.2f".format(row.dbl)}%")
           .build(),
       Column()
