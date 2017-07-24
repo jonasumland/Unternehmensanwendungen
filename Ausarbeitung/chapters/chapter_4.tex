@@ -1,2 +1,15 @@
 %
 \section{In-memory basiertes Rechnungswesen}
+Beim Rechnungswesen einer Firma vor In-Memory Systemen gab es Accounting Documents, wo zum Beispiel die Belegköpfe und -körper dabei sind, aber auch Sekundäre Indizes. Weiterhin gab es bereits materialisierte Aggregate und Views, die aufwändige Queries schon zu einem Zeitpunkt vorberechnen, damit man diese dann als Cache benutzen kann. Außerdem gibt es natürlich die Change History, also die Änderungen zwischen dem OLTP- und dem OLAP-System. Dadurch, dass die Accounting Documents, also die Standardtabellen auch noch jeweils extra auf dem OLAP- und auf dem OLTP-System gespeichert sind, hat man dadurch die Daten bereits doppelt und muss diese für die materialisierten Views und Aggregate noch öfter abspeichern. Man halt also viele redundante Datensätze, die jedoch nötig waren, um überhaupt Analysen auf den Daten in einer annehmbaren Zeit durchführen zu können.
+\\
+Weiterhin waren die Daten in dem Data Warehouse(OLAP-System) nicht aktuell, es kann also öfters passieren dass man die Analyse durchführt und die jüngsten Daten in der Datenbank schon über 1 Monat alt sind.
+Bei einem In-Memory Datensystem sollen die Daten redundanzfrei gespeichert werden. Man soll also nur noch die Belegköpfe und -körper haben , also nur die Basistabellen und sonst nichts. Die Analyse und auch die Transaktionen sollen jedoch trotzdem deutlich effizienter ablaufen.
+\\
+Dadurch dass man nur noch ein System hat, spart man sich natürlich auf lange Sicht die Kosten der mehreren Server(OLTP- und OLAP- Systeme) und brauch nur noch ein In-Memory System. Damit kann man langfristig schon an Anschaffungs- und Betriebskosten der Server sparen.
+\\
+Da man nur noch die Basistabellen speichert, kann man die Menge an Daten die man sonst speichern müsste um mindestens die Hälfte verringern, man braucht somit also nun nur noch die Hälfte an Speicherkapazität wie vorher.
+\\
+Weiterhin hat man nun alle Daten in nur zwei Tabellen und kann einfach so auf diese zugreifen und muss nicht mit materialisierten Views oder Aggregaten arbeiten. Die Queries werden dadurch also einfacher zu schreiben und zu verstehen. Da man die Anzahl möglicher Joins, die sehr zeitaufwendig sein können, reduziert indem man nur noch die zwei Tabellen hat, ist es auch einfacher möglich effiziente Queries in kürzerer Zeit zu schreiben.
+Da Queries also schneller laufen, siehe Aufgabe 3, und man schneller diese Queries auch effizient schreiben kann, ist es auch möglich in Echtzeit Analysen durchzuführen und diese auch in Echtzeiten zu ändern, so wie sie gerade benötigt werden.
+\\
+Die Queries müssen also nicht 3 Monate bevor man etwas wissen will materialisiert werden damit man dann irgendwann ein Ergebnis bekommt, sondern man kann in Echtzeit die aktuellen Daten, die auch wirklich aktuell sind, da keine Trennung zwischen den OLAP und OLTP Daten mehr herrscht, analysieren und somit immer sofort auf mögliche Änderungen reagieren und sein Geschäft dementsprechend anpassen.Man kann somit mögliche Fehler verhindern oder aber auch mögliche Chancen ausnutzen. 
