@@ -29,8 +29,10 @@ trait CreditRequestApiImpl extends CreditRequestApi {
     if(Marital == "Married") {
       grenzen = grenzen.map(_ * 2)
     }
-    var dataSets = ((0 until (bank.length)) map { i => DataSet(bank(i), zins(i), grenzen(i), raten(i), maxStudent(i)) })
-    dataSets = dataSets.filter(dS => (dS.raten/income)<= dS.grenzen && (Employment != "Student" || amount <= dS.studentMax ))
+    var dataSets = ((0 until (bank.length)) map { i => DataSet(bank(i), zins(i), grenzen(i),
+                                                               raten(i), maxStudent(i)) })
+    dataSets = dataSets.filter(dS => (dS.raten/income)<= dS.grenzen &&
+                                     (Employment != "Student" || amount <= dS.studentMax ))
     val offer = dataSets map (dS => Credit.Offer(dS.bank,dS.raten,dS.zins))
     return offer.asInstanceOf[Seq[Credit.Offer]].sortWith(_.raten < _.raten)
   }
