@@ -46,14 +46,7 @@ In-Memory Systeme speichern deshalb ihre Daten spaltenbasiert (siehe Abbildung 3
 Der Vorteil bei Spalten basierten Speicherung ist, dass bestimmte Operationen, wie zum Beispiel die Aggregation schneller ausgeführt werden können. Bei einer zeilenbasierten Speicherung kann es passieren, dass man aus jeder Zeile nur ein Wert dafür braucht, jedoch jedes Mal die gesamte Zeile einlesen muss. Bei einer spaltenbasierten Speicherung kann man jedoch einfach die gesamte Spalte dafür einlesen und muss keine unnötigen Daten in den CPU Cache laden.
 Da man die gesamte Datenbank in Main Memory dauerhaft speichern will, sind die Daten auch komprimiert um diese möglichst klein zu halten.
 Durch die spaltenbasierte Speicherung ist dies besonders gut möglich, da Daten von gleichen Typen jeweils zusammen gespeichert werden und es somit wahrscheinlich ist, das Werte mehrfach auftreten, da viele Spalten meist eine geringe Kardinalität Werten besitzen. Auch NULL Values oder Default Values sind meist der einzige Inhalt einer Spalte und somit komprimierbar. Dadurch kann man mit zum Beispiel einer Dictionary-Komprimierung viel Speicherplatz sparen.
-Weiterhin nutzen In-Memory Systeme die Entwicklung von Multicore-CPUs aus. Die Prozesse werden dabei in kleinste Verarbeitungsschritte aufgeteilt, die jeweils dann auf mehreren Prozessoren parallel ausgeführt werden können (siehe Abbildung 4).\\
-\begin{figure}[ht]
-  \begin{center}
-  \includegraphics[width=0.5\textwidth]{images/data.png}
-  \end{center}
-  \caption{Abbildung 4: Daten-Verteilung bei SAP HANA (\cite{sap}S.12)}
-  \label{fig_4}
-\end{figure} 
+Weiterhin nutzen In-Memory Systeme die Entwicklung von Multicore-CPUs aus. Die Prozesse werden dabei in kleinste Verarbeitungsschritte aufgeteilt, die jeweils dann auf mehreren Prozessoren parallel ausgeführt werden können.\\
 All \ref{fig_1} diese Veränderungen der Architektur sorgen dafür, dass man die Daten immer 
 aktuell im In-Memory System hat. Analysen werden nun immer über 
 den aktuellsten Daten durchgeführt und nicht über älteren, da die Daten noch nicht vom OLTP zum OLAP System kopiert wurden. Weiterhin sind durch die geringere Zugriffszeit auf die Daten, die Parallelisierung und die Speicherung der Daten in Spaltenformat die Geschwindigkeit von Prozessen deutlich erhöht worden. Somit ist es für Nutzer der In-Memory Systeme möglich, Analysen in Echtzeit zu berechnen und vor allem die Anforderungen für die Analysen variabel ändern und es muss nicht mehr auf die Ergebnisse gewartet werden. Dadurch erledigt sich das Vorberechnen von Ergebnissen.\cite{neumannsap}
